@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -82,6 +84,8 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		Log.d("gohn", "mCurrentDir : " + mCurrentDir);
+
 		mAdapter = new BaseAdapterEx(this, GetFiles(mCurrentDir));
 
 		mListView = (ListView) findViewById(R.id.list_view);
@@ -92,15 +96,24 @@ public class MainActivity extends ActionBarActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				File file = mAdapter.mData.get(position);
+
+				if (!file.isDirectory()) {
+
+					String ext = file.getName().substring(
+							file.getName().lastIndexOf("."));
+					if (ext.contains("xlsx")) {
+						Log.d("gohn", "excel :" + file.getName() + "@");
+					}
+					return;
+				}
+
 				if (position == 0) {
 					showPrev();
 					return;
 				}
 
-				if (!mAdapter.mData.get(position).isDirectory())
-					return;
-
-				showNext(mAdapter.mData.get(position).getName());
+				showNext(file.getName());
 			}
 
 		});
@@ -161,6 +174,12 @@ public class MainActivity extends ActionBarActivity {
 		//
 		// // ==========================================================
 
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		// TODO Auto-generated method stub
+		super.onConfigurationChanged(newConfig);
 	}
 
 	public void onClick(View v) {

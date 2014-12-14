@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,8 +100,16 @@ public class BaseAdapterEx extends BaseAdapter {
 			viewHolder.mIcon.setImageResource(R.raw.dir);
 		}
 		if (mData.get(position).isFile()) {
-			viewHolder.mNameTv.setTextColor(Color.BLACK);
-			viewHolder.mIcon.setImageResource(R.raw.go);
+			File file = mData.get(position);
+			String ext = file.getName().substring(
+					file.getName().lastIndexOf("."));
+			if (ext.contains("xlsx")) {
+				viewHolder.mNameTv.setTextColor(Color.BLACK);
+				viewHolder.mIcon.setImageResource(R.raw.excel);
+			} else {
+				viewHolder.mNameTv.setTextColor(Color.GRAY);
+				viewHolder.mIcon.setImageResource(R.raw.go);
+			}
 		}
 
 		// viewHolder.mNumberTv.setText(mData.get(position).mNumber);
