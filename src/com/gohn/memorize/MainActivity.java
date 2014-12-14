@@ -2,6 +2,7 @@ package com.gohn.memorize;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -22,29 +23,30 @@ public class MainActivity extends ActionBarActivity {
 
 	ListView mListView = null;
 	BaseAdapterEx mAdapter = null;
-	ArrayList<Student> mData = null;
 
 	String mCurrentDir = "/mnt/sdcard";
 
-	File[] mFiles;
+	public ArrayList<File> GetFiles(String DirectoryPath) {
+		ArrayList<File> MyFiles = new ArrayList<File>();
 
-	public ArrayList<Student> GetFiles(String DirectoryPath) {
-		ArrayList<Student> MyFiles = new ArrayList<Student>();
 		File f = new File(DirectoryPath);
-
 		f.mkdirs();
-		mFiles = f.listFiles();
+		File[] files = f.listFiles();
+		File parent = f.getParentFile();
 
-		File perent = f.getParentFile();
+		MyFiles.add(parent);
 
-		Student up = new Student();
-		up.mName = "상위 폴더로";
-		MyFiles.add(up);
+		Arrays.sort(files);
 
-		for (int i = 0; i < mFiles.length; i++) {
-			Student s = new Student();
-			s.mName = mFiles[i].getName();
-			MyFiles.add(s);
+		for (int i = 0; i < files.length; i++) {
+			if (!files[i].isHidden() && files[i].isDirectory()) {
+				MyFiles.add(files[i]);
+			}
+		}
+		for (int i = 0; i < files.length; i++) {
+			if (!files[i].isHidden() && !files[i].isDirectory()) {
+				MyFiles.add(files[i]);
+			}
 		}
 
 		return MyFiles;
@@ -56,7 +58,6 @@ public class MainActivity extends ActionBarActivity {
 
 		for (int i = -1; (i = child.indexOf("/", i + 1)) != -1;) {
 			index = i;
-			Log.d("gohn", "@@ " + index);
 		}
 		if (index == 4)
 			return child;
@@ -64,38 +65,24 @@ public class MainActivity extends ActionBarActivity {
 		return child.substring(0, index);
 	}
 
+	private void showPrev() {
+		mCurrentDir = ParentDir(mCurrentDir);
+		mAdapter.mData = GetFiles(mCurrentDir);
+		mAdapter.notifyDataSetChanged();
+	}
+
+	private void showNext(String dir) {
+		mCurrentDir = mCurrentDir + "/" + dir;
+		mAdapter.mData = GetFiles(mCurrentDir);
+		mAdapter.notifyDataSetChanged();
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		mData = new ArrayList<Student>();
-		//
-		// for (int i = 0; i < 100; i++) {
-		// Student s = new Student();
-		//
-		// s.mName = "고해곤 " + i;
-		// s.mNumber = "1000" + i;
-		// s.mDepartment = "엔크루" + i;
-		//
-		// mData.add(s);
-		// }
-
-		// File dir = new File(mCurrentDir);
-		// File[] filelist = dir.listFiles();
-		// String[] theNamesOfFiles = new String[filelist.length];
-		//
-		// for (int i = 0; i < theNamesOfFiles.length; i++) {
-		// theNamesOfFiles[i] = filelist[i].getName();
-		//
-		// Student s = new Student();
-		// s.mName = filelist[i].getName();
-		// mData.add(s);
-		// }
-
-		mData = GetFiles(mCurrentDir);
-
-		mAdapter = new BaseAdapterEx(this, mData);
+		mAdapter = new BaseAdapterEx(this, GetFiles(mCurrentDir));
 
 		mListView = (ListView) findViewById(R.id.list_view);
 		mListView.setAdapter(mAdapter);
@@ -105,36 +92,15 @@ public class MainActivity extends ActionBarActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO Auto-generated method stub
-				// Toast.makeText(MainActivity.this,
-				// "onItemClick Item : " + position + ", " + id,
-				// Toast.LENGTH_LONG).show();
-				Log.d("gohn", "@@@@@@@@@@@@@@@@@@@@@ mCurrentDir BEFORE : "
-						+ mCurrentDir);
-
 				if (position == 0) {
-
-					mCurrentDir = ParentDir(mCurrentDir);
-					Log.d("gohn",
-							"@@@@@@@@@@@@@@@@@@@@@ mCurrentDir After 1 : "
-									+ mCurrentDir);
-
-					mData = GetFiles(mCurrentDir);
-					mAdapter.mData = mData;
-					mAdapter.notifyDataSetChanged();
+					showPrev();
 					return;
 				}
 
-				if (!mFiles[position - 1].isDirectory())
+				if (!mAdapter.mData.get(position).isDirectory())
 					return;
 
-				mCurrentDir = mCurrentDir + "/" + mData.get(position).mName;
-				Log.d("gohn", "@@@@@@@@@@@@@@@@@@@@@ mCurrentDir After 2 : "
-						+ mCurrentDir);
-
-				mData = GetFiles(mCurrentDir);
-				mAdapter.mData = mData;
-				mAdapter.notifyDataSetChanged();
+				showNext(mAdapter.mData.get(position).getName());
 			}
 
 		});
