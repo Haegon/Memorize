@@ -1,10 +1,16 @@
 package com.gohn.memorize;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
-import android.content.pm.ActivityInfo;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -84,8 +90,6 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		Log.d("gohn", "mCurrentDir : " + mCurrentDir);
-
 		mAdapter = new BaseAdapterEx(this, GetFiles(mCurrentDir));
 
 		mListView = (ListView) findViewById(R.id.list_view);
@@ -103,7 +107,7 @@ public class MainActivity extends ActionBarActivity {
 					String ext = file.getName().substring(
 							file.getName().lastIndexOf("."));
 					if (ext.contains("xlsx")) {
-						Log.d("gohn", "excel :" + file.getName() + "@");
+						Log.d("gohn", "excel : " + file.getAbsolutePath());
 					}
 					return;
 				}
