@@ -103,7 +103,7 @@ public class BaseAdapterEx extends BaseAdapter {
 			File file = mData.get(position);
 			String ext = file.getName().substring(
 					file.getName().lastIndexOf("."));
-			if (ext.contains("xlsx")) {
+			if (ext.contains("xls")) {
 				viewHolder.mNameTv.setTextColor(Color.BLACK);
 				viewHolder.mIcon.setImageResource(R.raw.excel);
 			} else {

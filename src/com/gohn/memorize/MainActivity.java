@@ -1,22 +1,19 @@
 package com.gohn.memorize;
 
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
+import jxl.Cell;
+import jxl.CellType;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -25,7 +22,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 	View mHeaderView = null;
 	View mFooterView = null;
 
@@ -106,8 +103,50 @@ public class MainActivity extends ActionBarActivity {
 
 					String ext = file.getName().substring(
 							file.getName().lastIndexOf("."));
-					if (ext.contains("xlsx")) {
+					if (ext.contains("xls")) {
 						Log.d("gohn", "excel : " + file.getAbsolutePath());
+						
+						File inputWorkbook = new File(file.getAbsolutePath());
+						Workbook w = null;
+
+						try {
+							w = Workbook.getWorkbook(inputWorkbook);
+						} catch (BiffException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						// Get the first sheet
+						Sheet sheet = w.getSheet(0);
+						// Loop over first 10 column and lines
+
+						for (int i = 0; i < sheet.getRows(); i++) {
+							for (int j = 0; j < sheet.getColumns(); j++) {
+								Cell cell = sheet.getCell(j, i);
+								CellType type = cell.getType();
+								if (cell.getType() == CellType.LABEL) {
+
+									switch (j) {
+									case 0:
+										Log.d("gohn",
+												"Type : " + cell.getContents());
+										break;
+									case 1:
+										Log.d("gohn",
+												"단어 : " + cell.getContents());
+										break;
+									case 2:
+										Log.d("gohn",
+												"뜻   : " + cell.getContents());
+										break;
+
+									}
+								}
+							}
+						}
 					}
 					return;
 				}
@@ -152,32 +191,6 @@ public class MainActivity extends ActionBarActivity {
 						Toast.LENGTH_LONG).show();
 			}
 		});
-
-		// mListView.setDivider(new ColorDrawable(Color.RED));
-		// mListView.setDividerHeight(10);
-
-		// // ==========================================================
-		//
-		// mHeaderView = getLayoutInflater().inflate(
-		// R.layout.list_view_header_footer_layout, null);
-		//
-		// TextView headerTV = (TextView) mHeaderView
-		// .findViewById(R.id.header_footer_text);
-		//
-		// headerTV.setText("리스트의 시작입니다");
-		// mListView.addHeaderView(mHeaderView, null, true);
-		//
-		// mFooterView = getLayoutInflater().inflate(
-		// R.layout.list_view_header_footer_layout, null);
-		//
-		// TextView footerTV = (TextView) mFooterView
-		// .findViewById(R.id.header_footer_text);
-		//
-		// footerTV.setText("리스트의 끝입니다");
-		// mListView.addFooterView(mFooterView, null, false);
-		//
-		// // ==========================================================
-
 	}
 
 	@Override
@@ -205,24 +218,4 @@ public class MainActivity extends ActionBarActivity {
 			break;
 		}
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
 }
