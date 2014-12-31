@@ -13,7 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class BaseAdapterEx extends BaseAdapter {
+public class FindFileAdapter extends BaseAdapter {
 
 	Context mContext = null;
 	ArrayList<File> mData = null;
@@ -26,7 +26,7 @@ public class BaseAdapterEx extends BaseAdapter {
 		ImageView mIcon;
 	}
 
-	public BaseAdapterEx(Context context, ArrayList<File> data) {
+	public FindFileAdapter(Context context, ArrayList<File> data) {
 		mContext = context;
 		mData = data;
 		mLayout = LayoutInflater.from(mContext);
@@ -73,12 +73,12 @@ public class BaseAdapterEx extends BaseAdapter {
 		ViewHolder viewHolder = null;
 
 		if (itemLayout == null) {
-			itemLayout = mLayout.inflate(R.layout.list_view_item_layout, null);
+			itemLayout = mLayout.inflate(R.layout.find_file_list_layout, null);
 
 			viewHolder = new ViewHolder();
 
-			viewHolder.mNameTv = (TextView) itemLayout.findViewById(R.id.name_text);
-			viewHolder.mIcon = (ImageView) itemLayout.findViewById(R.id.dir);
+			viewHolder.mNameTv = (TextView) itemLayout.findViewById(R.id.find_file_name_text);
+			viewHolder.mIcon = (ImageView) itemLayout.findViewById(R.id.find_file_dir);
 
 			itemLayout.setTag(viewHolder);
 		} else {
