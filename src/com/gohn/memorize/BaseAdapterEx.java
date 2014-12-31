@@ -77,12 +77,7 @@ public class BaseAdapterEx extends BaseAdapter {
 
 			viewHolder = new ViewHolder();
 
-			viewHolder.mNameTv = (TextView) itemLayout
-					.findViewById(R.id.name_text);
-			// viewHolder.mNumberTv = (TextView) itemLayout
-			// .findViewById(R.id.number_text);
-			// viewHolder.mDepartmentTv = (TextView) itemLayout
-			// .findViewById(R.id.department_text);
+			viewHolder.mNameTv = (TextView) itemLayout.findViewById(R.id.name_text);
 			viewHolder.mIcon = (ImageView) itemLayout.findViewById(R.id.dir);
 
 			itemLayout.setTag(viewHolder);
@@ -98,12 +93,11 @@ public class BaseAdapterEx extends BaseAdapter {
 		if (mData.get(position).isDirectory()) {
 			viewHolder.mNameTv.setTextColor(Color.BLACK);
 			viewHolder.mIcon.setImageResource(R.raw.dir);
-		}
+		} 
 		if (mData.get(position).isFile()) {
 			File file = mData.get(position);
-			String ext = file.getName().substring(
-					file.getName().lastIndexOf("."));
-			if (ext.contains("xls")) {
+			String ext = file.getName().substring(file.getName().lastIndexOf("."));
+			if (ext.contains(".xls") && !ext.contains(".xlsx")) {
 				viewHolder.mNameTv.setTextColor(Color.BLACK);
 				viewHolder.mIcon.setImageResource(R.raw.excel);
 			} else {
@@ -111,9 +105,6 @@ public class BaseAdapterEx extends BaseAdapter {
 				viewHolder.mIcon.setImageResource(R.raw.go);
 			}
 		}
-
-		// viewHolder.mNumberTv.setText(mData.get(position).mNumber);
-		// viewHolder.mDepartmentTv.setText(mData.get(position).mDepartment);
 
 		return itemLayout;
 	}

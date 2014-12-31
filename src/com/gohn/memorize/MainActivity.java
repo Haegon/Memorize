@@ -11,18 +11,27 @@ import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
+
+	Context context = this;
+
 	View mHeaderView = null;
 	View mFooterView = null;
 
@@ -30,6 +39,149 @@ public class MainActivity extends Activity {
 	BaseAdapterEx mAdapter = null;
 
 	String mCurrentDir = "/mnt/sdcard";
+
+	public WordsDBMgr dbMgr = null;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		dbMgr = WordsDBMgr.getInstance(this);
+
+		mAdapter = new BaseAdapterEx(this, GetFiles(mCurrentDir));
+
+		mListView = (ListView) findViewById(R.id.list_view);
+		mListView.setAdapter(mAdapter);
+
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+				File file = mAdapter.mData.get(position);
+
+				if (!file.isDirectory()) {
+
+					String ext = file.getName().substring(file.getName().lastIndexOf("."));
+					if (ext.contains(".xls") && !ext.contains(".xlsx")) {
+						Log.d("gohn", "excel : " + file.getAbsolutePath());
+
+						File inputWorkbook = new File(file.getAbsolutePath());
+						Workbook w = null;
+
+						try {
+							w = Workbook.getWorkbook(inputWorkbook);
+						} catch (BiffException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						// Get the first sheet
+						Sheet sheet = w.getSheet(0);
+						// Loop over first 10 column and lines
+
+						final ArrayList<WordSet> words = new ArrayList<WordSet>();
+
+						for (int r = 0; r < sheet.getRows(); r++) {
+
+							WordSet word = new WordSet();
+
+							for (int c = 0; c < sheet.getColumns(); c++) {
+								Cell cell = sheet.getCell(c, r);
+								if (cell.getType() == CellType.LABEL) {
+
+									String content = cell.getContents();
+
+									switch (c) {
+									case 0:
+										if (!WordType.isType(content))
+											continue;
+										word.Type = content;
+										break;
+									case 1:
+										word.Word = content;
+										break;
+									case 2:
+										word.Meaning = content;
+										break;
+									}
+								}
+							}
+							words.add(word);
+						}
+
+						LayoutInflater li = LayoutInflater.from(context);
+						View promptsView = li.inflate(R.layout.activity_group_edittext, null);
+						final EditText result = null;
+
+						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+						// set prompts.xml to alertdialog builder
+						alertDialogBuilder.setView(promptsView);
+
+						final EditText userInput = (EditText) promptsView.findViewById(R.id.set_group_edittext);
+
+						// set dialog message
+						alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								addWordsToDB(userInput.getText().toString(), words);
+							}
+						}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.cancel();
+							}
+						});
+
+						// create alert dialog
+						AlertDialog alertDialog = alertDialogBuilder.create();
+
+						// show it
+						alertDialog.show();
+
+					}
+					return;
+				}
+
+				if (position == 0) {
+					showPrev();
+					return;
+				}
+
+				showNext(file.getName());
+			}
+
+		});
+
+		mListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				// TODO Auto-generated method stub
+				// mAdapter.delete((int) id);
+				return true;
+			}
+
+		});
+
+		mListView.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				// TODO Auto-generated method stub
+				Toast.makeText(MainActivity.this, "onItemSelected Item : " + position + ", " + id, Toast.LENGTH_LONG).show();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				Toast.makeText(MainActivity.this, "OnNothing Selected", Toast.LENGTH_LONG).show();
+			}
+		});
+	}
 
 	public ArrayList<File> GetFiles(String DirectoryPath) {
 		ArrayList<File> MyFiles = new ArrayList<File>();
@@ -53,7 +205,6 @@ public class MainActivity extends Activity {
 				MyFiles.add(files[i]);
 			}
 		}
-
 		return MyFiles;
 	}
 
@@ -82,115 +233,18 @@ public class MainActivity extends Activity {
 		mAdapter.notifyDataSetChanged();
 	}
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+	private void addWordsToDB(String group, ArrayList<WordSet> set) {
 
-		mAdapter = new BaseAdapterEx(this, GetFiles(mCurrentDir));
+		for (int i = 0; i < set.size(); i++) {
+			ContentValues cv = new ContentValues();
+			cv.put(WordsDBMgr.GROUP, group);
+			cv.put(WordsDBMgr.TYPE, set.get(i).Type);
+			cv.put(WordsDBMgr.WORD, set.get(i).Word);
+			cv.put(WordsDBMgr.MEANING, set.get(i).Meaning);
+			dbMgr.insert(cv);
+		}
 
-		mListView = (ListView) findViewById(R.id.list_view);
-		mListView.setAdapter(mAdapter);
-
-		mListView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				File file = mAdapter.mData.get(position);
-
-				if (!file.isDirectory()) {
-
-					String ext = file.getName().substring(
-							file.getName().lastIndexOf("."));
-					if (ext.contains("xls")) {
-						Log.d("gohn", "excel : " + file.getAbsolutePath());
-						
-						File inputWorkbook = new File(file.getAbsolutePath());
-						Workbook w = null;
-
-						try {
-							w = Workbook.getWorkbook(inputWorkbook);
-						} catch (BiffException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
-						// Get the first sheet
-						Sheet sheet = w.getSheet(0);
-						// Loop over first 10 column and lines
-
-						for (int i = 0; i < sheet.getRows(); i++) {
-							for (int j = 0; j < sheet.getColumns(); j++) {
-								Cell cell = sheet.getCell(j, i);
-								CellType type = cell.getType();
-								if (cell.getType() == CellType.LABEL) {
-
-									switch (j) {
-									case 0:
-										Log.d("gohn",
-												"Type : " + cell.getContents());
-										break;
-									case 1:
-										Log.d("gohn",
-												"단어 : " + cell.getContents());
-										break;
-									case 2:
-										Log.d("gohn",
-												"뜻   : " + cell.getContents());
-										break;
-
-									}
-								}
-							}
-						}
-					}
-					return;
-				}
-
-				if (position == 0) {
-					showPrev();
-					return;
-				}
-
-				showNext(file.getName());
-			}
-
-		});
-
-		mListView.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
-				// mAdapter.delete((int) id);
-				return true;
-			}
-
-		});
-
-		mListView.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
-				Toast.makeText(MainActivity.this,
-						"onItemSelected Item : " + position + ", " + id,
-						Toast.LENGTH_LONG).show();
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-				// TODO Auto-generated method stub
-				Toast.makeText(MainActivity.this, "OnNothing Selected",
-						Toast.LENGTH_LONG).show();
-			}
-		});
+		Log.d("gohn", "Success");
 	}
 
 	@Override
@@ -203,18 +257,36 @@ public class MainActivity extends Activity {
 
 		switch (v.getId()) {
 		case R.id.add_btn:
-			// EditText nameEt = (EditText) findViewById(R.id.name_edit);
-			// EditText numberEt = (EditText) findViewById(R.id.number_edit);
-			// EditText departmentEt = (EditText)
-			// findViewById(R.id.department_edit);
-			//
-			// Student addData = new Student();
-			//
-			// addData.mName = nameEt.getText().toString();
-			// addData.mNumber = numberEt.getText().toString();
-			// addData.mDepartment = departmentEt.getText().toString();
-			//
-			// mAdapter.add(0, addData);
+
+			LayoutInflater li = LayoutInflater.from(this);
+			View promptsView = li.inflate(R.layout.activity_group_edittext, null);
+			final EditText result = null;
+
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+			// set prompts.xml to alertdialog builder
+			alertDialogBuilder.setView(promptsView);
+
+			final EditText userInput = (EditText) promptsView.findViewById(R.id.set_group_edittext);
+
+			// set dialog message
+			alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					// get user input and set it to result
+					// edit text
+					result.setText(userInput.getText());
+				}
+			}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					dialog.cancel();
+				}
+			});
+
+			// create alert dialog
+			AlertDialog alertDialog = alertDialogBuilder.create();
+
+			// show it
+			alertDialog.show();
 			break;
 		}
 	}
