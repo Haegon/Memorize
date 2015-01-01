@@ -1,4 +1,4 @@
-package com.gohn.memorize;
+package com.gohn.memorize.manager;
 
 import android.content.ContentValues;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.gohn.memorize;
+package com.gohn.memorize.activity;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +27,14 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.gohn.memorize.R;
+import com.gohn.memorize.R.id;
+import com.gohn.memorize.R.layout;
+import com.gohn.memorize.adpator.FindFileAdapter;
+import com.gohn.memorize.manager.WordsDBMgr;
+import com.gohn.memorize.model.WordSet;
+import com.gohn.memorize.model.WordType;
 
 public class FindFileActivity extends Activity {
 	Context context = this;

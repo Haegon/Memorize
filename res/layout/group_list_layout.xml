@@ -3,15 +3,8 @@
     android:layout_height="match_parent"
     android:padding="10dp" >
 
-    <ImageView
-        android:id="@+id/dir"
-        android:layout_width="50dip"
-        android:layout_height="50dip"
-        android:scaleType="centerCrop"
-        android:src="@raw/dir" />
-
     <TextView
-        android:id="@+id/name_text"
+        android:id="@+id/group_name_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="left|center_vertical"

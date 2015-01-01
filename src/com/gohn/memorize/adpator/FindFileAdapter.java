@@ -1,7 +1,12 @@
-package com.gohn.memorize;
+package com.gohn.memorize.adpator;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import com.gohn.memorize.R;
+import com.gohn.memorize.R.id;
+import com.gohn.memorize.R.layout;
+import com.gohn.memorize.R.raw;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -16,7 +21,7 @@ import android.widget.TextView;
 public class FindFileAdapter extends BaseAdapter {
 
 	Context mContext = null;
-	ArrayList<File> mData = null;
+	public ArrayList<File> mData = null;
 	LayoutInflater mLayout = null;
 
 	class ViewHolder {
