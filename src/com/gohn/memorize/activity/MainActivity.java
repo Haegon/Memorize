@@ -3,6 +3,7 @@ package com.gohn.memorize.activity;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -22,16 +23,14 @@ import com.gohn.memorize.model.VocaGroup;
 
 public class MainActivity extends Activity {
 
-	// Context context = this;
-	//
+	Context context = this;
+
 	View mHeaderView = null;
 	View mFooterView = null;
-	//
+
 	ListView mListView = null;
 	GroupAdapter mAdapter = null;
-	//
-	// String mCurrentDir = "/mnt/sdcard";
-	//
+
 	public WordsDBMgr dbMgr = null;
 
 	@Override
@@ -51,8 +50,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-				VocaGroup file = mAdapter.mData.get(position);
-
+				startActivityForResult(new Intent(context, CategoryActivity.class), 1);
 			}
 
 		});
@@ -84,7 +82,6 @@ public class MainActivity extends Activity {
 		});
 	}
 
-
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -92,7 +89,6 @@ public class MainActivity extends Activity {
 		mAdapter.mData = getVocaGroups();
 		mAdapter.notifyDataSetChanged();
 	}
-
 
 	public ArrayList<VocaGroup> getVocaGroups() {
 

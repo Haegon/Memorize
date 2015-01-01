@@ -26,6 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.gohn.memorize.activity.FindFileActivity" />
+        <activity android:name="com.gohn.memorize.activity.CategoryActivity" />
     </application>
 
 </manifest>
