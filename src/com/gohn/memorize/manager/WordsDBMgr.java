@@ -1,5 +1,10 @@
 package com.gohn.memorize.manager;
 
+import java.util.ArrayList;
+
+import com.gohn.memorize.model.VocaGroup;
+import com.gohn.memorize.model.WordSet;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -55,5 +60,29 @@ public class WordsDBMgr {
 
 	public int delete(String whereClause, String[] whereAgs) {
 		return mDatabase.delete(TABLE_NAME, whereClause, whereAgs);
+	}
+
+	public ArrayList<WordSet> getWordsSet(String group) {
+
+		Cursor c = query(getColumns(), WordsDBMgr.GROUP + "=?", new String[] { group }, null, null, null);
+
+		if (c != null) {
+			ArrayList<WordSet> groups = new ArrayList<WordSet>();
+
+			while (c.moveToNext()) {
+				WordSet vg = new WordSet();
+				vg.Group = c.getString(0);
+				vg.Type = c.getString(1);
+				vg.Word = c.getString(2);
+				vg.Meaning = c.getString(3);
+				groups.add(vg);
+			}
+			return groups;
+		}
+		return null;
+	}
+
+	public String[] getColumns() {
+		return new String[] { WordsDBMgr.GROUP, WordsDBMgr.TYPE, WordsDBMgr.WORD, WordsDBMgr.MEANING };
 	}
 }
