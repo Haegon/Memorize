@@ -14,7 +14,7 @@
         android:textSize="50dp" />
 
     <RadioGroup
-        android:id="@+id/radioGroup1"
+        android:id="@+id/find_meaning_radio_group"
         android:layout_width="360dp"
         android:layout_height="300dp"
         android:paddingLeft="20dp" >

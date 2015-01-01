@@ -12,8 +12,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class WordsDBMgr {
 
-	static final String DB_NAME = "Words.db";
-	static final String TABLE_NAME = "Words";
+	public static final String DB_NAME = "Words.db";
+	public static final String TABLE_NAME = "Words";
 
 	public static final String GROUP = "groupName";
 	public static final String TYPE = "type";
@@ -60,6 +60,10 @@ public class WordsDBMgr {
 
 	public int delete(String whereClause, String[] whereAgs) {
 		return mDatabase.delete(TABLE_NAME, whereClause, whereAgs);
+	}
+
+	public Cursor rawQuery(String clause, String[] type2) {
+		return mDatabase.rawQuery(clause, type2);
 	}
 
 	public ArrayList<WordSet> getWordsSet(String group) {

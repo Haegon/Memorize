@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
 
 				Intent intent = new Intent(context, CategoryActivity.class);
 				intent.putExtra(WordsDBMgr.GROUP, mAdapter.mData.get(position).Name);
-				
+
 				startActivityForResult(intent, 1);
 			}
 
