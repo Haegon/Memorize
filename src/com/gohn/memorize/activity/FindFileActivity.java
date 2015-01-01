@@ -97,8 +97,12 @@ public class FindFileActivity extends Activity {
 
 							WordSet word = new WordSet();
 
+							boolean b = false;
+
 							for (int c = 0; c < sheet.getColumns(); c++) {
+
 								Cell cell = sheet.getCell(c, r);
+
 								if (cell.getType() == CellType.LABEL) {
 
 									String content = cell.getContents();
@@ -106,7 +110,7 @@ public class FindFileActivity extends Activity {
 									switch (c) {
 									case 0:
 										if (!WordType.isType(content))
-											continue;
+											b = true;
 										word.Type = content;
 										break;
 									case 1:
@@ -118,7 +122,8 @@ public class FindFileActivity extends Activity {
 									}
 								}
 							}
-							words.add(word);
+							if (b)
+								words.add(word);
 						}
 
 						LayoutInflater li = LayoutInflater.from(context);
