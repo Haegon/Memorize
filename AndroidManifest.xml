@@ -27,6 +27,7 @@
         </activity>
         <activity android:name="com.gohn.memorize.activity.FindFileActivity" />
         <activity android:name="com.gohn.memorize.activity.CategoryActivity" />
+        <activity android:name="com.gohn.memorize.activity.FindMeaningActivity" />
     </application>
 
 </manifest>
