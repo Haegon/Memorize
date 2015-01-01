@@ -1,17 +1,11 @@
 package com.gohn.memorize.activity;
 
-import java.io.File;
 import java.util.ArrayList;
-
-import com.gohn.memorize.R;
-import com.gohn.memorize.R.id;
-import com.gohn.memorize.R.layout;
-import com.gohn.memorize.adpator.GroupAdapter;
-import com.gohn.memorize.manager.WordsDBMgr;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,18 +15,23 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.gohn.memorize.R;
+import com.gohn.memorize.adpator.GroupAdapter;
+import com.gohn.memorize.manager.WordsDBMgr;
+import com.gohn.memorize.model.VocaGroup;
+
 public class MainActivity extends Activity {
 
-//	Context context = this;
-//
+	// Context context = this;
+	//
 	View mHeaderView = null;
 	View mFooterView = null;
-//
+	//
 	ListView mListView = null;
 	GroupAdapter mAdapter = null;
-//
-//	String mCurrentDir = "/mnt/sdcard";
-//
+	//
+	// String mCurrentDir = "/mnt/sdcard";
+	//
 	public WordsDBMgr dbMgr = null;
 
 	@Override
@@ -42,9 +41,9 @@ public class MainActivity extends Activity {
 
 		dbMgr = WordsDBMgr.getInstance(this);
 
-		mAdapter = new GroupAdapter(this, new ArrayList<File>());
+		mAdapter = new GroupAdapter(this, getVocaGroups());
 
-		mListView = (ListView) findViewById(R.id.list_view);
+		mListView = (ListView) findViewById(R.id.group_list_view);
 		mListView.setAdapter(mAdapter);
 
 		mListView.setOnItemClickListener(new OnItemClickListener() {
@@ -52,7 +51,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-				File file = mAdapter.mData.get(position);
+				VocaGroup file = mAdapter.mData.get(position);
 
 			}
 
@@ -85,6 +84,35 @@ public class MainActivity extends Activity {
 		});
 	}
 
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		mAdapter.mData = getVocaGroups();
+		mAdapter.notifyDataSetChanged();
+	}
+
+
+	public ArrayList<VocaGroup> getVocaGroups() {
+
+		String[] columns = new String[] { WordsDBMgr.GROUP, "count(" + WordsDBMgr.GROUP + ")" };
+		Cursor c = dbMgr.query(columns, null, null, WordsDBMgr.GROUP, null, null);
+
+		if (c != null) {
+			ArrayList<VocaGroup> groups = new ArrayList<VocaGroup>();
+
+			while (c.moveToNext()) {
+				VocaGroup vg = new VocaGroup();
+				vg.Name = c.getString(0);
+				vg.Numbers = c.getInt(1);
+				groups.add(vg);
+			}
+			return groups;
+		}
+		return null;
+	}
+
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		// TODO Auto-generated method stub
@@ -95,7 +123,7 @@ public class MainActivity extends Activity {
 
 		switch (v.getId()) {
 		case R.id.add_btn:
-			startActivity(new Intent(this,FindFileActivity.class));
+			startActivityForResult(new Intent(this, FindFileActivity.class), 0);
 			break;
 		}
 	}

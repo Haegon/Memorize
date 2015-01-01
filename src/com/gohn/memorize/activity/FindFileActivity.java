@@ -136,6 +136,7 @@ public class FindFileActivity extends Activity {
 						alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 								addWordsToDB(userInput.getText().toString(), words);
+								finish();
 							}
 						}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
@@ -250,8 +251,6 @@ public class FindFileActivity extends Activity {
 			cv.put(WordsDBMgr.MEANING, set.get(i).Meaning);
 			dbMgr.insert(cv);
 		}
-
-		Log.d("gohn", "Success");
 	}
 
 	@Override
