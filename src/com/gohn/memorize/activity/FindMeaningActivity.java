@@ -47,7 +47,7 @@ public class FindMeaningActivity extends Activity {
 
 		for (int i = 0; i < wordsSet.size(); i++) {
 			Exercise e = new Exercise();
-			e.Question = wordsSet.get(i).Word;
+			e.Question = wordsSet.get(i);
 			e.AnswerItems = makeAnswerItems(wordsSet.get(i));
 			exercises.add(e);
 		}
@@ -70,7 +70,7 @@ public class FindMeaningActivity extends Activity {
 
 	public void showPage(boolean checkClear) {
 
-		word.setText(exercises.get(page).Question);
+		word.setText(exercises.get(page).Question.Word);
 
 		for (int i = 0; i < 5; i++) {
 			radioBtns.get(i).setText(exercises.get(page).AnswerItems.get(i).Answer);
