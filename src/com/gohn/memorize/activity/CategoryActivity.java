@@ -2,6 +2,7 @@ package com.gohn.memorize.activity;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.manager.WordsDBMgr;
+import com.gohn.memorize.model.ExerciseType;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,7 +17,7 @@ public class CategoryActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.category_layout);
+		setContentView(R.layout.category_activity_layout);
 
 		groupName = getIntent().getExtras().getString(WordsDBMgr.GROUP);
 	}
@@ -25,10 +26,11 @@ public class CategoryActivity extends Activity {
 
 		Intent intent = new Intent();
 		intent.putExtra(WordsDBMgr.GROUP, groupName);
-		
+
 		switch (v.getId()) {
 		case R.id.category_find_meaning_btn:
-			intent.setClass(this, FindMeaningActivity.class);
+			intent.putExtra("TypeExercise", ExerciseType.GUESS_MEANING);
+			intent.setClass(this, TypeSelectActivity.class);
 			startActivityForResult(intent, 2);
 			break;
 		}

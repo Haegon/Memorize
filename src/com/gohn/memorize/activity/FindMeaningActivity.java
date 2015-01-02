@@ -42,7 +42,8 @@ public class FindMeaningActivity extends Activity {
 		setContentView(R.layout.find_meaning_activity_layout);
 
 		dbMgr = WordsDBMgr.getInstance(this);
-		wordsSet = dbMgr.getWordsSet(getIntent().getExtras().getString(WordsDBMgr.GROUP));
+		Bundle b = getIntent().getExtras();
+		wordsSet = dbMgr.getWordsSet(b.getString(WordsDBMgr.GROUP), b.getString(WordsDBMgr.TYPE));
 
 		for (int i = 0; i < wordsSet.size(); i++) {
 			Exercise e = new Exercise();
@@ -74,9 +75,9 @@ public class FindMeaningActivity extends Activity {
 		for (int i = 0; i < 5; i++) {
 			radioBtns.get(i).setText(exercises.get(page).AnswerItems.get(i).Answer);
 			radioBtns.get(i).setTextColor(exercises.get(page).AnswerItems.get(i).Tint);
-			if (checkClear)
-				radioBtns.get(i).setChecked(false);
 		}
+
+		radioGroup.clearCheck();
 	}
 
 	public ArrayList<AnswerItem> makeAnswerItems(WordSet wordSet) {
@@ -101,6 +102,14 @@ public class FindMeaningActivity extends Activity {
 		return answerItems;
 	}
 
+	public boolean isUserCheck() {
+		for (int i = 0; i < 5; i++) {
+			if (radioBtns.get(i).isChecked())
+				return true;
+		}
+		return false;
+	}
+
 	public void onClick(View v) {
 
 		int tmpPage = page;
@@ -114,6 +123,9 @@ public class FindMeaningActivity extends Activity {
 			nextBtn.setEnabled(true);
 			break;
 		case R.id.find_meaning_check_btn:
+
+			if (!isUserCheck())
+				return;
 
 			int checkedIndex = -100;
 

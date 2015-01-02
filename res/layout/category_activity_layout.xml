@@ -8,7 +8,7 @@
         android:layout_width="360dp"
         android:layout_height="100dp"
         android:onClick="onClick"
-        android:text="단어보고 뜻 찾기"
+        android:text="단어 보고 뜻 찾기"
         android:textAlignment="center"
         android:textSize="50dp" />
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.gohn.memorize.model.VocaGroup;
 import com.gohn.memorize.model.WordSet;
+import com.gohn.memorize.model.WordType;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -66,9 +67,14 @@ public class WordsDBMgr {
 		return mDatabase.rawQuery(clause, type2);
 	}
 
-	public ArrayList<WordSet> getWordsSet(String group) {
+	public ArrayList<WordSet> getWordsSet(String group, String type) {
 
-		Cursor c = query(getColumns(), WordsDBMgr.GROUP + "=?", new String[] { group }, null, null, null);
+		Cursor c;
+
+		if (type == WordType.NONE)
+			c = query(getColumns(), WordsDBMgr.GROUP + "=?", new String[] { group }, null, null, null);
+		else
+			c = query(getColumns(), WordsDBMgr.GROUP + "=? and " + WordsDBMgr.TYPE + "=? ", new String[] { group, type }, null, null, null);
 
 		if (c != null) {
 			ArrayList<WordSet> groups = new ArrayList<WordSet>();

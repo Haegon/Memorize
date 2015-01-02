@@ -18,16 +18,25 @@
         <activity
             android:name="com.gohn.memorize.activity.MainActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.gohn.memorize.activity.FindFileActivity" />
-        <activity android:name="com.gohn.memorize.activity.CategoryActivity" />
-        <activity android:name="com.gohn.memorize.activity.FindMeaningActivity" />
-    </application>
+        <activity
+            android:name="com.gohn.memorize.activity.FindFileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.gohn.memorize.activity.CategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.gohn.memorize.activity.TypeSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.gohn.memorize.activity.FindMeaningActivity"
+            android:screenOrientation="portrait" />
+        </application>
 
 </manifest>
