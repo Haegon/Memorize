@@ -3,10 +3,10 @@ package com.gohn.memorize.activity;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -25,9 +25,11 @@ public class FindMeaningActivity extends Activity {
 
 	ArrayList<WordSet> wordsSet;
 	TextView word;
+	TextView count;
 	RadioGroup radioGroup;
 	ArrayList<RadioButton> radioBtns = new ArrayList<RadioButton>();
 	Button nextBtn;
+	Button checkBtn;
 
 	WordsDBMgr dbMgr;
 
@@ -55,9 +57,10 @@ public class FindMeaningActivity extends Activity {
 		radioBtns.add((RadioButton) findViewById(R.id.find_meaning_radio4));
 		radioBtns.add((RadioButton) findViewById(R.id.find_meaning_radio5));
 
+		count = (TextView) findViewById(R.id.find_meaning_word_count);
 		word = (TextView) findViewById(R.id.find_meaning_word_text);
 		nextBtn = (Button) findViewById(R.id.find_meaning_next_btn);
-
+		checkBtn = (Button) findViewById(R.id.find_meaning_check_btn);
 		nextBtn.setEnabled(false);
 
 		showPage();
@@ -65,6 +68,7 @@ public class FindMeaningActivity extends Activity {
 
 	public void showPage() {
 
+		count.setText(correctedCount() + " / " + solvedCount() + " / " + exercises.size());
 		word.setText(exercises.get(page).Question.Word);
 
 		for (int i = 0; i < 5; i++) {
@@ -74,10 +78,24 @@ public class FindMeaningActivity extends Activity {
 
 		radioGroup.clearCheck();
 
-		if (exercises.get(page).Solve)
+		if (exercises.get(page).Solve) {
 			nextBtn.setEnabled(true);
-		else
+			checkBtn.setEnabled(false);
+		} else {
 			nextBtn.setEnabled(false);
+			checkBtn.setEnabled(true);
+		}
+	}
+
+	public void showResult() {
+
+		setContentView(R.layout.result_layout);
+
+		TextView cntTv = (TextView) findViewById(R.id.result_count_text);
+		cntTv.setText(exercises.size() + " 문제 중 " + correctedCount() + " 개 맞았습니다.");
+
+		TextView scrTv = (TextView) findViewById(R.id.result_score_text);
+		scrTv.setText(correctedCount() * 100 / exercises.size() + " 점");
 	}
 
 	public Exercise makeExercise(WordSet wordSet) {
@@ -119,6 +137,24 @@ public class FindMeaningActivity extends Activity {
 				return true;
 		}
 		return false;
+	}
+
+	public int solvedCount() {
+		int c = 0;
+		for (int i = 0; i < exercises.size(); i++) {
+			if (exercises.get(i).Solve)
+				c++;
+		}
+		return c;
+	}
+
+	public int correctedCount() {
+		int c = 0;
+		for (int i = 0; i < exercises.size(); i++) {
+			if (exercises.get(i).Correct)
+				c++;
+		}
+		return c;
 	}
 
 	public void onClick(View v) {
@@ -172,10 +208,19 @@ public class FindMeaningActivity extends Activity {
 			break;
 		case R.id.find_meaning_next_btn:
 			page++;
-			if (page >= wordsSet.size())
+			if (page >= wordsSet.size()) {
 				page--;
-			showPage();
+				showResult();
+			} else
+				showPage();
 			break;
+		case R.id.result_home_btn:
+			Intent intent = new Intent();
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			intent.setClass(this, MainActivity.class);
+			startActivity(intent);
+			break;
+
 		}
 	}
 }

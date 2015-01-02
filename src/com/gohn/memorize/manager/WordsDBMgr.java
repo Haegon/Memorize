@@ -2,14 +2,14 @@ package com.gohn.memorize.manager;
 
 import java.util.ArrayList;
 
-import com.gohn.memorize.model.VocaGroup;
-import com.gohn.memorize.model.WordSet;
-import com.gohn.memorize.model.WordType;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import com.gohn.memorize.model.WordSet;
+import com.gohn.memorize.model.WordType;
 
 public class WordsDBMgr {
 
@@ -71,7 +71,7 @@ public class WordsDBMgr {
 
 		Cursor c;
 
-		if (type == WordType.NONE)
+		if (type.equals(WordType.NONE))
 			c = query(getColumns(), WordsDBMgr.GROUP + "=?", new String[] { group }, null, null, null);
 		else
 			c = query(getColumns(), WordsDBMgr.GROUP + "=? and " + WordsDBMgr.TYPE + "=? ", new String[] { group, type }, null, null, null);
@@ -96,9 +96,10 @@ public class WordsDBMgr {
 
 		Cursor c;
 
-		if (type == WordType.NONE)
-			c = query(new String[] { "count(*)" }, WordsDBMgr.GROUP + "=?", new String[] { group }, null, null, null);
-		else
+		if (type.equals(WordType.NONE)) {
+			Log.d("gohn", "@@@@@@ " + type + " --- " + WordType.NONE);
+			c = query(new String[] { "count(*)" }, WordsDBMgr.GROUP + "=? ", new String[] { group }, null, null, null);
+		} else
 			c = query(new String[] { "count(*)" }, WordsDBMgr.GROUP + "=? and " + WordsDBMgr.TYPE + "=? ", new String[] { group, type }, null, null, null);
 
 		int number = 0;
