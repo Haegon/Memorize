@@ -31,8 +31,6 @@ public class FindMeaningActivity extends Activity {
 
 	WordsDBMgr dbMgr;
 
-	boolean onNext = false;
-
 	int page = 0;
 
 	@Override
@@ -46,10 +44,7 @@ public class FindMeaningActivity extends Activity {
 		wordsSet = dbMgr.getWordsSet(b.getString(WordsDBMgr.GROUP), b.getString(WordsDBMgr.TYPE));
 
 		for (int i = 0; i < wordsSet.size(); i++) {
-			Exercise e = new Exercise();
-			e.Question = wordsSet.get(i);
-			e.AnswerItems = makeAnswerItems(wordsSet.get(i));
-			exercises.add(e);
+			exercises.add(makeExercise(wordsSet.get(i)));
 		}
 
 		radioGroup = (RadioGroup) findViewById(R.id.find_meaning_radio_group);
@@ -65,10 +60,10 @@ public class FindMeaningActivity extends Activity {
 
 		nextBtn.setEnabled(false);
 
-		showPage(true);
+		showPage();
 	}
 
-	public void showPage(boolean checkClear) {
+	public void showPage() {
 
 		word.setText(exercises.get(page).Question.Word);
 
@@ -78,28 +73,44 @@ public class FindMeaningActivity extends Activity {
 		}
 
 		radioGroup.clearCheck();
+
+		if (exercises.get(page).Solve)
+			nextBtn.setEnabled(true);
+		else
+			nextBtn.setEnabled(false);
 	}
 
-	public ArrayList<AnswerItem> makeAnswerItems(WordSet wordSet) {
+	public Exercise makeExercise(WordSet wordSet) {
+
+		Exercise e = new Exercise();
+
 		Cursor c = dbMgr.rawQuery("SELECT " + WordsDBMgr.MEANING + " from " + WordsDBMgr.TABLE_NAME + " where " + WordsDBMgr.TYPE + "=? order by random() limit 5", new String[] { wordSet.Type });
 
 		ArrayList<AnswerItem> answerItems = new ArrayList<AnswerItem>();
 
 		boolean have = false;
 		if (c != null) {
+			int a = 0;
 			while (c.moveToNext()) {
-
 				if (c.getString(0).equals(wordSet.Meaning)) {
 					have = true;
+					e.AnswerNo = a;
 				}
 				answerItems.add(new AnswerItem(c.getString(0)));
+				a++;
 			}
 		}
 
-		if (!have)
-			answerItems.get((int) (Math.random() * 5)).Answer = wordSet.Meaning;
+		if (!have) {
+			int r = (int) (Math.random() * 5);
+			answerItems.get(r).Answer = wordSet.Meaning;
+			e.AnswerNo = r;
+		}
 
-		return answerItems;
+		e.Question = wordSet;
+		e.AnswerItems = answerItems;
+
+		return e;
 	}
 
 	public boolean isUserCheck() {
@@ -119,8 +130,7 @@ public class FindMeaningActivity extends Activity {
 			page--;
 			if (page < 0)
 				page = 0;
-			showPage(true);
-			nextBtn.setEnabled(true);
+			showPage();
 			break;
 		case R.id.find_meaning_check_btn:
 
@@ -149,24 +159,22 @@ public class FindMeaningActivity extends Activity {
 				checkedIndex = -1;
 			}
 
-			Log.d("gohn", "@@@@@@@@@@@@ " + checkedIndex);
+			exercises.get(page).Solve = true;
 
 			if (wordsSet.get(page).Meaning.equals(radioBtns.get(checkedIndex).getText())) {
 				exercises.get(page).AnswerItems.get(checkedIndex).Tint = Color.BLUE;
+				exercises.get(page).Correct = true;
 			} else {
 				exercises.get(page).AnswerItems.get(checkedIndex).Tint = Color.RED;
+				exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Tint = Color.BLUE;
 			}
-			showPage(false);
-			onNext = true;
-			nextBtn.setEnabled(true);
+			showPage();
 			break;
 		case R.id.find_meaning_next_btn:
 			page++;
 			if (page >= wordsSet.size())
 				page--;
-			showPage(true);
-			onNext = false;
-			nextBtn.setEnabled(false);
+			showPage();
 			break;
 		}
 	}
