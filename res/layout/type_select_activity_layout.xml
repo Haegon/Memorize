@@ -9,7 +9,6 @@
         android:layout_height="100dp"
         android:onClick="onClick"
         android:layout_marginTop="5dp"
-        android:text="모두"
         android:textAlignment="center"
         android:textSize="50dp" />
 
@@ -18,7 +17,6 @@
         android:layout_width="360dp"
         android:layout_height="100dp"
         android:onClick="onClick"
-        android:text="명사"
         android:textAlignment="center"
         android:textSize="50dp" />
 
@@ -27,7 +25,6 @@
         android:layout_width="360dp"
         android:layout_height="100dp"
         android:onClick="onClick"
-        android:text="동사"
         android:textAlignment="center"
         android:textSize="50dp" />
 
@@ -36,7 +33,6 @@
         android:layout_width="360dp"
         android:layout_height="100dp"
         android:onClick="onClick"
-        android:text="형용사"
         android:textAlignment="center"
         android:textSize="50dp" />
 
@@ -45,7 +41,6 @@
         android:layout_width="360dp"
         android:layout_height="100dp"
         android:onClick="onClick"
-        android:text="부사"
         android:textAlignment="center"
         android:textSize="50dp" />
 
@@ -54,7 +49,6 @@
         android:layout_width="360dp"
         android:layout_height="100dp"
         android:onClick="onClick"
-        android:text="기타"
         android:textAlignment="center"
         android:textSize="50dp" />
 

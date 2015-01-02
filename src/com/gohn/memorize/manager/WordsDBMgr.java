@@ -92,6 +92,25 @@ public class WordsDBMgr {
 		return null;
 	}
 
+	public int getWordsCount(String group, String type) {
+
+		Cursor c;
+
+		if (type == WordType.NONE)
+			c = query(new String[] { "count(*)" }, WordsDBMgr.GROUP + "=?", new String[] { group }, null, null, null);
+		else
+			c = query(new String[] { "count(*)" }, WordsDBMgr.GROUP + "=? and " + WordsDBMgr.TYPE + "=? ", new String[] { group, type }, null, null, null);
+
+		int number = 0;
+
+		if (c != null) {
+			while (c.moveToNext()) {
+				number = c.getInt(0);
+			}
+		}
+		return number;
+	}
+
 	public String[] getColumns() {
 		return new String[] { WordsDBMgr.GROUP, WordsDBMgr.TYPE, WordsDBMgr.WORD, WordsDBMgr.MEANING };
 	}
