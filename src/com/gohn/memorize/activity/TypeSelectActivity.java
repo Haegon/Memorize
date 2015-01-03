@@ -1,6 +1,8 @@
 package com.gohn.memorize.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -42,28 +44,54 @@ public class TypeSelectActivity extends Activity {
 		btn_e.setText("기타 (" + dbMgr.getWordsCount(groupName, WordType.ETC) + ")");
 	}
 
+	public void alertZero() {
+		AlertDialog.Builder alert = new AlertDialog.Builder(TypeSelectActivity.this);
+		alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		alert.setMessage("해당 유형으로 등록된 단어가 없어서 테스트를 진행 할 수 없습니다.");
+		alert.show();
+	}
+
 	public void onClick(View v) {
 
 		Intent intent = new Intent();
 		intent.putExtra(WordsDBMgr.GROUP, groupName);
 
+		boolean zero = false;
+
 		switch (v.getId()) {
 		case R.id.type_select_all_btn:
+			if (dbMgr.getWordsCount(groupName, WordType.NONE) == 0)
+				zero = true;
 			intent.putExtra(WordsDBMgr.TYPE, WordType.NONE);
 			break;
 		case R.id.type_select_noun_btn:
+			if (dbMgr.getWordsCount(groupName, WordType.NOUN) == 0)
+				zero = true;
 			intent.putExtra(WordsDBMgr.TYPE, WordType.NOUN);
 			break;
 		case R.id.type_select_verb_btn:
+			if (dbMgr.getWordsCount(groupName, WordType.VERB) == 0)
+				zero = true;
 			intent.putExtra(WordsDBMgr.TYPE, WordType.VERB);
 			break;
 		case R.id.type_select_adjective_btn:
+			if (dbMgr.getWordsCount(groupName, WordType.ADJECTIVE) == 0)
+				zero = true;
 			intent.putExtra(WordsDBMgr.TYPE, WordType.ADJECTIVE);
 			break;
 		case R.id.type_select_adverb_btn:
+			if (dbMgr.getWordsCount(groupName, WordType.ADVERB) == 0)
+				zero = true;
 			intent.putExtra(WordsDBMgr.TYPE, WordType.ADVERB);
 			break;
 		case R.id.type_select_etc_btn:
+			if (dbMgr.getWordsCount(groupName, WordType.ETC) == 0)
+				zero = true;
 			intent.putExtra(WordsDBMgr.TYPE, WordType.ETC);
 			break;
 		}
@@ -80,6 +108,9 @@ public class TypeSelectActivity extends Activity {
 			break;
 		}
 
-		startActivityForResult(intent, 3);
+		if (zero)
+			alertZero();
+		else
+			startActivityForResult(intent, 3);
 	}
 }
