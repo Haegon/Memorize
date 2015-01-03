@@ -9,5 +9,13 @@ public class Exercise {
 
 	public boolean Solve = false;
 	public boolean Correct = false;
-	
+
+	public void Clear() {
+		for (int i = 0; i < AnswerItems.size(); i++) {
+			AnswerItems.get(i).ColorClear();
+		}
+		Solve = false;
+		Correct = false;
+	}
+
 }

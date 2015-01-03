@@ -10,4 +10,8 @@ public class AnswerItem {
 	public AnswerItem(String answer) {
 		Answer = answer;
 	}
+
+	public void ColorClear() {
+		Tint = Color.BLACK;
+	}
 }

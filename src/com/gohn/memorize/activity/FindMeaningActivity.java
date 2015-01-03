@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -24,10 +25,11 @@ public class FindMeaningActivity extends Activity {
 	ArrayList<Exercise> exercises = new ArrayList<Exercise>();
 
 	ArrayList<WordSet> wordsSet;
+
 	TextView word;
 	TextView count;
 	RadioGroup radioGroup;
-	ArrayList<RadioButton> radioBtns = new ArrayList<RadioButton>();
+	ArrayList<RadioButton> radioBtns;
 	Button nextBtn;
 	Button checkBtn;
 
@@ -48,9 +50,14 @@ public class FindMeaningActivity extends Activity {
 		for (int i = 0; i < wordsSet.size(); i++) {
 			exercises.add(makeExercise(wordsSet.get(i)));
 		}
+		viewInit();
+		showPage();
+	}
+
+	public void viewInit() {
 
 		radioGroup = (RadioGroup) findViewById(R.id.find_meaning_radio_group);
-
+		radioBtns = new ArrayList<RadioButton>();
 		radioBtns.add((RadioButton) findViewById(R.id.find_meaning_radio1));
 		radioBtns.add((RadioButton) findViewById(R.id.find_meaning_radio2));
 		radioBtns.add((RadioButton) findViewById(R.id.find_meaning_radio3));
@@ -62,8 +69,6 @@ public class FindMeaningActivity extends Activity {
 		nextBtn = (Button) findViewById(R.id.find_meaning_next_btn);
 		checkBtn = (Button) findViewById(R.id.find_meaning_check_btn);
 		nextBtn.setEnabled(false);
-
-		showPage();
 	}
 
 	public void showPage() {
@@ -72,6 +77,7 @@ public class FindMeaningActivity extends Activity {
 		word.setText(exercises.get(page).Question.Word);
 
 		for (int i = 0; i < 5; i++) {
+			Log.d("gohn", "@@@@@ " + exercises.get(page).AnswerItems.get(i).Answer);
 			radioBtns.get(i).setText(exercises.get(page).AnswerItems.get(i).Answer);
 			radioBtns.get(i).setTextColor(exercises.get(page).AnswerItems.get(i).Tint);
 		}
@@ -96,6 +102,11 @@ public class FindMeaningActivity extends Activity {
 
 		TextView scrTv = (TextView) findViewById(R.id.result_score_text);
 		scrTv.setText(correctedCount() * 100 / exercises.size() + " 점");
+
+		if (isFinish()) {
+			Button againBtn = (Button) findViewById(R.id.result_again_btn);
+			againBtn.setText("단어장 공부를 완료 하였습니다");
+		}
 	}
 
 	public Exercise makeExercise(WordSet wordSet) {
@@ -131,6 +142,20 @@ public class FindMeaningActivity extends Activity {
 		return e;
 	}
 
+	public ArrayList<Exercise> assembleWrongExercises() {
+
+		ArrayList<Exercise> ea = new ArrayList<Exercise>();
+
+		for (int i = 0; i < exercises.size(); i++) {
+			if (!exercises.get(i).Correct) {
+				Exercise e = exercises.get(i);
+				e.Clear();
+				ea.add(e);
+			}
+		}
+		return ea;
+	}
+
 	public boolean isUserCheck() {
 		for (int i = 0; i < 5; i++) {
 			if (radioBtns.get(i).isChecked())
@@ -157,9 +182,22 @@ public class FindMeaningActivity extends Activity {
 		return c;
 	}
 
-	public void onClick(View v) {
+	public boolean isFinish() {
+		for (int i = 0; i < exercises.size(); i++) {
+			if (!exercises.get(i).Correct)
+				return false;
+		}
+		return true;
+	}
 
-		int tmpPage = page;
+	public void goHome() {
+		Intent intent = new Intent();
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.setClass(this, MainActivity.class);
+		startActivity(intent);
+	}
+
+	public void onClick(View v) {
 
 		switch (v.getId()) {
 		case R.id.find_meaning_prev_btn:
@@ -197,7 +235,7 @@ public class FindMeaningActivity extends Activity {
 
 			exercises.get(page).Solve = true;
 
-			if (wordsSet.get(page).Meaning.equals(radioBtns.get(checkedIndex).getText())) {
+			if (exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Answer.equals(radioBtns.get(checkedIndex).getText())) {
 				exercises.get(page).AnswerItems.get(checkedIndex).Tint = Color.BLUE;
 				exercises.get(page).Correct = true;
 			} else {
@@ -208,19 +246,26 @@ public class FindMeaningActivity extends Activity {
 			break;
 		case R.id.find_meaning_next_btn:
 			page++;
-			if (page >= wordsSet.size()) {
+			if (page >= exercises.size()) {
 				page--;
 				showResult();
 			} else
 				showPage();
 			break;
-		case R.id.result_home_btn:
-			Intent intent = new Intent();
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.setClass(this, MainActivity.class);
-			startActivity(intent);
+		case R.id.result_again_btn:
+			if (isFinish()) {
+				goHome();
+				return;
+			}
+			exercises = assembleWrongExercises();
+			page = 0;
+			setContentView(R.layout.find_meaning_activity_layout);
+			viewInit();
+			showPage();
 			break;
-
+		case R.id.result_home_btn:
+			goHome();
+			break;
 		}
 	}
 }
