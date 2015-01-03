@@ -3,16 +3,24 @@ package com.gohn.memorize.activity;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -62,11 +70,67 @@ public class MainActivity extends Activity {
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-				// TODO Auto-generated method stub
-				// mAdapter.delete((int) id);
+
+				final int p = position;
+
+				CharSequence s[] = new CharSequence[] { "삭제", "이름 바꾸기", "취소" };
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setTitle("단어장 설정");
+				builder.setItems(s, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						switch (which) {
+						// 삭제버튼을 눌렀을때
+						case 0:
+							WordsDBMgr db = WordsDBMgr.getInstance(context);
+							db.delete(WordsDBMgr.GROUP + "=?", new String[] { mAdapter.mData.get(p).Name });
+							reloadView();
+							break;
+						// 이름변경 버튼을 눌렀을때
+						case 1:
+							LayoutInflater li = LayoutInflater.from(context);
+							View promptsView = li.inflate(R.layout.activity_group_edittext, null);
+							final EditText result = null;
+
+							AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+							// set prompts.xml to alertdialog builder
+							alertDialogBuilder.setView(promptsView);
+
+							final EditText userInput = (EditText) promptsView.findViewById(R.id.set_group_edittext);
+
+							// set dialog message
+							alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int id) {
+									WordsDBMgr db = WordsDBMgr.getInstance(context);
+									ContentValues cv = new ContentValues();
+									cv.put(WordsDBMgr.GROUP, userInput.getText().toString());
+									db.update(cv, WordsDBMgr.GROUP + "=?", new String[] { mAdapter.mData.get(p).Name });
+									reloadView();
+								}
+							}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int id) {
+									dialog.cancel();
+								}
+							});
+
+							// create alert dialog
+							AlertDialog alertDialog = alertDialogBuilder.create();
+
+							// show it
+							alertDialog.show();
+							break;
+						case 2:
+							dialog.cancel();
+							break;
+						}
+					}
+				});
+				builder.show();
+				mAdapter.notifyDataSetChanged();
 				return true;
 			}
-
 		});
 
 		mListView.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -89,6 +153,10 @@ public class MainActivity extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		reloadView();
+	}
+
+	public void reloadView() {
 		mAdapter.mData = getVocaGroups();
 		mAdapter.notifyDataSetChanged();
 	}

@@ -10,6 +10,7 @@
         android:layout_gravity="left|center_vertical"
         android:layout_weight="1"
         android:paddingLeft="10dp"
+        android:textColor="#000"
         android:textSize="30dp" />
 
     <TextView
@@ -18,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right|center_vertical"
         android:layout_weight="2"
+        android:gravity="right"
         android:paddingRight="10dp"
-        android:textSize="30dp" />
+        android:textSize="20dp" />
 
 </LinearLayout>

@@ -52,7 +52,7 @@ public class TypeSelectActivity extends Activity {
 				dialog.dismiss();
 			}
 		});
-		alert.setMessage("해당 유형으로 등록된 단어가 없어서 테스트를 진행 할 수 없습니다.");
+		alert.setMessage("해당 유형으로 등록된 단어가 없어 테스트를 진행 할 수 없습니다.\n모든 단어 테스트를 이용하시거나 새로운 단어장을 추가해주세요.");
 		alert.show();
 	}
 
