@@ -29,7 +29,12 @@ public class CategoryActivity extends Activity {
 
 		switch (v.getId()) {
 		case R.id.category_find_meaning_btn:
-			intent.putExtra("TypeExercise", ExerciseType.GUESS_MEANING);
+			intent.putExtra(ExerciseType.toStr(), ExerciseType.GUESS_MEANING);
+			intent.setClass(this, TypeSelectActivity.class);
+			startActivityForResult(intent, 2);
+			break;
+		case R.id.category_find_word_btn:
+			intent.putExtra(ExerciseType.toStr(), ExerciseType.GUESS_WORD);
 			intent.setClass(this, TypeSelectActivity.class);
 			startActivityForResult(intent, 2);
 			break;

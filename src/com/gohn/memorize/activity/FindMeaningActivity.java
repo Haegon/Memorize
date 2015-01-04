@@ -17,6 +17,7 @@ import com.gohn.memorize.R;
 import com.gohn.memorize.manager.WordsDBMgr;
 import com.gohn.memorize.model.AnswerItem;
 import com.gohn.memorize.model.Exercise;
+import com.gohn.memorize.model.ExerciseType;
 import com.gohn.memorize.model.WordSet;
 
 public class FindMeaningActivity extends Activity {
@@ -34,6 +35,7 @@ public class FindMeaningActivity extends Activity {
 
 	WordsDBMgr dbMgr;
 
+	int exerciseType;
 	int page = 0;
 
 	@Override
@@ -44,10 +46,22 @@ public class FindMeaningActivity extends Activity {
 
 		dbMgr = WordsDBMgr.getInstance(this);
 		Bundle b = getIntent().getExtras();
+		exerciseType = b.getInt(ExerciseType.toStr());
 		wordsSet = dbMgr.getWordsSet(b.getString(WordsDBMgr.GROUP), b.getString(WordsDBMgr.TYPE));
 
 		for (int i = 0; i < wordsSet.size(); i++) {
-			exercises.add(makeExercise(wordsSet.get(i)));
+			switch (exerciseType) {
+			case ExerciseType.GUESS_MEANING:
+				exercises.add(makeGuessMeaningExercise(wordsSet.get(i)));
+				break;
+			case ExerciseType.GUESS_WORD:
+				exercises.add(makeGuessWordExercise(wordsSet.get(i)));
+				break;
+			default:
+				finish();
+				break;
+			}
+
 		}
 		viewInit();
 		showPage();
@@ -73,7 +87,14 @@ public class FindMeaningActivity extends Activity {
 	public void showPage() {
 
 		count.setText(correctedCount() + " / " + solvedCount() + " / " + exercises.size());
-		word.setText(exercises.get(page).Question.Word);
+		switch (exerciseType) {
+		case ExerciseType.GUESS_MEANING:
+			word.setText(exercises.get(page).Question.Word);
+			break;
+		case ExerciseType.GUESS_WORD:
+			word.setText(exercises.get(page).Question.Meaning);
+			break;
+		}
 
 		for (int i = 0; i < 5; i++) {
 			radioBtns.get(i).setText(exercises.get(page).AnswerItems.get(i).Answer);
@@ -107,7 +128,7 @@ public class FindMeaningActivity extends Activity {
 		}
 	}
 
-	public Exercise makeExercise(WordSet wordSet) {
+	public Exercise makeGuessMeaningExercise(WordSet wordSet) {
 
 		Exercise e = new Exercise();
 
@@ -131,6 +152,39 @@ public class FindMeaningActivity extends Activity {
 		if (!have) {
 			int r = (int) (Math.random() * 5);
 			answerItems.get(r).Answer = wordSet.Meaning;
+			e.AnswerNo = r;
+		}
+
+		e.Question = wordSet;
+		e.AnswerItems = answerItems;
+
+		return e;
+	}
+
+	public Exercise makeGuessWordExercise(WordSet wordSet) {
+
+		Exercise e = new Exercise();
+
+		Cursor c = dbMgr.rawQuery("SELECT " + WordsDBMgr.WORD + " from " + WordsDBMgr.TABLE_NAME + " where " + WordsDBMgr.TYPE + "=? order by random() limit 5", new String[] { wordSet.Type });
+
+		ArrayList<AnswerItem> answerItems = new ArrayList<AnswerItem>();
+
+		boolean have = false;
+		if (c != null) {
+			int a = 0;
+			while (c.moveToNext()) {
+				if (c.getString(0).equals(wordSet.Word)) {
+					have = true;
+					e.AnswerNo = a;
+				}
+				answerItems.add(new AnswerItem(c.getString(0)));
+				a++;
+			}
+		}
+
+		if (!have) {
+			int r = (int) (Math.random() * 5);
+			answerItems.get(r).Answer = wordSet.Word;
 			e.AnswerNo = r;
 		}
 

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -28,7 +29,7 @@ public class TypeSelectActivity extends Activity {
 
 		dbMgr = WordsDBMgr.getInstance(this);
 		groupName = getIntent().getExtras().getString(WordsDBMgr.GROUP);
-		exerciseType = getIntent().getExtras().getInt("ExerciseType");
+		exerciseType = getIntent().getExtras().getInt(ExerciseType.toStr());
 
 		Button btn_all = (Button) findViewById(R.id.type_select_all_btn);
 		btn_all.setText("¸ðµÎ (" + dbMgr.getWordsCount(groupName, WordType.NONE) + ")");
@@ -98,10 +99,9 @@ public class TypeSelectActivity extends Activity {
 
 		switch (exerciseType) {
 		case ExerciseType.GUESS_MEANING:
-			intent.setClass(this, FindMeaningActivity.class);
-			break;
 		case ExerciseType.GUESS_WORD:
-			intent.setClass(this, FindWordActivity.class);
+			intent.putExtra(ExerciseType.toStr(), exerciseType);
+			intent.setClass(this, FindMeaningActivity.class);
 			break;
 		case ExerciseType.WRITE_WORD:
 			intent.setClass(this, WriteWordActivity.class);
