@@ -4,7 +4,7 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/find_meaning_word_count"
+        android:id="@+id/choice_problem_word_count"
         android:layout_width="360dp"
         android:layout_height="50dp"
         android:layout_gravity="center|center_vertical"
@@ -14,7 +14,7 @@
         android:textSize="20dp" />
 
     <TextView
-        android:id="@+id/find_meaning_word_text"
+        android:id="@+id/choice_problem_word_text"
         android:layout_width="360dp"
         android:layout_height="150dp"
         android:layout_gravity="center|center_vertical"
@@ -24,13 +24,13 @@
         android:textSize="50dp" />
 
     <RadioGroup
-        android:id="@+id/find_meaning_radio_group"
+        android:id="@+id/choice_problem_radio_group"
         android:layout_width="360dp"
         android:layout_height="300dp"
         android:paddingLeft="20dp" >
 
         <RadioButton
-            android:id="@+id/find_meaning_radio1"
+            android:id="@+id/choice_problem_radio1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#485"
@@ -38,28 +38,28 @@
             android:textSize="30dp" />
 
         <RadioButton
-            android:id="@+id/find_meaning_radio2"
+            android:id="@+id/choice_problem_radio2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="30dp" />
 
         <RadioButton
-            android:id="@+id/find_meaning_radio3"
+            android:id="@+id/choice_problem_radio3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="30dp" />
 
         <RadioButton
-            android:id="@+id/find_meaning_radio4"
+            android:id="@+id/choice_problem_radio4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="30dp" />
 
         <RadioButton
-            android:id="@+id/find_meaning_radio5"
+            android:id="@+id/choice_problem_radio5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -72,7 +72,7 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/find_meaning_prev_btn"
+            android:id="@+id/choice_problem_prev_btn"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_gravity="bottom"
@@ -82,7 +82,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/find_meaning_check_btn"
+            android:id="@+id/choice_problem_check_btn"
             android:layout_width="160dp"
             android:layout_height="50dp"
             android:layout_gravity="bottom"
@@ -92,7 +92,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/find_meaning_next_btn"
+            android:id="@+id/choice_problem_next_btn"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_gravity="bottom"

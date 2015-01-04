@@ -20,7 +20,7 @@ import com.gohn.memorize.model.Exercise;
 import com.gohn.memorize.model.ExerciseType;
 import com.gohn.memorize.model.WordSet;
 
-public class FindMeaningActivity extends Activity {
+public class ChoiceProblemActivity extends Activity {
 
 	ArrayList<Exercise> exercises = new ArrayList<Exercise>();
 
@@ -42,7 +42,7 @@ public class FindMeaningActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.find_meaning_activity_layout);
+		setContentView(R.layout.choice_problem_activity_layout);
 
 		dbMgr = WordsDBMgr.getInstance(this);
 		Bundle b = getIntent().getExtras();
@@ -69,18 +69,18 @@ public class FindMeaningActivity extends Activity {
 
 	public void viewInit() {
 
-		radioGroup = (RadioGroup) findViewById(R.id.find_meaning_radio_group);
+		radioGroup = (RadioGroup) findViewById(R.id.choice_problem_radio_group);
 		radioBtns = new ArrayList<RadioButton>();
-		radioBtns.add((RadioButton) findViewById(R.id.find_meaning_radio1));
-		radioBtns.add((RadioButton) findViewById(R.id.find_meaning_radio2));
-		radioBtns.add((RadioButton) findViewById(R.id.find_meaning_radio3));
-		radioBtns.add((RadioButton) findViewById(R.id.find_meaning_radio4));
-		radioBtns.add((RadioButton) findViewById(R.id.find_meaning_radio5));
+		radioBtns.add((RadioButton) findViewById(R.id.choice_problem_radio1));
+		radioBtns.add((RadioButton) findViewById(R.id.choice_problem_radio2));
+		radioBtns.add((RadioButton) findViewById(R.id.choice_problem_radio3));
+		radioBtns.add((RadioButton) findViewById(R.id.choice_problem_radio4));
+		radioBtns.add((RadioButton) findViewById(R.id.choice_problem_radio5));
 
-		count = (TextView) findViewById(R.id.find_meaning_word_count);
-		word = (TextView) findViewById(R.id.find_meaning_word_text);
-		nextBtn = (Button) findViewById(R.id.find_meaning_next_btn);
-		checkBtn = (Button) findViewById(R.id.find_meaning_check_btn);
+		count = (TextView) findViewById(R.id.choice_problem_word_count);
+		word = (TextView) findViewById(R.id.choice_problem_word_text);
+		nextBtn = (Button) findViewById(R.id.choice_problem_next_btn);
+		checkBtn = (Button) findViewById(R.id.choice_problem_check_btn);
 		nextBtn.setEnabled(false);
 	}
 
@@ -252,13 +252,13 @@ public class FindMeaningActivity extends Activity {
 	public void onClick(View v) {
 
 		switch (v.getId()) {
-		case R.id.find_meaning_prev_btn:
+		case R.id.choice_problem_prev_btn:
 			page--;
 			if (page < 0)
 				page = 0;
 			showPage();
 			break;
-		case R.id.find_meaning_check_btn:
+		case R.id.choice_problem_check_btn:
 
 			if (!isUserCheck())
 				return;
@@ -266,19 +266,19 @@ public class FindMeaningActivity extends Activity {
 			int checkedIndex = -100;
 
 			switch (radioGroup.getCheckedRadioButtonId()) {
-			case R.id.find_meaning_radio1:
+			case R.id.choice_problem_radio1:
 				checkedIndex = 0;
 				break;
-			case R.id.find_meaning_radio2:
+			case R.id.choice_problem_radio2:
 				checkedIndex = 1;
 				break;
-			case R.id.find_meaning_radio3:
+			case R.id.choice_problem_radio3:
 				checkedIndex = 2;
 				break;
-			case R.id.find_meaning_radio4:
+			case R.id.choice_problem_radio4:
 				checkedIndex = 3;
 				break;
-			case R.id.find_meaning_radio5:
+			case R.id.choice_problem_radio5:
 				checkedIndex = 4;
 				break;
 			default:
@@ -296,7 +296,7 @@ public class FindMeaningActivity extends Activity {
 			}
 			showPage();
 			break;
-		case R.id.find_meaning_next_btn:
+		case R.id.choice_problem_next_btn:
 			page++;
 			if (page >= exercises.size()) {
 				page--;
@@ -311,7 +311,7 @@ public class FindMeaningActivity extends Activity {
 			}
 			exercises = assembleWrongExercises();
 			page = 0;
-			setContentView(R.layout.find_meaning_activity_layout);
+			setContentView(R.layout.choice_problem_activity_layout);
 			viewInit();
 			showPage();
 			break;

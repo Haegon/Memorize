@@ -36,7 +36,7 @@
             android:name="com.gohn.memorize.activity.TypeSelectActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.gohn.memorize.activity.FindMeaningActivity"
+            android:name="com.gohn.memorize.activity.ChoiceProblemActivity"
             android:screenOrientation="portrait" />
     </application>
 

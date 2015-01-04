@@ -3,7 +3,7 @@ package com.gohn.memorize.activity;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class WriteWordActivity extends Activity {
+public class WriteProblemActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
