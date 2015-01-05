@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="기본 설정" >
+
+        <CheckBoxPreference
+            android:id="@+id/pref_random"
+            android:defaultValue="false"
+            android:key="useUserName"
+            android:summaryOff="문제가 엑셀파일 순서대로 출제됩니다."
+            android:summaryOn="문제가 엑셀파일 순서대로 출제되지 않습니다."
+            android:title="문제를 랜덤하게 나오게 하기" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -196,6 +196,7 @@ public class MainActivity extends Activity {
 			startActivityForResult(new Intent(this, HelpActivity.class), 0);
 			break;
 		case R.id.option_btn:
+			startActivityForResult(new Intent(this, SettingsActivity.class), 0);
 			break;
 		}
 	}
