@@ -38,6 +38,9 @@
         <activity
             android:name="com.gohn.memorize.activity.ChoiceProblemActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.gohn.memorize.activity.HelpActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

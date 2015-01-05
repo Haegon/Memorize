@@ -192,6 +192,11 @@ public class MainActivity extends Activity {
 		case R.id.add_btn:
 			startActivityForResult(new Intent(this, FindFileActivity.class), 0);
 			break;
+		case R.id.help_btn:
+			startActivityForResult(new Intent(this, HelpActivity.class), 0);
+			break;
+		case R.id.option_btn:
+			break;
 		}
 	}
 }
