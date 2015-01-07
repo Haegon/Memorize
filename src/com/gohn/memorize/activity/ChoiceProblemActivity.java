@@ -87,9 +87,7 @@ public class ChoiceProblemActivity extends Activity {
 
 		count = (TextView) findViewById(R.id.choice_problem_word_count);
 		word = (TextView) findViewById(R.id.choice_problem_word_text);
-		nextBtn = (Button) findViewById(R.id.choice_problem_next_btn);
 		checkBtn = (Button) findViewById(R.id.choice_problem_check_btn);
-		nextBtn.setEnabled(false);
 	}
 
 	public void showPage() {
@@ -112,11 +110,9 @@ public class ChoiceProblemActivity extends Activity {
 		radioGroup.clearCheck();
 
 		if (exercises.get(page).Solve) {
-			nextBtn.setEnabled(true);
-			checkBtn.setEnabled(false);
+			checkBtn.setText("다음 문제");
 		} else {
-			nextBtn.setEnabled(false);
-			checkBtn.setEnabled(true);
+			checkBtn.setText("정답 확인");
 		}
 	}
 
@@ -276,60 +272,50 @@ public class ChoiceProblemActivity extends Activity {
 			break;
 		case R.id.choice_problem_check_btn:
 
-			if (!isUserCheck())
-				return;
+			if (checkBtn.getText().equals("정답 확인")) {
+				if (!isUserCheck())
+					return;
 
-			int checkedIndex = -100;
+				int checkedIndex = -100;
 
-			switch (radioGroup.getCheckedRadioButtonId()) {
-			case R.id.choice_problem_radio1:
-				checkedIndex = 0;
-				break;
-			case R.id.choice_problem_radio2:
-				checkedIndex = 1;
-				break;
-			case R.id.choice_problem_radio3:
-				checkedIndex = 2;
-				break;
-			case R.id.choice_problem_radio4:
-				checkedIndex = 3;
-				break;
-			case R.id.choice_problem_radio5:
-				checkedIndex = 4;
-				break;
-			default:
-				checkedIndex = -1;
-			}
+				switch (radioGroup.getCheckedRadioButtonId()) {
+				case R.id.choice_problem_radio1:
+					checkedIndex = 0;
+					break;
+				case R.id.choice_problem_radio2:
+					checkedIndex = 1;
+					break;
+				case R.id.choice_problem_radio3:
+					checkedIndex = 2;
+					break;
+				case R.id.choice_problem_radio4:
+					checkedIndex = 3;
+					break;
+				case R.id.choice_problem_radio5:
+					checkedIndex = 4;
+					break;
+				default:
+					checkedIndex = -1;
+				}
 
-			exercises.get(page).Solve = true;
+				exercises.get(page).Solve = true;
 
-			if (exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Answer.equals(radioBtns.get(checkedIndex).getText())) {
-				exercises.get(page).AnswerItems.get(checkedIndex).Tint = Color.BLUE;
-				exercises.get(page).Correct = true;
-			} else {
-				exercises.get(page).AnswerItems.get(checkedIndex).Tint = Color.RED;
-				exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Tint = Color.BLUE;
-			}
-			showPage();
-			break;
-		case R.id.choice_problem_next_btn:
-			page++;
-			if (page >= exercises.size()) {
-				page--;
-				showResult();
-			} else
+				if (exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Answer.equals(radioBtns.get(checkedIndex).getText())) {
+					exercises.get(page).AnswerItems.get(checkedIndex).Tint = Color.BLUE;
+					exercises.get(page).Correct = true;
+				} else {
+					exercises.get(page).AnswerItems.get(checkedIndex).Tint = Color.RED;
+					exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Tint = Color.BLUE;
+				}
 				showPage();
-			break;
-		case R.id.result_again_btn:
-			if (isFinish()) {
-				goHome();
-				return;
+			} else if (checkBtn.getText().equals("다음 문제")) {
+				page++;
+				if (page >= exercises.size()) {
+					page--;
+					showResult();
+				} else
+					showPage();
 			}
-			exercises = assembleWrongExercises();
-			page = 0;
-			setContentView(R.layout.choice_problem_activity_layout);
-			viewInit();
-			showPage();
 			break;
 		case R.id.result_home_btn:
 			goHome();
