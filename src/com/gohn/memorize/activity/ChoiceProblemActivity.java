@@ -136,7 +136,8 @@ public class ChoiceProblemActivity extends Activity {
 
 		Exercise e = new Exercise();
 
-		Cursor c = dbMgr.rawQuery("SELECT " + WordsDBMgr.MEANING + " from " + WordsDBMgr.TABLE_NAME + " where " + WordsDBMgr.TYPE + "=? order by random() limit 5", new String[] { wordSet.Type });
+		Cursor c = dbMgr.rawQuery("SELECT " + WordsDBMgr.MEANING + " from " + WordsDBMgr.TABLE_NAME + " where " + WordsDBMgr.TYPE + "=? group by " + WordsDBMgr.MEANING + " order by random() limit 5",
+				new String[] { wordSet.Type });
 
 		ArrayList<AnswerItem> answerItems = new ArrayList<AnswerItem>();
 
@@ -169,7 +170,8 @@ public class ChoiceProblemActivity extends Activity {
 
 		Exercise e = new Exercise();
 
-		Cursor c = dbMgr.rawQuery("SELECT " + WordsDBMgr.WORD + " from " + WordsDBMgr.TABLE_NAME + " where " + WordsDBMgr.TYPE + "=? order by random() limit 5", new String[] { wordSet.Type });
+		Cursor c = dbMgr.rawQuery("SELECT " + WordsDBMgr.WORD + " from " + WordsDBMgr.TABLE_NAME + " where " + WordsDBMgr.TYPE + "=? group by " + WordsDBMgr.WORD + " order by random() limit 5",
+				new String[] { wordSet.Type });
 
 		ArrayList<AnswerItem> answerItems = new ArrayList<AnswerItem>();
 

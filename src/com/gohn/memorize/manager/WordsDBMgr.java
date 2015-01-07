@@ -42,6 +42,8 @@ public class WordsDBMgr {
 				+ " meaning TEXT" + ");");
 		mDatabase.execSQL("CREATE INDEX IF NOT EXISTS group_idx ON " + TABLE_NAME + " (" + GROUP + ");");
 		mDatabase.execSQL("CREATE INDEX IF NOT EXISTS type_idx ON " + TABLE_NAME + " (" + TYPE + ");");
+		mDatabase.execSQL("CREATE INDEX IF NOT EXISTS word_idx ON " + TABLE_NAME + " (" + WORD + ");");
+		mDatabase.execSQL("CREATE INDEX IF NOT EXISTS meaning_idx ON " + TABLE_NAME + " (" + MEANING + ");");
 	}
 
 	public long insert(ContentValues addRowValue) {
