@@ -44,6 +44,6 @@
         <activity
             android:name="com.gohn.memorize.activity.SettingsActivity"
             android:screenOrientation="portrait" />
-        </application>
+    </application>
 
 </manifest>
