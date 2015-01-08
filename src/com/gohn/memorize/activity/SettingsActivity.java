@@ -25,7 +25,6 @@ public class SettingsActivity extends PreferenceActivity {
 
 	private void setOnPreferenceChange(Preference mPreference) {
 		mPreference.setOnPreferenceChangeListener(onPreferenceChangeListener);
-
 		onPreferenceChangeListener.onPreferenceChange(mPreference, PreferenceManager.getDefaultSharedPreferences(mPreference.getContext()).getString(mPreference.getKey(), ""));
 	}
 
@@ -35,22 +34,14 @@ public class SettingsActivity extends PreferenceActivity {
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
 
 			if (preference instanceof CheckBoxPreference) {
-
-				if (preference.getKey().equals("randomProblem")) {
+				if (preference.getKey().equals("randomProblem"))
 					Global.getInstance(getApplicationContext()).RandomProblem = Boolean.valueOf(newValue.toString());
-				} else if (preference.getKey().equals("useUpdateNotify")) {
-
-				}
 			} else if (preference instanceof SwitchPreference) {
-
 				if (preference.getKey() == "autoUpdate ") {
 
 				}
 			}
-
 			return true;
 		}
-
 	};
-
 }

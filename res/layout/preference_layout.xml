@@ -21,14 +21,6 @@
             android:switchTextOff="OFF"
             android:switchTextOn="ON"
             android:title="자동 업데이트" />
-
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:dependency="autoUpdate"
-            android:key="useUpdateNotify"
-            android:summary="업데이트후 알림을 띄웁니다"
-            android:title="알림 사용" />
-
     </PreferenceCategory>
 
     <PreferenceCategory android:title="어플 정보" >
