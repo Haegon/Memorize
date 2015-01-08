@@ -319,6 +319,17 @@ public class ChoiceProblemActivity extends Activity {
 					showPage();
 			}
 			break;
+		case R.id.result_again_btn:
+			if (isFinish()) {
+				goHome();
+				return;
+			}
+			exercises = assembleWrongExercises();
+			page = 0;
+			setContentView(R.layout.choice_problem_activity_layout);
+			viewInit();
+			showPage();
+			break;
 		case R.id.result_home_btn:
 			goHome();
 			break;
