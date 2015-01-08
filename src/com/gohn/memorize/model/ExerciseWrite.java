@@ -1,9 +1,9 @@
 package com.gohn.memorize.model;
 
-import java.util.ArrayList;
 
 public class ExerciseWrite {
 	public WordSet Question;
+	public AnswerItem AnswerItems = new AnswerItem();
 
 	public boolean Solve = false;
 	public boolean Correct = false;

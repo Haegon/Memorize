@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.gohn.memorize.R;
 import com.gohn.memorize.manager.Global;
 import com.gohn.memorize.manager.WordsDBMgr;
+import com.gohn.memorize.model.AnswerItem;
 import com.gohn.memorize.model.ExerciseType;
 import com.gohn.memorize.model.ExerciseWrite;
 import com.gohn.memorize.model.WordSet;
@@ -87,6 +88,10 @@ public class WriteProblemActivity extends Activity {
 		} else {
 			checkBtn.setText("정답 확인");
 		}
+
+		editText.setText(exercises.get(page).AnswerItems.Answer);
+		editText.setTextColor(exercises.get(page).AnswerItems.Tint);
+		rightAnswer.setText(exercises.get(page).AnswerItems.RightAnswer);
 	}
 
 	public void showResult() {
@@ -177,16 +182,20 @@ public class WriteProblemActivity extends Activity {
 			showPage();
 			break;
 		case R.id.write_problem_check_btn:
+			if (editText.getText().toString().isEmpty())
+				return;
 
 			if (checkBtn.getText().equals("정답 확인")) {
 				exercises.get(page).Solve = true;
 
+				exercises.get(page).AnswerItems.Answer = editText.getText().toString();
+				exercises.get(page).AnswerItems.RightAnswer = exercises.get(page).Question.Word;
+
 				if (exercises.get(page).Question.Word.toLowerCase().equals(editText.getText().toString().toLowerCase())) {
-					editText.setTextColor(Color.BLUE);
+					exercises.get(page).AnswerItems.Tint = Color.BLUE;
 					exercises.get(page).Correct = true;
 				} else {
-					editText.setTextColor(Color.RED);
-					rightAnswer.setText(exercises.get(page).Question.Word);
+					exercises.get(page).AnswerItems.Tint = Color.RED;
 				}
 				showPage();
 			} else if (checkBtn.getText().equals("다음 문제")) {
