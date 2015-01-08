@@ -97,13 +97,13 @@ public class TypeSelectActivity extends Activity {
 			break;
 		}
 
-		switch (exerciseType) {
-		case ExerciseType.GUESS_MEANING:
-		case ExerciseType.GUESS_WORD:
+		switch (getIntent().getExtras().getInt(ExerciseType.toStr())) {
+		case R.id.category_find_meaning_btn:
+		case R.id.category_find_word_btn:
 			intent.putExtra(ExerciseType.toStr(), exerciseType);
 			intent.setClass(this, ChoiceProblemActivity.class);
 			break;
-		case ExerciseType.WRITE_WORD:
+		case R.id.category_write_word_btn:
 			intent.setClass(this, WriteProblemActivity.class);
 			break;
 		}

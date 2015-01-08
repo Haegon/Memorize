@@ -26,7 +26,7 @@ import com.gohn.memorize.model.WordSet;
 
 public class ChoiceProblemActivity extends Activity {
 
-	ArrayList<Exercise> exercises = new ArrayList<Exercise>();
+	ArrayList<Exercise> exercises;
 
 	ArrayList<WordSet> wordsSet;
 
@@ -53,26 +53,30 @@ public class ChoiceProblemActivity extends Activity {
 		exerciseType = b.getInt(ExerciseType.toStr());
 		wordsSet = dbMgr.getWordsSet(b.getString(WordsDBMgr.GROUP), b.getString(WordsDBMgr.TYPE));
 
+		exerciseInit();
+		viewInit();
+		showPage();
+	}
+
+	public void exerciseInit() {
+		exercises = new ArrayList<Exercise>();
+
 		for (int i = 0; i < wordsSet.size(); i++) {
 			switch (exerciseType) {
-			case ExerciseType.GUESS_MEANING:
+			case R.id.category_find_meaning_btn:
 				exercises.add(makeGuessMeaningExercise(wordsSet.get(i)));
 				break;
-			case ExerciseType.GUESS_WORD:
+			case R.id.category_find_word_btn:
 				exercises.add(makeGuessWordExercise(wordsSet.get(i)));
 				break;
 			default:
 				finish();
 				break;
 			}
-
 		}
 
 		if (Global.getInstance(getApplicationContext()).RandomProblem)
 			makeExercisesRandomly();
-
-		viewInit();
-		showPage();
 	}
 
 	public void viewInit() {
@@ -94,10 +98,10 @@ public class ChoiceProblemActivity extends Activity {
 
 		count.setText(correctedCount() + " / " + solvedCount() + " / " + exercises.size());
 		switch (exerciseType) {
-		case ExerciseType.GUESS_MEANING:
+		case R.id.category_find_meaning_btn:
 			word.setText(exercises.get(page).Question.Word);
 			break;
-		case ExerciseType.GUESS_WORD:
+		case R.id.category_find_word_btn:
 			word.setText(exercises.get(page).Question.Meaning);
 			break;
 		}
@@ -128,7 +132,7 @@ public class ChoiceProblemActivity extends Activity {
 
 		if (isFinish()) {
 			Button againBtn = (Button) findViewById(R.id.result_again_btn);
-			againBtn.setText("단어장 공부를 완료 하였습니다");
+			againBtn.setVisibility(View.GONE);
 		}
 	}
 
@@ -318,6 +322,13 @@ public class ChoiceProblemActivity extends Activity {
 				} else
 					showPage();
 			}
+			break;
+		case R.id.result_restart_btn:
+			page = 0;
+			setContentView(R.layout.choice_problem_activity_layout);
+			exerciseInit();
+			viewInit();
+			showPage();
 			break;
 		case R.id.result_again_btn:
 			if (isFinish()) {
