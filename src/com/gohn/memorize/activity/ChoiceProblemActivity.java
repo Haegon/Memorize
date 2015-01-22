@@ -96,7 +96,7 @@ public class ChoiceProblemActivity extends Activity {
 
 	public void showPage() {
 
-		count.setText(correctedCount() + " / " + solvedCount() + " / " + exercises.size());
+		count.setText(page + " / " + exercises.size());
 		switch (exerciseType) {
 		case R.id.category_find_meaning_btn:
 			word.setText(exercises.get(page).Question.Word);

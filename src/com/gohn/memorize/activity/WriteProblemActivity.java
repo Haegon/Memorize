@@ -81,7 +81,7 @@ public class WriteProblemActivity extends Activity {
 
 	public void showPage() {
 
-		count.setText(correctedCount() + " / " + solvedCount() + " / " + exercises.size());
+		count.setText(page + " / " + exercises.size());
 		word.setText(exercises.get(page).Question.Meaning);
 		if (exercises.get(page).Solve) {
 			checkBtn.setText("다음 문제");

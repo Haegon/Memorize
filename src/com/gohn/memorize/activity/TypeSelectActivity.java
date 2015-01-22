@@ -98,6 +98,9 @@ public class TypeSelectActivity extends Activity {
 		}
 
 		switch (getIntent().getExtras().getInt(ExerciseType.toStr())) {
+		case R.id.category_study_btn:
+			intent.setClass(this, StudyActivity.class);
+			break;
 		case R.id.category_find_meaning_btn:
 		case R.id.category_find_word_btn:
 			intent.putExtra(ExerciseType.toStr(), exerciseType);
