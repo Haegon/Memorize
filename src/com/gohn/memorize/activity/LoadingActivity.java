@@ -31,7 +31,7 @@ public class LoadingActivity extends Activity {
 		Thread t = new Thread() {
 			public void run() {
 				try {
-					sleep(2000);
+					sleep(1500);
 					startActivity(new Intent(getApplicationContext(), MainActivity.class));
 					finish();
 				} catch (InterruptedException e) {

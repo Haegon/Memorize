@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.style.BackgroundColorSpan;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.gohn.memorize.R;
@@ -31,16 +30,15 @@ public class ChoiceProblemActivity extends BaseActivity {
 
 	TextView word;
 	TextView count;
-	RadioGroup radioGroup;
-	ArrayList<RadioButton> radioBtns;
 	Button nextBtn;
 	Button checkBtn;
+	ArrayList<Button> answerBtns;
 
 	WordsDBMgr dbMgr;
 
 	int exerciseType;
 	int page = 0;
-
+	int answer = -1;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -80,13 +78,12 @@ public class ChoiceProblemActivity extends BaseActivity {
 
 	public void viewInit() {
 
-		radioGroup = (RadioGroup) findViewById(R.id.choice_problem_radio_group);
-		radioBtns = new ArrayList<RadioButton>();
-		radioBtns.add((RadioButton) findViewById(R.id.choice_problem_radio1));
-		radioBtns.add((RadioButton) findViewById(R.id.choice_problem_radio2));
-		radioBtns.add((RadioButton) findViewById(R.id.choice_problem_radio3));
-		radioBtns.add((RadioButton) findViewById(R.id.choice_problem_radio4));
-		radioBtns.add((RadioButton) findViewById(R.id.choice_problem_radio5));
+		answerBtns = new ArrayList<Button>();
+		answerBtns.add((Button) findViewById(R.id.choice_problem_a1_btn));
+		answerBtns.add((Button) findViewById(R.id.choice_problem_a2_btn));
+		answerBtns.add((Button) findViewById(R.id.choice_problem_a3_btn));
+		answerBtns.add((Button) findViewById(R.id.choice_problem_a4_btn));
+		answerBtns.add((Button) findViewById(R.id.choice_problem_a5_btn));
 
 		count = (TextView) findViewById(R.id.choice_problem_word_count);
 		word = (TextView) findViewById(R.id.choice_problem_word_text);
@@ -95,7 +92,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 
 	public void showPage() {
 
-		count.setText(page + " / " + exercises.size());
+		count.setText((page+1) + " / " + exercises.size());
 		switch (exerciseType) {
 		case R.id.category_find_meaning_btn:
 			word.setText(exercises.get(page).Question.Word);
@@ -106,16 +103,8 @@ public class ChoiceProblemActivity extends BaseActivity {
 		}
 
 		for (int i = 0; i < 5; i++) {
-			radioBtns.get(i).setText(exercises.get(page).AnswerItems.get(i).Answer);
-			radioBtns.get(i).setTextColor(exercises.get(page).AnswerItems.get(i).Tint);
-		}
-
-		radioGroup.clearCheck();
-
-		if (exercises.get(page).Solve) {
-			checkBtn.setText("다음 문제");
-		} else {
-			checkBtn.setText("정답 확인");
+			answerBtns.get(i).setText(exercises.get(page).AnswerItems.get(i).Answer);
+			answerBtns.get(i).setTextColor(Color.GRAY);
 		}
 	}
 
@@ -225,14 +214,6 @@ public class ChoiceProblemActivity extends BaseActivity {
 		Collections.shuffle(exercises, new Random(seed));
 	}
 
-	public boolean isUserCheck() {
-		for (int i = 0; i < 5; i++) {
-			if (radioBtns.get(i).isChecked())
-				return true;
-		}
-		return false;
-	}
-
 	public int solvedCount() {
 		int c = 0;
 		for (int i = 0; i < exercises.size(); i++) {
@@ -266,6 +247,35 @@ public class ChoiceProblemActivity extends BaseActivity {
 		startActivity(intent);
 	}
 
+	public void onAnswerClick(View v) {
+
+		for (int i = 0; i < 5; i++) {
+			if (answerBtns.get(i).getId() == v.getId()) {
+				answerBtns.get(i).setTextColor(Color.BLACK);
+			} else {
+				answerBtns.get(i).setTextColor(Color.GRAY);
+			}
+		}
+		
+		switch (v.getId()) {
+		case R.id.choice_problem_a1_btn:
+			answer = 0;
+			break;
+		case R.id.choice_problem_a2_btn:
+			answer = 1;
+			break;
+		case R.id.choice_problem_a3_btn:
+			answer = 2;
+			break;
+		case R.id.choice_problem_a4_btn:
+			answer = 3;
+			break;
+		case R.id.choice_problem_a5_btn:
+			answer = 4;
+			break;
+		}
+	}
+
 	public void onClick(View v) {
 
 		switch (v.getId()) {
@@ -278,48 +288,34 @@ public class ChoiceProblemActivity extends BaseActivity {
 		case R.id.choice_problem_check_btn:
 
 			if (checkBtn.getText().equals("정답 확인")) {
-				if (!isUserCheck())
+				if (answer < 0)
 					return;
-
-				int checkedIndex = -100;
-
-				switch (radioGroup.getCheckedRadioButtonId()) {
-				case R.id.choice_problem_radio1:
-					checkedIndex = 0;
-					break;
-				case R.id.choice_problem_radio2:
-					checkedIndex = 1;
-					break;
-				case R.id.choice_problem_radio3:
-					checkedIndex = 2;
-					break;
-				case R.id.choice_problem_radio4:
-					checkedIndex = 3;
-					break;
-				case R.id.choice_problem_radio5:
-					checkedIndex = 4;
-					break;
-				default:
-					checkedIndex = -1;
-				}
 
 				exercises.get(page).Solve = true;
 
-				if (exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Answer.equals(radioBtns.get(checkedIndex).getText())) {
-					exercises.get(page).AnswerItems.get(checkedIndex).Tint = Color.BLUE;
-					exercises.get(page).Correct = true;
+				if (exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Answer.equals(answerBtns.get(answer).getText())) {
+					Spannable spanText = Spannable.Factory.getInstance().newSpannable(answerBtns.get(answer).getText());
+					spanText.setSpan(new BackgroundColorSpan(0xFF00A881), 0, spanText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+					answerBtns.get(answer).setText(spanText);
+					answerBtns.get(answer).setTextColor(Color.BLACK);
+                    exercises.get(page).Correct = true;
 				} else {
-					exercises.get(page).AnswerItems.get(checkedIndex).Tint = Color.RED;
-					exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Tint = Color.BLUE;
+					Spannable spanText = Spannable.Factory.getInstance().newSpannable(answerBtns.get(exercises.get(page).AnswerNo).getText());
+					spanText.setSpan(new BackgroundColorSpan(0xFF00A881), 0, spanText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+					answerBtns.get(exercises.get(page).AnswerNo).setText(spanText);
+					answerBtns.get(exercises.get(page).AnswerNo).setTextColor(Color.BLACK);
 				}
-				showPage();
+				checkBtn.setText("다음 문제");
 			} else if (checkBtn.getText().equals("다음 문제")) {
 				page++;
 				if (page >= exercises.size()) {
 					page--;
 					showResult();
-				} else
+				} else {
 					showPage();
+					checkBtn.setText("정답 확인");
+					answer = -1;
+				}
 			}
 			break;
 		case R.id.result_restart_btn:

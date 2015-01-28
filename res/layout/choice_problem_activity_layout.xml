@@ -6,65 +6,74 @@
     <TextView
         android:id="@+id/choice_problem_word_count"
         android:layout_width="360dp"
-        android:layout_height="50dp"
+        android:layout_height="80dp"
         android:layout_gravity="center|center_vertical"
         android:gravity="center"
         android:padding="10dp"
-        android:textColor="#000"
+        android:textColor="#777"
         android:textSize="20dp" />
 
     <TextView
         android:id="@+id/choice_problem_word_text"
         android:layout_width="360dp"
-        android:layout_height="150dp"
+        android:layout_height="130dp"
         android:layout_gravity="center|center_vertical"
         android:gravity="center"
         android:padding="10dp"
         android:textColor="#000"
         android:textSize="50dp" />
 
-    <RadioGroup
-        android:id="@+id/choice_problem_radio_group"
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:src="@raw/gray_line" />
+
+    <Button
+        android:id="@+id/choice_problem_a1_btn"
         android:layout_width="360dp"
-        android:layout_height="300dp"
-        android:paddingLeft="20dp" >
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:onClick="onAnswerClick"
+        android:textAlignment="center"
+        android:textSize="28dp" />
 
-        <RadioButton
-            android:id="@+id/choice_problem_radio1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#485"
-            android:padding="10dp"
-            android:textSize="30dp" />
+    <Button
+        android:id="@+id/choice_problem_a2_btn"
+        android:layout_width="360dp"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:onClick="onAnswerClick"
+        android:textAlignment="center"
+        android:textSize="28dp" />
 
-        <RadioButton
-            android:id="@+id/choice_problem_radio2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textSize="30dp" />
+    <Button
+        android:id="@+id/choice_problem_a3_btn"
+        android:layout_width="360dp"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:onClick="onAnswerClick"
+        android:textAlignment="center"
+        android:textSize="28dp" />
 
-        <RadioButton
-            android:id="@+id/choice_problem_radio3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textSize="30dp" />
+    <Button
+        android:id="@+id/choice_problem_a4_btn"
+        android:layout_width="360dp"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:onClick="onAnswerClick"
+        android:textAlignment="center"
+        android:textSize="28dp" />
 
-        <RadioButton
-            android:id="@+id/choice_problem_radio4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textSize="30dp" />
-
-        <RadioButton
-            android:id="@+id/choice_problem_radio5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textSize="30dp" />
-    </RadioGroup>
+    <Button
+        android:id="@+id/choice_problem_a5_btn"
+        android:layout_width="360dp"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:onClick="onAnswerClick"
+        android:textAlignment="center"
+        android:textSize="28dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -90,7 +99,6 @@
             android:text="정답 확인"
             android:textAlignment="center"
             android:textSize="20dp" />
-
     </LinearLayout>
 
 </LinearLayout>
