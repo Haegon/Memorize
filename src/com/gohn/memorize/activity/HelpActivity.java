@@ -1,10 +1,9 @@
 package com.gohn.memorize.activity;
 
-import com.gohn.memorize.R;
-import com.gohn.memorize.manager.WordsDBMgr;
-
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.gohn.memorize.R;
 
 public class HelpActivity extends Activity {
 

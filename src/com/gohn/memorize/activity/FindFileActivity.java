@@ -29,8 +29,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.gohn.memorize.R;
-import com.gohn.memorize.R.id;
-import com.gohn.memorize.R.layout;
 import com.gohn.memorize.adpator.FindFileAdapter;
 import com.gohn.memorize.manager.WordsDBMgr;
 import com.gohn.memorize.model.WordSet;
@@ -128,7 +126,6 @@ public class FindFileActivity extends Activity {
 
 						LayoutInflater li = LayoutInflater.from(context);
 						View promptsView = li.inflate(R.layout.activity_group_edittext, null);
-						final EditText result = null;
 
 						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 

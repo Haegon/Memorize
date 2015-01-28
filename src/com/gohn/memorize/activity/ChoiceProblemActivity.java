@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Random;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -24,7 +23,7 @@ import com.gohn.memorize.model.Exercise;
 import com.gohn.memorize.model.ExerciseType;
 import com.gohn.memorize.model.WordSet;
 
-public class ChoiceProblemActivity extends Activity {
+public class ChoiceProblemActivity extends BaseActivity {
 
 	ArrayList<Exercise> exercises;
 

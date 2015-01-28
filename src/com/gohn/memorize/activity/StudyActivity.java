@@ -5,22 +5,14 @@ import java.util.Collections;
 import java.util.Random;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.manager.Global;
 import com.gohn.memorize.manager.WordsDBMgr;
-import com.gohn.memorize.model.AnswerItem;
-import com.gohn.memorize.model.Exercise;
 import com.gohn.memorize.model.ExerciseType;
 import com.gohn.memorize.model.WordSet;
 

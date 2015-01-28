@@ -11,9 +11,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -91,7 +88,6 @@ public class MainActivity extends Activity {
 						case 1:
 							LayoutInflater li = LayoutInflater.from(context);
 							View promptsView = li.inflate(R.layout.activity_group_edittext, null);
-							final EditText result = null;
 
 							AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
