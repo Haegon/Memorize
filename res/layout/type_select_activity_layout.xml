@@ -7,49 +7,43 @@
         android:id="@+id/type_select_all_btn"
         android:layout_width="360dp"
         android:layout_height="100dp"
-        android:onClick="onClick"
         android:layout_marginTop="5dp"
-        android:textAlignment="center"
-        android:textSize="50dp" />
+        android:background="@raw/t_v_d"
+        android:onClick="onClick" />
 
     <Button
         android:id="@+id/type_select_noun_btn"
         android:layout_width="360dp"
         android:layout_height="100dp"
-        android:onClick="onClick"
-        android:textAlignment="center"
-        android:textSize="50dp" />
+        android:background="@raw/t_v_d"
+        android:onClick="onClick" />
 
     <Button
         android:id="@+id/type_select_verb_btn"
         android:layout_width="360dp"
         android:layout_height="100dp"
-        android:onClick="onClick"
-        android:textAlignment="center"
-        android:textSize="50dp" />
+        android:background="@raw/t_v_d"
+        android:onClick="onClick" />
 
     <Button
         android:id="@+id/type_select_adjective_btn"
         android:layout_width="360dp"
         android:layout_height="100dp"
-        android:onClick="onClick"
-        android:textAlignment="center"
-        android:textSize="50dp" />
+        android:background="@raw/t_v_d"
+        android:onClick="onClick" />
 
     <Button
         android:id="@+id/type_select_adverb_btn"
         android:layout_width="360dp"
         android:layout_height="100dp"
-        android:onClick="onClick"
-        android:textAlignment="center"
-        android:textSize="50dp" />
+        android:background="@raw/t_v_d"
+        android:onClick="onClick" />
 
     <Button
         android:id="@+id/type_select_etc_btn"
         android:layout_width="360dp"
         android:layout_height="100dp"
-        android:onClick="onClick"
-        android:textAlignment="center"
-        android:textSize="50dp" />
+        android:background="@raw/t_v_d"
+        android:onClick="onClick" />
 
 </LinearLayout>

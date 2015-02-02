@@ -25,9 +25,6 @@ public class LoadingActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.loading_layout);
 
-		ImageView imgView = (ImageView) findViewById(R.id.loading_image);
-		imgView.setScaleType(ScaleType.FIT_XY);
-
 		Thread t = new Thread() {
 			public void run() {
 				try {

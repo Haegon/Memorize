@@ -8,10 +8,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Spannable;
 import android.text.style.BackgroundColorSpan;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gohn.memorize.R;
@@ -33,12 +35,16 @@ public class ChoiceProblemActivity extends BaseActivity {
 	Button nextBtn;
 	Button checkBtn;
 	ArrayList<Button> answerBtns;
+	ImageView countDown;
+	ArrayList<Integer> countdownImage = new ArrayList<Integer>();;
 
 	WordsDBMgr dbMgr;
+	Handler handler = new Handler();
 
 	int exerciseType;
 	int page = 0;
 	int answer = -1;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -88,11 +94,25 @@ public class ChoiceProblemActivity extends BaseActivity {
 		count = (TextView) findViewById(R.id.choice_problem_word_count);
 		word = (TextView) findViewById(R.id.choice_problem_word_text);
 		checkBtn = (Button) findViewById(R.id.choice_problem_check_btn);
+
+		countDown = (ImageView) findViewById(R.id.choice_problem_count_down);
+
+		countdownImage.add(R.raw.n10);
+		countdownImage.add(R.raw.n09);
+		countdownImage.add(R.raw.n08);
+		countdownImage.add(R.raw.n07);
+		countdownImage.add(R.raw.n06);
+		countdownImage.add(R.raw.n05);
+		countdownImage.add(R.raw.n04);
+		countdownImage.add(R.raw.n03);
+		countdownImage.add(R.raw.n02);
+		countdownImage.add(R.raw.n01);
+		countdownImage.add(R.raw.n00);
 	}
 
 	public void showPage() {
 
-		count.setText((page+1) + " / " + exercises.size());
+		count.setText((page + 1) + " / " + exercises.size());
 		switch (exerciseType) {
 		case R.id.category_find_meaning_btn:
 			word.setText(exercises.get(page).Question.Word);
@@ -106,6 +126,38 @@ public class ChoiceProblemActivity extends BaseActivity {
 			answerBtns.get(i).setText(exercises.get(page).AnswerItems.get(i).Answer);
 			answerBtns.get(i).setTextColor(Color.GRAY);
 		}
+
+		Thread t = new Thread("Count Down Thread") {
+			int idx = 0;
+
+			public void run() {
+				for (int i = 0; i < 10; i++) {
+					handler.post(new Runnable() {
+						@Override
+						public void run() {
+							countDown.setImageResource(countdownImage.get(idx));
+
+						}
+					});
+					try {
+						sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					idx++;
+				}
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						countDown.setImageResource(countdownImage.get(idx));
+						checkAnswer();
+					}
+				});
+
+			}
+		};
+		t.start();
 	}
 
 	public void showResult() {
@@ -247,6 +299,34 @@ public class ChoiceProblemActivity extends BaseActivity {
 		startActivity(intent);
 	}
 
+	public void checkAnswer() {
+
+		if (checkBtn.getText().equals("정답 확인")) {
+			if (answer < 0)
+				return;
+
+			exercises.get(page).Solve = true;
+
+			if (exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Answer.equals(answerBtns.get(answer).getText())) {
+				answerBtns.get(answer).setTextColor(0xFF02b58b);
+				exercises.get(page).Correct = true;
+			} else {
+				answerBtns.get(exercises.get(page).AnswerNo).setTextColor(0xFF02b58b);
+			}
+			checkBtn.setText("다음 문제");
+		} else if (checkBtn.getText().equals("다음 문제")) {
+			page++;
+			if (page >= exercises.size()) {
+				page--;
+				showResult();
+			} else {
+				showPage();
+				checkBtn.setText("정답 확인");
+				answer = -1;
+			}
+		}
+	}
+
 	public void onAnswerClick(View v) {
 
 		for (int i = 0; i < 5; i++) {
@@ -256,7 +336,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 				answerBtns.get(i).setTextColor(Color.GRAY);
 			}
 		}
-		
+
 		switch (v.getId()) {
 		case R.id.choice_problem_a1_btn:
 			answer = 0;
@@ -286,37 +366,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 			showPage();
 			break;
 		case R.id.choice_problem_check_btn:
-
-			if (checkBtn.getText().equals("정답 확인")) {
-				if (answer < 0)
-					return;
-
-				exercises.get(page).Solve = true;
-
-				if (exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Answer.equals(answerBtns.get(answer).getText())) {
-					Spannable spanText = Spannable.Factory.getInstance().newSpannable(answerBtns.get(answer).getText());
-					spanText.setSpan(new BackgroundColorSpan(0xFF00A881), 0, spanText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-					answerBtns.get(answer).setText(spanText);
-					answerBtns.get(answer).setTextColor(Color.BLACK);
-                    exercises.get(page).Correct = true;
-				} else {
-					Spannable spanText = Spannable.Factory.getInstance().newSpannable(answerBtns.get(exercises.get(page).AnswerNo).getText());
-					spanText.setSpan(new BackgroundColorSpan(0xFF00A881), 0, spanText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-					answerBtns.get(exercises.get(page).AnswerNo).setText(spanText);
-					answerBtns.get(exercises.get(page).AnswerNo).setTextColor(Color.BLACK);
-				}
-				checkBtn.setText("다음 문제");
-			} else if (checkBtn.getText().equals("다음 문제")) {
-				page++;
-				if (page >= exercises.size()) {
-					page--;
-					showResult();
-				} else {
-					showPage();
-					checkBtn.setText("정답 확인");
-					answer = -1;
-				}
-			}
+			checkAnswer();
 			break;
 		case R.id.result_restart_btn:
 			page = 0;

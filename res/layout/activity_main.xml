@@ -5,37 +5,42 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:layout_height="63dp"
+        android:orientation="horizontal"
+        android:paddingTop="10dp" >
 
         <Button
             android:id="@+id/add_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="148dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="onClick"
-            android:text="단어장 추가" />
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/add_btn"
+            android:onClick="onClick" />
 
         <Button
             android:id="@+id/help_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="102dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="onClick"
-            android:text="도움말" />
+            android:background="@drawable/help_btn"
+            android:onClick="onClick" />
 
         <Button
             android:id="@+id/option_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="onClick"
-            android:text="설정" />
+            android:background="@drawable/option_btn"
+            android:onClick="onClick" />
     </LinearLayout>
 
     <ListView
         android:id="@+id/group_list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="522dp" />
+
+    <ImageView
+        android:layout_width="360dp"
+        android:layout_height="30dp"
+        android:layout_gravity="bottom"
+        android:src="@raw/page_down" />
 
 </LinearLayout>
