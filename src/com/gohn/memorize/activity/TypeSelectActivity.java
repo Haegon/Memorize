@@ -30,18 +30,18 @@ public class TypeSelectActivity extends Activity {
 		groupName = getIntent().getExtras().getString(WordsDBMgr.GROUP);
 		exerciseType = getIntent().getExtras().getInt(ExerciseType.toStr());
 
-//		Button btn_all = (Button) findViewById(R.id.type_select_all_btn);
-//		btn_all.setText("모두 (" + dbMgr.getWordsCount(groupName, WordType.NONE) + ")");
-//		Button btn_n = (Button) findViewById(R.id.type_select_noun_btn);
-//		btn_n.setText("명사 (" + dbMgr.getWordsCount(groupName, WordType.NOUN) + ")");
-//		Button btn_v = (Button) findViewById(R.id.type_select_verb_btn);
-//		btn_v.setText("동사 (" + dbMgr.getWordsCount(groupName, WordType.VERB) + ")");
-//		Button btn_a = (Button) findViewById(R.id.type_select_adjective_btn);
-//		btn_a.setText("형용사 (" + dbMgr.getWordsCount(groupName, WordType.ADJECTIVE) + ")");
-//		Button btn_ad = (Button) findViewById(R.id.type_select_adverb_btn);
-//		btn_ad.setText("부사 (" + dbMgr.getWordsCount(groupName, WordType.ADVERB) + ")");
-//		Button btn_e = (Button) findViewById(R.id.type_select_etc_btn);
-//		btn_e.setText("기타 (" + dbMgr.getWordsCount(groupName, WordType.ETC) + ")");
+		Button btn_all = (Button) findViewById(R.id.type_select_all_btn);
+		btn_all.setText("모두 (" + dbMgr.getWordsCount(groupName, WordType.NONE) + ")");
+		Button btn_n = (Button) findViewById(R.id.type_select_noun_btn);
+		btn_n.setText("명사 (" + dbMgr.getWordsCount(groupName, WordType.NOUN) + ")");
+		Button btn_v = (Button) findViewById(R.id.type_select_verb_btn);
+		btn_v.setText("동사 (" + dbMgr.getWordsCount(groupName, WordType.VERB) + ")");
+		Button btn_a = (Button) findViewById(R.id.type_select_adjective_btn);
+		btn_a.setText("형용사 (" + dbMgr.getWordsCount(groupName, WordType.ADJECTIVE) + ")");
+		Button btn_ad = (Button) findViewById(R.id.type_select_adverb_btn);
+		btn_ad.setText("부사 (" + dbMgr.getWordsCount(groupName, WordType.ADVERB) + ")");
+		Button btn_e = (Button) findViewById(R.id.type_select_etc_btn);
+		btn_e.setText("기타 (" + dbMgr.getWordsCount(groupName, WordType.ETC) + ")");
 	}
 
 	public void alertZero() {

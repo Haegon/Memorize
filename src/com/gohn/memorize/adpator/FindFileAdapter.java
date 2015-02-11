@@ -106,8 +106,8 @@ public class FindFileAdapter extends BaseAdapter {
 				viewHolder.mNameTv.setTextColor(Color.BLACK);
 				viewHolder.mIcon.setImageResource(R.raw.excel);
 			} else {
-//				viewHolder.mNameTv.setTextColor(Color.GRAY);
-//				viewHolder.mIcon.setImageResource(R.raw.go);
+				viewHolder.mNameTv.setTextColor(Color.GRAY);
+				viewHolder.mIcon.setImageResource(R.raw.go);
 			}
 		}
 

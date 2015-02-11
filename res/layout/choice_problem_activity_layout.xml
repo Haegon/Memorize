@@ -25,10 +25,9 @@
 
     <ImageView
         android:layout_width="fill_parent"
-        android:layout_height="4dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:scaleType="fitXY"
         android:src="@raw/gray_line" />
 
     <Button
@@ -86,7 +85,6 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_gravity="bottom"
-            android:background="@drawable/prev_btn"
             android:onClick="onClick"
             android:text="이전"
             android:textAlignment="center"
@@ -97,18 +95,10 @@
             android:layout_width="160dp"
             android:layout_height="50dp"
             android:layout_gravity="bottom"
-            android:background="@drawable/check_btn"
             android:onClick="onClick"
             android:text="정답 확인"
             android:textAlignment="center"
             android:textSize="20dp" />
-
-        <ImageView
-            android:id="@+id/choice_problem_count_down"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom"
-            android:src="@raw/n10" />
     </LinearLayout>
 
 </LinearLayout>
