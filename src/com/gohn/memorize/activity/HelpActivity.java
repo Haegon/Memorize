@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.gohn.memorize.R;
 
-public class HelpActivity extends Activity {
+public class HelpActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

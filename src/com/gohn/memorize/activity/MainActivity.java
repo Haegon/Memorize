@@ -26,7 +26,7 @@ import com.gohn.memorize.adpator.GroupAdapter;
 import com.gohn.memorize.manager.WordsDBMgr;
 import com.gohn.memorize.model.VocaGroup;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
 
 	Context context = this;
 

@@ -34,7 +34,7 @@ import com.gohn.memorize.manager.WordsDBMgr;
 import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.model.WordType;
 
-public class FindFileActivity extends Activity {
+public class FindFileActivity extends BaseActivity {
 	Context context = this;
 
 	View mHeaderView = null;

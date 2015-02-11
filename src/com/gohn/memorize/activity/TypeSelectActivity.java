@@ -13,7 +13,7 @@ import com.gohn.memorize.manager.WordsDBMgr;
 import com.gohn.memorize.model.ExerciseType;
 import com.gohn.memorize.model.WordType;
 
-public class TypeSelectActivity extends Activity {
+public class TypeSelectActivity extends BaseActivity {
 
 	String groupName = "";
 	int exerciseType;

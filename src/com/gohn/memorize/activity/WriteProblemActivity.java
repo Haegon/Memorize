@@ -20,7 +20,7 @@ import com.gohn.memorize.model.ExerciseType;
 import com.gohn.memorize.model.ExerciseWrite;
 import com.gohn.memorize.model.WordSet;
 
-public class WriteProblemActivity extends Activity {
+public class WriteProblemActivity extends BaseActivity {
 
 	ArrayList<ExerciseWrite> exercises;
 	ArrayList<WordSet> wordsSet;

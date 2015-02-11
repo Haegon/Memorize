@@ -5,7 +5,7 @@ import android.graphics.Color;
 public class AnswerItem {
 	public String Answer = "";
 	public String RightAnswer = "";
-	public int Tint = Color.BLACK;
+	public int Tint = Color.GRAY;
 	public boolean Bold = false;
 
 	public AnswerItem(String answer) {

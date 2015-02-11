@@ -15,7 +15,7 @@ import com.gohn.memorize.R;
 import com.gohn.memorize.manager.WordsDBMgr;
 
 @SuppressLint("NewApi")
-public class LoadingActivity extends Activity {
+public class LoadingActivity extends BaseActivity {
 
 	public WordsDBMgr dbMgr = null;
 

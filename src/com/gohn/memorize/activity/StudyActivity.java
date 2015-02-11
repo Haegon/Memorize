@@ -16,7 +16,7 @@ import com.gohn.memorize.manager.WordsDBMgr;
 import com.gohn.memorize.model.ExerciseType;
 import com.gohn.memorize.model.WordSet;
 
-public class StudyActivity extends Activity {
+public class StudyActivity extends BaseActivity {
 
 	ArrayList<WordSet> wordsSet;
 	

@@ -2,41 +2,75 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:paddingTop="100dp" >
+
+        <Button
+            android:id="@+id/category_study_btn"
+            android:layout_width="260dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/category_btn"
+            android:onClick="onClick"
+            android:text="학습 하기"
+            android:textAlignment="center"
+            android:textSize="25dp" />
+
+        <Button
+            android:id="@+id/category_find_meaning_btn"
+            android:layout_width="260dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/category_btn"
+            android:onClick="onClick"
+            android:text="단어 보고 뜻 찾기"
+            android:textAlignment="center"
+            android:textSize="25dp" />
+
+        <Button
+            android:id="@+id/category_find_word_btn"
+            android:layout_width="260dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/category_btn"
+            android:onClick="onClick"
+            android:text="뜻 보고 단어 찾기"
+            android:textAlignment="center"
+            android:textSize="25dp" />
+
+        <Button
+            android:id="@+id/category_write_word_btn"
+            android:layout_width="260dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/category_btn"
+            android:onClick="onClick"
+            android:text="뜻 보고 단어 쓰기"
+            android:textAlignment="center"
+            android:textSize="25dp" />
+    </LinearLayout>
     
-    <Button
-        android:id="@+id/category_study_btn"
-        android:layout_width="360dp"
-        android:layout_height="100dp"
-        android:onClick="onClick"
-        android:text="학습 하기"
-        android:textAlignment="center"
-        android:textSize="50dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="105dp" >
+
+        <ImageView
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:src="@raw/bottom" />
+    </LinearLayout>
     
-    <Button
-        android:id="@+id/category_find_meaning_btn"
-        android:layout_width="360dp"
-        android:layout_height="100dp"
-        android:onClick="onClick"
-        android:text="단어 보고 뜻 찾기"
-        android:textAlignment="center"
-        android:textSize="50dp" />
-
-    <Button
-        android:id="@+id/category_find_word_btn"
-        android:layout_width="360dp"
-        android:layout_height="100dp"
-        android:onClick="onClick"
-        android:text="뜻 보고 단어 찾기"
-        android:textAlignment="center"
-        android:textSize="50dp" />
-
-    <Button
-        android:id="@+id/category_write_word_btn"
-        android:layout_width="360dp"
-        android:layout_height="100dp"
-        android:onClick="onClick"
-        android:text="뜻 보고 단어 쓰기"
-        android:textAlignment="center"
-        android:textSize="50dp" />
-
 </LinearLayout>

@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.style.BackgroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -39,6 +37,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 	int exerciseType;
 	int page = 0;
 	int answer = -1;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -92,7 +91,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 
 	public void showPage() {
 
-		count.setText((page+1) + " / " + exercises.size());
+		count.setText((page + 1) + " / " + exercises.size());
 		switch (exerciseType) {
 		case R.id.category_find_meaning_btn:
 			word.setText(exercises.get(page).Question.Word);
@@ -104,8 +103,13 @@ public class ChoiceProblemActivity extends BaseActivity {
 
 		for (int i = 0; i < 5; i++) {
 			answerBtns.get(i).setText(exercises.get(page).AnswerItems.get(i).Answer);
-			answerBtns.get(i).setTextColor(Color.GRAY);
+			answerBtns.get(i).setTextColor(exercises.get(page).AnswerItems.get(i).Tint);
 		}
+
+		if (exercises.get(page).Solve)
+			checkBtn.setText("다음 문제");
+		else
+			checkBtn.setText("정답 확인");
 	}
 
 	public void showResult() {
@@ -249,6 +253,9 @@ public class ChoiceProblemActivity extends BaseActivity {
 
 	public void onAnswerClick(View v) {
 
+		if (exercises.get(page).Solve)
+			return;
+
 		for (int i = 0; i < 5; i++) {
 			if (answerBtns.get(i).getId() == v.getId()) {
 				answerBtns.get(i).setTextColor(Color.BLACK);
@@ -256,7 +263,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 				answerBtns.get(i).setTextColor(Color.GRAY);
 			}
 		}
-		
+
 		switch (v.getId()) {
 		case R.id.choice_problem_a1_btn:
 			answer = 0;
@@ -294,16 +301,14 @@ public class ChoiceProblemActivity extends BaseActivity {
 				exercises.get(page).Solve = true;
 
 				if (exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Answer.equals(answerBtns.get(answer).getText())) {
-					Spannable spanText = Spannable.Factory.getInstance().newSpannable(answerBtns.get(answer).getText());
-					spanText.setSpan(new BackgroundColorSpan(0xFF00A881), 0, spanText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-					answerBtns.get(answer).setText(spanText);
-					answerBtns.get(answer).setTextColor(Color.BLACK);
-                    exercises.get(page).Correct = true;
+					exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Tint = 0xFF02b58b;
+					answerBtns.get(answer).setTextColor(exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Tint);
+					exercises.get(page).Correct = true;
 				} else {
-					Spannable spanText = Spannable.Factory.getInstance().newSpannable(answerBtns.get(exercises.get(page).AnswerNo).getText());
-					spanText.setSpan(new BackgroundColorSpan(0xFF00A881), 0, spanText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-					answerBtns.get(exercises.get(page).AnswerNo).setText(spanText);
-					answerBtns.get(exercises.get(page).AnswerNo).setTextColor(Color.BLACK);
+					exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Tint = 0xFF02b58b;
+					answerBtns.get(exercises.get(page).AnswerNo).setTextColor(0xFF02b58b);
+					exercises.get(page).AnswerItems.get(answer).Tint = Color.BLACK;
+					answerBtns.get(answer).setTextColor(exercises.get(page).AnswerItems.get(answer).Tint);
 				}
 				checkBtn.setText("다음 문제");
 			} else if (checkBtn.getText().equals("다음 문제")) {
