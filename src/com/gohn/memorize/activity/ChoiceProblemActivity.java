@@ -104,8 +104,8 @@ public class ChoiceProblemActivity extends BaseActivity {
 		for (int i = 0; i < 5; i++) {
 			answerBtns.get(i).setText(exercises.get(page).AnswerItems.get(i).Answer);
 			answerBtns.get(i).setTextColor(exercises.get(page).AnswerItems.get(i).Tint);
-		}
-
+		}				
+		
 		if (exercises.get(page).Solve)
 			checkBtn.setText("다음 문제");
 		else
@@ -318,7 +318,6 @@ public class ChoiceProblemActivity extends BaseActivity {
 					showResult();
 				} else {
 					showPage();
-					checkBtn.setText("정답 확인");
 					answer = -1;
 				}
 			}

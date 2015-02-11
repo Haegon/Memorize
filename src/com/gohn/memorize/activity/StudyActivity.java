@@ -54,7 +54,7 @@ public class StudyActivity extends BaseActivity {
 	}
 
 	public void showPage() {
-		count.setText(page + " / " + wordsSet.size());
+		count.setText((page + 1) + " / " + wordsSet.size());
 		word.setText(wordsSet.get(page).Word);
 		meaning.setText(wordsSet.get(page).Meaning);
 	}
