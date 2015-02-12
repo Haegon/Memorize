@@ -211,8 +211,10 @@ public class FindFileActivity extends BaseActivity {
 			}
 		}
 		for (int i = 0; i < files.length; i++) {
-			if (!files[i].isHidden() && !files[i].isDirectory()) {
-				MyFiles.add(files[i]);
+			if (!files[i].isHidden() && !files[i].isDirectory() && files[i].getAbsolutePath().contains(".xls")) {
+				if (files[i].getAbsolutePath().contains(".xls") && !files[i].getAbsolutePath().contains(".xlsx")) {
+					MyFiles.add(files[i]);
+				}
 			}
 		}
 		return MyFiles;

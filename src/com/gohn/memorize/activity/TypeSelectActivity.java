@@ -1,12 +1,11 @@
 package com.gohn.memorize.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.manager.WordsDBMgr;
@@ -30,17 +29,17 @@ public class TypeSelectActivity extends BaseActivity {
 		groupName = getIntent().getExtras().getString(WordsDBMgr.GROUP);
 		exerciseType = getIntent().getExtras().getInt(ExerciseType.toStr());
 
-		Button btn_all = (Button) findViewById(R.id.type_select_all_btn);
+		TextView btn_all = (TextView) findViewById(R.id.type_select_all_text);
 		btn_all.setText("모두 (" + dbMgr.getWordsCount(groupName, WordType.NONE) + ")");
-		Button btn_n = (Button) findViewById(R.id.type_select_noun_btn);
+		TextView btn_n = (TextView) findViewById(R.id.type_select_noun_text);
 		btn_n.setText("명사 (" + dbMgr.getWordsCount(groupName, WordType.NOUN) + ")");
-		Button btn_v = (Button) findViewById(R.id.type_select_verb_btn);
+		TextView btn_v = (TextView) findViewById(R.id.type_select_verb_text);
 		btn_v.setText("동사 (" + dbMgr.getWordsCount(groupName, WordType.VERB) + ")");
-		Button btn_a = (Button) findViewById(R.id.type_select_adjective_btn);
+		TextView btn_a = (TextView) findViewById(R.id.type_select_adjective_text);
 		btn_a.setText("형용사 (" + dbMgr.getWordsCount(groupName, WordType.ADJECTIVE) + ")");
-		Button btn_ad = (Button) findViewById(R.id.type_select_adverb_btn);
+		TextView btn_ad = (TextView) findViewById(R.id.type_select_adverb_text);
 		btn_ad.setText("부사 (" + dbMgr.getWordsCount(groupName, WordType.ADVERB) + ")");
-		Button btn_e = (Button) findViewById(R.id.type_select_etc_btn);
+		TextView btn_e = (TextView) findViewById(R.id.type_select_etc_text);
 		btn_e.setText("기타 (" + dbMgr.getWordsCount(groupName, WordType.ETC) + ")");
 	}
 

@@ -3,53 +3,197 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/type_select_all_btn"
-        android:layout_width="360dp"
-        android:layout_height="100dp"
-        android:onClick="onClick"
-        android:layout_marginTop="5dp"
-        android:textAlignment="center"
-        android:textSize="50dp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="40dp" >
 
-    <Button
-        android:id="@+id/type_select_noun_btn"
-        android:layout_width="360dp"
-        android:layout_height="100dp"
-        android:onClick="onClick"
-        android:textAlignment="center"
-        android:textSize="50dp" />
+        <Button
+            android:id="@+id/type_select_all_btn"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/type_btn"
+            android:onClick="onClick"
+            android:text="All"
+            android:textAlignment="center"
+            android:textColor="#02b58b"
+            android:textSize="50dp" />
 
-    <Button
-        android:id="@+id/type_select_verb_btn"
-        android:layout_width="360dp"
-        android:layout_height="100dp"
-        android:onClick="onClick"
-        android:textAlignment="center"
-        android:textSize="50dp" />
+        <Button
+            android:id="@+id/type_select_noun_btn"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="45dp"
+            android:background="@drawable/type_btn"
+            android:onClick="onClick"
+            android:text="N"
+            android:textAlignment="center"
+            android:textColor="#02b58b"
+            android:textSize="50dp" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/type_select_adjective_btn"
-        android:layout_width="360dp"
-        android:layout_height="100dp"
-        android:onClick="onClick"
-        android:textAlignment="center"
-        android:textSize="50dp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="5dp" >
 
-    <Button
-        android:id="@+id/type_select_adverb_btn"
-        android:layout_width="360dp"
-        android:layout_height="100dp"
-        android:onClick="onClick"
-        android:textAlignment="center"
-        android:textSize="50dp" />
+        <TextView
+            android:id="@+id/type_select_all_text"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center|center_vertical"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:textSize="20dp" />
 
-    <Button
-        android:id="@+id/type_select_etc_btn"
-        android:layout_width="360dp"
-        android:layout_height="100dp"
-        android:onClick="onClick"
-        android:textAlignment="center"
-        android:textSize="50dp" />
+        <TextView
+            android:id="@+id/type_select_noun_text"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center|center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="45dp"
+            android:gravity="center"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="30dp" >
+
+        <Button
+            android:id="@+id/type_select_verb_btn"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/type_btn"
+            android:onClick="onClick"
+            android:text="V"
+            android:textAlignment="center"
+            android:textColor="#02b58b"
+            android:textSize="50dp" />
+
+        <Button
+            android:id="@+id/type_select_adjective_btn"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="45dp"
+            android:background="@drawable/type_btn"
+            android:onClick="onClick"
+            android:text="Adj"
+            android:textAlignment="center"
+            android:textColor="#02b58b"
+            android:textSize="50dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="5dp" >
+
+        <TextView
+            android:id="@+id/type_select_verb_text"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center|center_vertical"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/type_select_adjective_text"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center|center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="45dp"
+            android:gravity="center"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="30dp" >
+
+        <Button
+            android:id="@+id/type_select_adverb_btn"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/type_btn"
+            android:onClick="onClick"
+            android:text="Adv"
+            android:textAlignment="center"
+            android:textColor="#02b58b"
+            android:textSize="50dp" />
+
+        <Button
+            android:id="@+id/type_select_etc_btn"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="45dp"
+            android:background="@drawable/type_btn"
+            android:onClick="onClick"
+            android:text="Etc"
+            android:textAlignment="center"
+            android:textColor="#02b58b"
+            android:textSize="50dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="5dp" >
+
+        <TextView
+            android:id="@+id/type_select_adverb_text"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center|center_vertical"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/type_select_etc_text"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center|center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="45dp"
+            android:gravity="center"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="50dp" >
+
+        <ImageView
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:src="@raw/bottom" />
+    </LinearLayout>
 
 </LinearLayout>
