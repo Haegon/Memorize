@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-import android.app.Activity;
+import Extention.ColorEx;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -72,7 +72,7 @@ public class WriteProblemActivity extends BaseActivity {
 		editText = (EditText) findViewById(R.id.write_problem_word_edit);
 		rightAnswer = (TextView) findViewById(R.id.write_right_answer_word_text);
 
-		editText.setTextColor(Color.BLACK);
+		editText.setTextColor(Color.GRAY);
 		editText.setText("");
 		rightAnswer.setText("");
 	}
@@ -87,9 +87,13 @@ public class WriteProblemActivity extends BaseActivity {
 			checkBtn.setText("정답 확인");
 		}
 
-		editText.setText(exercises.get(page).AnswerItems.Answer);
+		// editText.setText(exercises.get(page).AnswerItems.Answer);
 		editText.setTextColor(exercises.get(page).AnswerItems.Tint);
-		rightAnswer.setText(exercises.get(page).AnswerItems.RightAnswer);
+
+		if (!exercises.get(page).Correct) {
+			rightAnswer.setText(exercises.get(page).AnswerItems.RightAnswer);
+			rightAnswer.setTextColor(ColorEx.VOCA);
+		}
 	}
 
 	public void showResult() {
@@ -190,10 +194,8 @@ public class WriteProblemActivity extends BaseActivity {
 				exercises.get(page).AnswerItems.RightAnswer = exercises.get(page).Question.Word;
 
 				if (exercises.get(page).Question.Word.toLowerCase().equals(editText.getText().toString().toLowerCase())) {
-					exercises.get(page).AnswerItems.Tint = Color.BLUE;
+					exercises.get(page).AnswerItems.Tint = ColorEx.VOCA;
 					exercises.get(page).Correct = true;
-				} else {
-					exercises.get(page).AnswerItems.Tint = Color.RED;
 				}
 				showPage();
 			} else if (checkBtn.getText().equals("다음 문제")) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+import Extention.ColorEx;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -104,8 +105,8 @@ public class ChoiceProblemActivity extends BaseActivity {
 		for (int i = 0; i < 5; i++) {
 			answerBtns.get(i).setText(exercises.get(page).AnswerItems.get(i).Answer);
 			answerBtns.get(i).setTextColor(exercises.get(page).AnswerItems.get(i).Tint);
-		}				
-		
+		}
+
 		if (exercises.get(page).Solve)
 			checkBtn.setText("다음 문제");
 		else
@@ -301,12 +302,12 @@ public class ChoiceProblemActivity extends BaseActivity {
 				exercises.get(page).Solve = true;
 
 				if (exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Answer.equals(answerBtns.get(answer).getText())) {
-					exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Tint = 0xFF02b58b;
+					exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Tint = ColorEx.VOCA;
 					answerBtns.get(answer).setTextColor(exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Tint);
 					exercises.get(page).Correct = true;
 				} else {
-					exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Tint = 0xFF02b58b;
-					answerBtns.get(exercises.get(page).AnswerNo).setTextColor(0xFF02b58b);
+					exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Tint = ColorEx.VOCA;
+					answerBtns.get(exercises.get(page).AnswerNo).setTextColor(ColorEx.VOCA);
 					exercises.get(page).AnswerItems.get(answer).Tint = Color.BLACK;
 					answerBtns.get(answer).setTextColor(exercises.get(page).AnswerItems.get(answer).Tint);
 				}

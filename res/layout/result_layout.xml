@@ -26,36 +26,47 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:paddingTop="60dp" >
 
         <Button
             android:id="@+id/result_restart_btn"
-            android:layout_width="360dp"
-            android:layout_height="80dp"
+            android:layout_width="260dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/category_btn"
             android:onClick="onClick"
             android:text="처음부터 다시 풀기"
             android:textAlignment="center"
-            android:textSize="30dp" />
+            android:textSize="25dp" />
 
         <Button
             android:id="@+id/result_again_btn"
-            android:layout_width="360dp"
-            android:layout_height="80dp"
+            android:layout_width="260dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/category_btn"
             android:onClick="onClick"
             android:text="틀린문제만 다시 풀기"
             android:textAlignment="center"
-            android:textSize="30dp" />
+            android:textSize="25dp" />
 
         <Button
             android:id="@+id/result_home_btn"
-            android:layout_width="360dp"
-            android:layout_height="80dp"
+            android:layout_width="260dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/category_btn"
             android:onClick="onClick"
             android:text="단어장으로 돌아가기"
             android:textAlignment="center"
-            android:textSize="30dp" />
+            android:textSize="25dp" />
     </LinearLayout>
 
 </LinearLayout>

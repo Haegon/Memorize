@@ -16,6 +16,6 @@ public class AnswerItem {
 	}
 
 	public void ColorClear() {
-		Tint = Color.BLACK;
+		Tint = Color.GRAY;
 	}
 }
