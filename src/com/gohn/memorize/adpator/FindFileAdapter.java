@@ -3,20 +3,17 @@ package com.gohn.memorize.adpator;
 import java.io.File;
 import java.util.ArrayList;
 
-import com.gohn.memorize.R;
-import com.gohn.memorize.R.id;
-import com.gohn.memorize.R.layout;
-import com.gohn.memorize.R.raw;
-
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.gohn.memorize.R;
+import com.gohn.memorize.extention.TextViewEx;
 
 public class FindFileAdapter extends BaseAdapter {
 
@@ -25,9 +22,9 @@ public class FindFileAdapter extends BaseAdapter {
 	LayoutInflater mLayout = null;
 
 	class ViewHolder {
-		TextView mNameTv;
-		TextView mNumberTv;
-		TextView mDepartmentTv;
+		TextViewEx mNameTv;
+		TextViewEx mNumberTv;
+		TextViewEx mDepartmentTv;
 		ImageView mIcon;
 	}
 
@@ -82,7 +79,7 @@ public class FindFileAdapter extends BaseAdapter {
 
 			viewHolder = new ViewHolder();
 
-			viewHolder.mNameTv = (TextView) itemLayout.findViewById(R.id.find_file_name_text);
+			viewHolder.mNameTv = (TextViewEx) itemLayout.findViewById(R.id.find_file_name_text);
 			viewHolder.mIcon = (ImageView) itemLayout.findViewById(R.id.find_file_dir);
 
 			itemLayout.setTag(viewHolder);

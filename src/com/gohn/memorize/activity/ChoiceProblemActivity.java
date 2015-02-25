@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-import Extention.ColorEx;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -14,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.gohn.memorize.R;
+import com.gohn.memorize.extention.ColorEx;
 import com.gohn.memorize.manager.Global;
 import com.gohn.memorize.manager.WordsDBMgr;
 import com.gohn.memorize.model.AnswerItem;
