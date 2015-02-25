@@ -346,4 +346,19 @@ public class ChoiceProblemActivity extends BaseActivity {
 			break;
 		}
 	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+
+		exercises = null;
+		wordsSet = null;
+		word = null;
+		count = null;
+		nextBtn = null;
+		checkBtn = null;
+		answerBtns = null;
+		dbMgr = null;
+	}
 }

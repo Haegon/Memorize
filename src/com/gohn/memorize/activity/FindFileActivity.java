@@ -47,6 +47,8 @@ public class FindFileActivity extends BaseActivity {
 
 	public WordsDBMgr dbMgr = null;
 
+	File file;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,8 +65,7 @@ public class FindFileActivity extends BaseActivity {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-				File file = mAdapter.mData.get(position);
+				file = mAdapter.mData.get(position);
 
 				if (!file.isDirectory()) {
 
@@ -72,58 +73,7 @@ public class FindFileActivity extends BaseActivity {
 					if (ext.contains(".xls") && !ext.contains(".xlsx")) {
 						Log.d("gohn", "excel : " + file.getAbsolutePath());
 
-						File inputWorkbook = new File(file.getAbsolutePath());
-						Workbook w = null;
-
-						try {
-							w = Workbook.getWorkbook(inputWorkbook);
-						} catch (BiffException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
-						// Get the first sheet
-						Sheet sheet = w.getSheet(0);
-						// Loop over first 10 column and lines
-
-						final ArrayList<WordSet> words = new ArrayList<WordSet>();
-
-						for (int r = 0; r < sheet.getRows(); r++) {
-
-							WordSet word = new WordSet();
-
-							boolean b = false;
-
-							for (int c = 0; c < sheet.getColumns(); c++) {
-
-								Cell cell = sheet.getCell(c, r);
-
-								if (cell.getType() == CellType.LABEL) {
-
-									String content = cell.getContents();
-
-									switch (c) {
-									case 0:
-										if (!WordType.isType(content))
-											b = true;
-										word.Type = content;
-										break;
-									case 1:
-										word.Word = content;
-										break;
-									case 2:
-										word.Meaning = content;
-										break;
-									}
-								}
-							}
-							if (b)
-								words.add(word);
-						}
-
+						
 						LayoutInflater li = LayoutInflater.from(context);
 						View promptsView = li.inflate(R.layout.activity_group_edittext, null);
 
@@ -137,6 +87,60 @@ public class FindFileActivity extends BaseActivity {
 						// set dialog message
 						alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
+								
+								File inputWorkbook = new File(file.getAbsolutePath());
+								Workbook w = null;
+
+								try {
+									w = Workbook.getWorkbook(inputWorkbook);
+								} catch (BiffException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+
+								// Get the first sheet
+								Sheet sheet = w.getSheet(0);
+								// Loop over first 10 column and lines
+
+								final ArrayList<WordSet> words = new ArrayList<WordSet>();
+
+								for (int r = 0; r < sheet.getRows(); r++) {
+
+									WordSet word = new WordSet();
+
+									boolean b = false;
+
+									for (int c = 0; c < sheet.getColumns(); c++) {
+
+										Cell cell = sheet.getCell(c, r);
+
+										if (cell.getType() == CellType.LABEL) {
+
+											String content = cell.getContents();
+
+											switch (c) {
+											case 0:
+												if (!WordType.isType(content))
+													b = true;
+												word.Type = content;
+												break;
+											case 1:
+												word.Word = content;
+												break;
+											case 2:
+												word.Meaning = content;
+												break;
+											}
+										}
+									}
+									if (b)
+										words.add(word);
+								}
+
+								
 								addWordsToDB(userInput.getText().toString(), words);
 								finish();
 							}
