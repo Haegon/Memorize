@@ -30,13 +30,14 @@
         android:orientation="vertical"
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
-        android:paddingTop="60dp" >
+        android:paddingTop="30dp" >
 
         <Button
             android:id="@+id/result_restart_btn"
             android:layout_width="260dp"
             android:layout_height="55dp"
-            android:layout_marginBottom="20dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/category_btn"
             android:onClick="onClick"
@@ -48,7 +49,8 @@
             android:id="@+id/result_again_btn"
             android:layout_width="260dp"
             android:layout_height="55dp"
-            android:layout_marginBottom="20dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/category_btn"
             android:onClick="onClick"
@@ -57,10 +59,24 @@
             android:textSize="25dp" />
 
         <Button
+            android:id="@+id/result_save_btn"
+            android:layout_width="260dp"
+            android:layout_height="55dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/category_btn"
+            android:onClick="onClick"
+            android:text="틀린문제만 저장"
+            android:textAlignment="center"
+            android:textSize="25dp" />
+
+        <Button
             android:id="@+id/result_home_btn"
             android:layout_width="260dp"
             android:layout_height="55dp"
-            android:layout_marginBottom="20dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/category_btn"
             android:onClick="onClick"

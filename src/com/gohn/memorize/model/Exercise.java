@@ -3,9 +3,9 @@ package com.gohn.memorize.model;
 import java.util.ArrayList;
 
 public class Exercise {
-	public WordSet Question;
+	public WordSet Question = new WordSet();
 	public ArrayList<AnswerItem> AnswerItems = new ArrayList<AnswerItem>();
-	public int AnswerNo;
+	public int AnswerNo = 0;
 
 	public boolean Solve = false;
 	public boolean Correct = false;

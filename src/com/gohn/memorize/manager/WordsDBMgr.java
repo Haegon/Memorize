@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.model.WordType;
@@ -70,27 +71,39 @@ public class WordsDBMgr {
 
 	public ArrayList<WordSet> getWordsSet(String group, String type) {
 
-		Cursor c;
+		String query;
+		int count = getWordsCount(group, type);
 
-		if (type.equals(WordType.NONE))
-			c = query(getColumns(), WordsDBMgr.GROUP + "=?", new String[] { group }, null, null, null);
-		else
-			c = query(getColumns(), WordsDBMgr.GROUP + "=? and " + WordsDBMgr.TYPE + "=? ", new String[] { group, type }, null, null, null);
+		ArrayList<WordSet> groups = new ArrayList<WordSet>();
 
-		if (c != null) {
-			ArrayList<WordSet> groups = new ArrayList<WordSet>();
+		for (int i = 0; i < count / 100 + 1; i++) {
+			Cursor c;
+			int limit = 100;
 
-			while (c.moveToNext()) {
-				WordSet vg = new WordSet();
-				vg.Group = c.getString(0);
-				vg.Type = c.getString(1);
-				vg.Word = c.getString(2);
-				vg.Meaning = c.getString(3);
-				groups.add(vg);
+			if (i == count / 100)
+				limit = count - (count / 100) * i;
+
+			if (type.equals(WordType.NONE)) {
+				query = String.format("select groupName, type, word, meaning from Words where groupName=? limit %d offset %d", limit, i * 100);
+				c = rawQuery(query, new String[] { group });
+			} else {
+				query = String.format("select groupName, type, word, meaning from Words where groupName=? and type=? limit %d offset %d", limit, i * 100);
+				c = rawQuery(query, new String[] { group, type });
 			}
-			return groups;
+
+			if (c != null) {
+				while (c.moveToNext()) {
+					WordSet vg = new WordSet();
+					vg.Group = c.getString(0);
+					vg.Type = c.getString(1);
+					vg.Word = c.getString(2);
+					vg.Meaning = c.getString(3);
+					groups.add(vg);
+				}
+			}
+			Log.d("gohn", "@@@@@@@");
 		}
-		return null;
+		return groups;
 	}
 
 	public int getWordsCount(String group, String type) {

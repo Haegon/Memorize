@@ -132,23 +132,24 @@ public class ChoiceProblemActivity extends BaseActivity {
 	public Exercise makeGuessMeaningExercise(WordSet wordSet) {
 
 		Exercise e = new Exercise();
-
-		Cursor c = dbMgr.rawQuery("SELECT " + WordsDBMgr.MEANING + " from " + WordsDBMgr.TABLE_NAME + " where " + WordsDBMgr.TYPE + "=? group by " + WordsDBMgr.MEANING + " order by random() limit 5",
-				new String[] { wordSet.Type });
-
 		ArrayList<AnswerItem> answerItems = new ArrayList<AnswerItem>();
-
+		ArrayList<Integer> idxs = new ArrayList<Integer>();
 		boolean have = false;
-		if (c != null) {
-			int a = 0;
-			while (c.moveToNext()) {
-				if (c.getString(0).equals(wordSet.Meaning)) {
-					have = true;
-					e.AnswerNo = a;
-				}
-				answerItems.add(new AnswerItem(c.getString(0)));
-				a++;
+		Random rnd = new Random(System.nanoTime());
+		int a = 0;
+
+		for (int i = 0; i < 5; i++) {
+			Integer n = rnd.nextInt(wordsSet.size());
+			while (idxs.contains(n)) {
+				n = rnd.nextInt(wordsSet.size());
 			}
+			idxs.add(n);
+			if (wordsSet.get(n).Meaning.equals(wordSet.Meaning)) {
+				have = true;
+				e.AnswerNo = a;
+			}
+			a++;
+			answerItems.add(new AnswerItem(wordsSet.get(n).Meaning));
 		}
 
 		if (!have) {
@@ -166,23 +167,24 @@ public class ChoiceProblemActivity extends BaseActivity {
 	public Exercise makeGuessWordExercise(WordSet wordSet) {
 
 		Exercise e = new Exercise();
-
-		Cursor c = dbMgr.rawQuery("SELECT " + WordsDBMgr.WORD + " from " + WordsDBMgr.TABLE_NAME + " where " + WordsDBMgr.TYPE + "=? group by " + WordsDBMgr.WORD + " order by random() limit 5",
-				new String[] { wordSet.Type });
-
 		ArrayList<AnswerItem> answerItems = new ArrayList<AnswerItem>();
-
+		ArrayList<Integer> idxs = new ArrayList<Integer>();
 		boolean have = false;
-		if (c != null) {
-			int a = 0;
-			while (c.moveToNext()) {
-				if (c.getString(0).equals(wordSet.Word)) {
-					have = true;
-					e.AnswerNo = a;
-				}
-				answerItems.add(new AnswerItem(c.getString(0)));
-				a++;
+		Random rnd = new Random(System.nanoTime());
+		int a = 0;
+
+		for (int i = 0; i < 5; i++) {
+			Integer n = rnd.nextInt(wordsSet.size());
+			while (idxs.contains(n)) {
+				n = rnd.nextInt(wordsSet.size());
 			}
+			idxs.add(n);
+			if (wordsSet.get(n).Word.equals(wordSet.Word)) {
+				have = true;
+				e.AnswerNo = a;
+			}
+			a++;
+			answerItems.add(new AnswerItem(wordsSet.get(n).Word));
 		}
 
 		if (!have) {
