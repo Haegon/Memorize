@@ -139,9 +139,8 @@ public class FindFileActivity extends BaseActivity {
 									if (b)
 										words.add(word);
 								}
-
 								
-								addWordsToDB(userInput.getText().toString(), words);
+								dbMgr.addWordsToDB(userInput.getText().toString(), words);
 								finish();
 							}
 						}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

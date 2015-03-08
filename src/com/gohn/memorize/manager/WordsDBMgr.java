@@ -101,7 +101,6 @@ public class WordsDBMgr {
 					groups.add(vg);
 				}
 			}
-			Log.d("gohn", "@@@@@@@");
 		}
 		return groups;
 	}
@@ -127,5 +126,17 @@ public class WordsDBMgr {
 
 	public String[] getColumns() {
 		return new String[] { WordsDBMgr.GROUP, WordsDBMgr.TYPE, WordsDBMgr.WORD, WordsDBMgr.MEANING };
+	}
+	
+	public void addWordsToDB(String group, ArrayList<WordSet> set) {
+
+		for (int i = 0; i < set.size(); i++) {
+			ContentValues cv = new ContentValues();
+			cv.put(WordsDBMgr.GROUP, group);
+			cv.put(WordsDBMgr.TYPE, set.get(i).Type);
+			cv.put(WordsDBMgr.WORD, set.get(i).Word);
+			cv.put(WordsDBMgr.MEANING, set.get(i).Meaning);
+			insert(cv);
+		}
 	}
 }

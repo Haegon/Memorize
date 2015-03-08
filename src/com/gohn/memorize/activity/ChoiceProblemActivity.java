@@ -2,14 +2,20 @@ package com.gohn.memorize.activity;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gohn.memorize.R;
@@ -20,18 +26,22 @@ import com.gohn.memorize.model.AnswerItem;
 import com.gohn.memorize.model.Exercise;
 import com.gohn.memorize.model.ExerciseType;
 import com.gohn.memorize.model.WordSet;
+import com.gohn.memorize.model.WordType;
 
 public class ChoiceProblemActivity extends BaseActivity {
 
 	ArrayList<Exercise> exercises;
-
 	ArrayList<WordSet> wordsSet;
+	Map<String, ArrayList<WordSet>> wordMap;
 
 	TextView word;
 	TextView count;
 	Button nextBtn;
 	Button checkBtn;
 	ArrayList<Button> answerBtns;
+
+	String groupName;
+	String wordType;
 
 	WordsDBMgr dbMgr;
 
@@ -47,8 +57,10 @@ public class ChoiceProblemActivity extends BaseActivity {
 
 		dbMgr = WordsDBMgr.getInstance(this);
 		Bundle b = getIntent().getExtras();
+		groupName = b.getString(WordsDBMgr.GROUP);
 		exerciseType = b.getInt(ExerciseType.toStr());
-		wordsSet = dbMgr.getWordsSet(b.getString(WordsDBMgr.GROUP), b.getString(WordsDBMgr.TYPE));
+		wordType = b.getString(WordsDBMgr.TYPE);
+		wordsSet = dbMgr.getWordsSet(groupName, wordType);
 
 		exerciseInit();
 		viewInit();
@@ -56,6 +68,15 @@ public class ChoiceProblemActivity extends BaseActivity {
 	}
 
 	public void exerciseInit() {
+		wordMap = new HashMap<String, ArrayList<WordSet>>();
+
+		for (int i = 0; i < wordsSet.size(); i++) {
+			if (!wordMap.containsKey(wordsSet.get(i).Type)) {
+				wordMap.put(wordsSet.get(i).Type, new ArrayList<WordSet>());
+			}
+			wordMap.get(wordsSet.get(i).Type).add(wordsSet.get(i));
+		}
+
 		exercises = new ArrayList<Exercise>();
 
 		for (int i = 0; i < wordsSet.size(); i++) {
@@ -129,29 +150,47 @@ public class ChoiceProblemActivity extends BaseActivity {
 		}
 	}
 
+	// 문제를 넣으면 보기와 정답유무를 알고있는 클래스를 리턴해주는 함수.
 	public Exercise makeGuessMeaningExercise(WordSet wordSet) {
 
+		// 리턴한 문제 클래스 생성.
 		Exercise e = new Exercise();
+		// 보기는 5개의 리스트로 관리된다.
 		ArrayList<AnswerItem> answerItems = new ArrayList<AnswerItem>();
+
+		// 전체 보기 리스트에서 가져올 보기의 인덱스 리스트
+		// 5개의 보기만 넣을것임.
 		ArrayList<Integer> idxs = new ArrayList<Integer>();
 		boolean have = false;
 		Random rnd = new Random(System.nanoTime());
 		int a = 0;
 
+		// 보기에 넣을 단어 리스트를 만들어줄 리스트를 생성한다.
+		ArrayList<WordSet> ws = wordMap.get(wordSet.Type);
+
 		for (int i = 0; i < 5; i++) {
-			Integer n = rnd.nextInt(wordsSet.size());
+			// 랜덤한 숫자를 가져온다.
+			Integer n = rnd.nextInt(ws.size());
+			// 인덱스가 겹치지 않도록 랜덤하게 가져온다.
 			while (idxs.contains(n)) {
-				n = rnd.nextInt(wordsSet.size());
+				if (wordType.equals(WordType.NONE) && !ws.get(n).Type.equals(wordSet.Type)) {
+					continue;
+				}
+				n = rnd.nextInt(ws.size());
 			}
 			idxs.add(n);
-			if (wordsSet.get(n).Meaning.equals(wordSet.Meaning)) {
+			// 인덱스에 해당하는 단어가 문제의 정답과 일치하면
+			// 정답이 보기 중에 있다고 하고 정답을 적어 놓는다.
+			if (ws.get(n).Meaning.equals(wordSet.Meaning)) {
 				have = true;
 				e.AnswerNo = a;
 			}
 			a++;
-			answerItems.add(new AnswerItem(wordsSet.get(n).Meaning));
+			// 문제 리스트에 추가 한다.
+			answerItems.add(new AnswerItem(ws.get(n).Meaning));
 		}
 
+		// 5개의 보기에 정답이 없는경우 5개중 하나를 택해서 정답을 꽂아준다.
 		if (!have) {
 			int r = (int) (Math.random() * 5);
 			answerItems.get(r).Answer = wordSet.Meaning;
@@ -173,18 +212,24 @@ public class ChoiceProblemActivity extends BaseActivity {
 		Random rnd = new Random(System.nanoTime());
 		int a = 0;
 
+		// 보기에 넣을 단어 리스트를 만들어줄 리스트를 생성한다.
+		ArrayList<WordSet> ws = wordMap.get(wordSet.Type);
+		
 		for (int i = 0; i < 5; i++) {
-			Integer n = rnd.nextInt(wordsSet.size());
+			Integer n = rnd.nextInt(ws.size());
 			while (idxs.contains(n)) {
-				n = rnd.nextInt(wordsSet.size());
+				if (wordType.equals(WordType.NONE) && !ws.get(n).Type.equals(wordSet.Type)) {
+					continue;
+				}
+				n = rnd.nextInt(ws.size());
 			}
 			idxs.add(n);
-			if (wordsSet.get(n).Word.equals(wordSet.Word)) {
+			if (ws.get(n).Word.equals(wordSet.Word)) {
 				have = true;
 				e.AnswerNo = a;
 			}
 			a++;
-			answerItems.add(new AnswerItem(wordsSet.get(n).Word));
+			answerItems.add(new AnswerItem(ws.get(n).Word));
 		}
 
 		if (!have) {
@@ -345,6 +390,56 @@ public class ChoiceProblemActivity extends BaseActivity {
 			break;
 		case R.id.result_home_btn:
 			goHome();
+			break;
+		case R.id.result_save_btn:
+			exercises = assembleWrongExercises();
+			DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					switch (which) {
+					case DialogInterface.BUTTON_POSITIVE:
+
+						LayoutInflater li = LayoutInflater.from(ChoiceProblemActivity.this);
+						View promptsView = li.inflate(R.layout.activity_group_edittext, null);
+						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChoiceProblemActivity.this);
+						// set prompts.xml to alertdialog builder
+						alertDialogBuilder.setView(promptsView);
+
+						final EditText userInput = (EditText) promptsView.findViewById(R.id.set_group_edittext);
+
+						// set dialog message
+						alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								final ArrayList<WordSet> words = new ArrayList<WordSet>();
+								for (int i = 0; i < exercises.size(); i++) {
+									words.add(exercises.get(i).Question);
+								}
+								dbMgr.addWordsToDB(userInput.getText().toString(), words);
+								goHome();
+							}
+						}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.cancel();
+							}
+						});
+
+						// create alert dialog
+						AlertDialog alertDialog = alertDialogBuilder.create();
+
+						// show it
+						alertDialog.show();
+						break;
+
+					case DialogInterface.BUTTON_NEGATIVE:
+						// No button clicked
+						break;
+					}
+				}
+			};
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(ChoiceProblemActivity.this);
+			builder.setMessage("단어장 추가 유형을 선택하여 주십시오").setPositiveButton("새 단어장", dialogClickListener).setNegativeButton("기존 단어장", dialogClickListener).show();
+			
 			break;
 		}
 	}
