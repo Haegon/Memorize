@@ -8,6 +8,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.gohn.memorize.model.Exercise;
+import com.gohn.memorize.model.VocaGroup;
 import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.model.WordType;
 
@@ -21,6 +23,7 @@ public class WordsDBMgr {
 	public static final String WORD = "word";
 	public static final String MEANING = "meaning";
 
+	public ArrayList<Exercise> worngExercises = new ArrayList<Exercise>();
 	static final int DB_VERSION = 1;
 
 	Context mContext = null;
@@ -138,5 +141,24 @@ public class WordsDBMgr {
 			cv.put(WordsDBMgr.MEANING, set.get(i).Meaning);
 			insert(cv);
 		}
+	}
+	
+	public ArrayList<VocaGroup> getVocaGroups() {
+
+		String[] columns = new String[] { WordsDBMgr.GROUP, "count(" + WordsDBMgr.GROUP + ")" };
+		Cursor c = query(columns, null, null, WordsDBMgr.GROUP, null, null);
+
+		if (c != null) {
+			ArrayList<VocaGroup> groups = new ArrayList<VocaGroup>();
+
+			while (c.moveToNext()) {
+				VocaGroup vg = new VocaGroup();
+				vg.Name = c.getString(0);
+				vg.Numbers = c.getInt(1);
+				groups.add(vg);
+			}
+			return groups;
+		}
+		return null;
 	}
 }

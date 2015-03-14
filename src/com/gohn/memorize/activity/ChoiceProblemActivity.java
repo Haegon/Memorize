@@ -214,7 +214,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 
 		// 보기에 넣을 단어 리스트를 만들어줄 리스트를 생성한다.
 		ArrayList<WordSet> ws = wordMap.get(wordSet.Type);
-		
+
 		for (int i = 0; i < 5; i++) {
 			Integer n = rnd.nextInt(ws.size());
 			while (idxs.contains(n)) {
@@ -432,6 +432,13 @@ public class ChoiceProblemActivity extends BaseActivity {
 
 					case DialogInterface.BUTTON_NEGATIVE:
 						// No button clicked
+						Intent intent = new Intent();
+						for (int i = 0; i < exercises.size(); i++) {
+							intent.putExtra(exercises.get(i).Question.Word, exercises.get(i).Question.Meaning);
+						}
+						dbMgr.worngExercises = exercises;
+						intent.setClass(getApplicationContext(), SelectGroupActivity.class);
+						startActivity(intent);
 						break;
 					}
 				}
@@ -439,7 +446,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(ChoiceProblemActivity.this);
 			builder.setMessage("단어장 추가 유형을 선택하여 주십시오").setPositiveButton("새 단어장", dialogClickListener).setNegativeButton("기존 단어장", dialogClickListener).show();
-			
+
 			break;
 		}
 	}

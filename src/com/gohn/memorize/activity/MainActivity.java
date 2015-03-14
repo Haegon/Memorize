@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity {
 
 		dbMgr = WordsDBMgr.getInstance(this);
 
-		mAdapter = new GroupAdapter(this, getVocaGroups());
+		mAdapter = new GroupAdapter(this, dbMgr.getVocaGroups());
 
 		mListView = (ListView) findViewById(R.id.group_list_view);
 		mListView.setAdapter(mAdapter);
@@ -153,27 +153,8 @@ public class MainActivity extends BaseActivity {
 	}
 
 	public void reloadView() {
-		mAdapter.mData = getVocaGroups();
+		mAdapter.mData = dbMgr.getVocaGroups();
 		mAdapter.notifyDataSetChanged();
-	}
-
-	public ArrayList<VocaGroup> getVocaGroups() {
-
-		String[] columns = new String[] { WordsDBMgr.GROUP, "count(" + WordsDBMgr.GROUP + ")" };
-		Cursor c = dbMgr.query(columns, null, null, WordsDBMgr.GROUP, null, null);
-
-		if (c != null) {
-			ArrayList<VocaGroup> groups = new ArrayList<VocaGroup>();
-
-			while (c.moveToNext()) {
-				VocaGroup vg = new VocaGroup();
-				vg.Name = c.getString(0);
-				vg.Numbers = c.getInt(1);
-				groups.add(vg);
-			}
-			return groups;
-		}
-		return null;
 	}
 
 	@Override
