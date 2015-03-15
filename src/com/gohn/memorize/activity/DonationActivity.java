@@ -41,10 +41,13 @@ public class DonationActivity extends BaseActivity {
 			BuyItem("donation_1000");
 			break;
 		case R.id.donation_3000_btn:
+			BuyItem("donation_3000");
 			break;
 		case R.id.donation_5000_btn:
+			BuyItem("donation_5000");
 			break;
 		case R.id.donation_10000_btn:
+			BuyItem("donation_10000");
 			break;
 		}
 	}
@@ -177,15 +180,15 @@ public class DonationActivity extends BaseActivity {
 		// gameHelper.onActivityResult(requestCode, resultCode, data);
 	}
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-
-		// very important:
-		Log.d("gohn", "Destroying helper.");
-		if (mHelper != null) {
-			mHelper.dispose();
-			mHelper = null;
-		}
-	}
+//	@Override
+//	public void onDestroy() {
+//		super.onDestroy();
+//
+//		// very important:
+//		Log.d("gohn", "Destroying helper.");
+//		if (mHelper != null) {
+//			mHelper.dispose();
+//			mHelper = null;
+//		}
+//	}
 }
