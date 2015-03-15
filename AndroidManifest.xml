@@ -59,6 +59,16 @@
         <activity
             android:name="com.gohn.memorize.activity.SelectGroupActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.gohn.memorize.activity.DonationActivity"
+            android:label="Donation"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="com.gohn.memorize.activity.DonationActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

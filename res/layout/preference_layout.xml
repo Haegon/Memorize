@@ -31,11 +31,21 @@
 
         <Preference
             android:summary="개발자에게 메일을 보냅니다"
-            android:title="메일 보내기" >
+            android:title="피드백 보내기" >
 
             <intent
                 android:action="android.intent.action.SENDTO"
                 android:data="mailto:gohn0929@gmail.com" />
+        </Preference>
+
+        <Preference
+            android:summary="이 앱이 마음에 드시면 기부 부탁드립니다."
+            android:title="기부하기" >
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="com.gohn.memorize.activity.DonationActivity"
+                android:targetPackage="com.gohn.memorize" />
         </Preference>
     </PreferenceCategory>
 
