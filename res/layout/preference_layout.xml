@@ -39,7 +39,7 @@
         </Preference>
 
         <Preference
-            android:summary="이 앱이 마음에 드시면 기부 부탁드립니다."
+            android:summary="기부를 하면 개발자에게 큰 힘이 됩니다."
             android:title="기부하기" >
 
             <intent
