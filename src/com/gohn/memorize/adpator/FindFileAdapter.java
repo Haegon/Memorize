@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.extention.TextViewEx;
@@ -88,18 +88,19 @@ public class FindFileAdapter extends BaseAdapter {
 		}
 
 		if (position == 0) {
-			viewHolder.mNameTv.setText(".. 상위 폴더로");
+			viewHolder.mNameTv.setText(R.string.list_parent_folder);
 		} else {
 			viewHolder.mNameTv.setText(mData.get(position).getName());
 		}
 		if (mData.get(position).isDirectory()) {
 			viewHolder.mNameTv.setTextColor(Color.BLACK);
 			viewHolder.mIcon.setImageResource(R.raw.dir);
-		} 
+		}
 		if (mData.get(position).isFile()) {
 			File file = mData.get(position);
 			String ext = file.getName().substring(file.getName().lastIndexOf("."));
-			if (ext.contains(".xls") && !ext.contains(".xlsx")) {
+			Log.d("gohn", ext);
+			if (ext.contains(".xls") || ext.contains(".xlsx") || ext.contains(".cvs")) {
 				viewHolder.mNameTv.setTextColor(Color.BLACK);
 				viewHolder.mIcon.setImageResource(R.raw.excel);
 			} else {

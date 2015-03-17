@@ -7,11 +7,12 @@ import java.util.Map;
 import java.util.Random;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -48,7 +49,8 @@ public class ChoiceProblemActivity extends BaseActivity {
 	int exerciseType;
 	int page = 0;
 	int answer = -1;
-
+	
+	Vibrator vibe;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -65,6 +67,8 @@ public class ChoiceProblemActivity extends BaseActivity {
 		exerciseInit();
 		viewInit();
 		showPage();
+		
+		vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 	}
 
 	public void exerciseInit() {
@@ -129,9 +133,9 @@ public class ChoiceProblemActivity extends BaseActivity {
 		}
 
 		if (exercises.get(page).Solve)
-			checkBtn.setText("다음 문제");
+			checkBtn.setText(R.string.next);
 		else
-			checkBtn.setText("정답 확인");
+			checkBtn.setText(R.string.check);
 	}
 
 	public void showResult() {
@@ -139,10 +143,10 @@ public class ChoiceProblemActivity extends BaseActivity {
 		setContentView(R.layout.result_layout);
 
 		TextView cntTv = (TextView) findViewById(R.id.result_count_text);
-		cntTv.setText(exercises.size() + " 문제 중 " + correctedCount() + " 개 맞았습니다.");
+		cntTv.setText(exercises.size() + " " + getResources().getString(R.string.result_problems) + " " + correctedCount() + " " + getResources().getString(R.string.result_correct));
 
 		TextView scrTv = (TextView) findViewById(R.id.result_score_text);
-		scrTv.setText(correctedCount() * 100 / exercises.size() + " 점");
+		scrTv.setText(correctedCount() * 100 / exercises.size() + " " + getResources().getString(R.string.result_point));
 
 		if (isFinish()) {
 			Button againBtn = (Button) findViewById(R.id.result_again_btn);
@@ -342,7 +346,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 			break;
 		case R.id.choice_problem_check_btn:
 
-			if (checkBtn.getText().equals("정답 확인")) {
+			if (checkBtn.getText().equals(getResources().getString(R.string.check))) {
 				if (answer < 0)
 					return;
 
@@ -353,13 +357,14 @@ public class ChoiceProblemActivity extends BaseActivity {
 					answerBtns.get(answer).setTextColor(exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Tint);
 					exercises.get(page).Correct = true;
 				} else {
+					vibe.vibrate(150);
 					exercises.get(page).AnswerItems.get(exercises.get(page).AnswerNo).Tint = ColorEx.VOCA;
 					answerBtns.get(exercises.get(page).AnswerNo).setTextColor(ColorEx.VOCA);
 					exercises.get(page).AnswerItems.get(answer).Tint = Color.BLACK;
 					answerBtns.get(answer).setTextColor(exercises.get(page).AnswerItems.get(answer).Tint);
 				}
-				checkBtn.setText("다음 문제");
-			} else if (checkBtn.getText().equals("다음 문제")) {
+				checkBtn.setText(R.string.next);
+			} else if (checkBtn.getText().equals(getResources().getString(R.string.next))) {
 				page++;
 				if (page >= exercises.size()) {
 					page--;
@@ -445,7 +450,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 			};
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(ChoiceProblemActivity.this);
-			builder.setMessage("단어장 추가 유형을 선택하여 주십시오").setPositiveButton("새 단어장", dialogClickListener).setNegativeButton("기존 단어장", dialogClickListener).show();
+			builder.setMessage(R.string.result_save_mention).setPositiveButton(R.string.result_save_new, dialogClickListener).setNegativeButton(R.string.result_save_old, dialogClickListener).show();
 
 			break;
 		}

@@ -30,17 +30,28 @@ public class TypeSelectActivity extends BaseActivity {
 		exerciseType = getIntent().getExtras().getInt(ExerciseType.toStr());
 
 		TextView btn_all = (TextView) findViewById(R.id.type_select_all_text);
-		btn_all.setText("모두 (" + dbMgr.getWordsCount(groupName, WordType.NONE) + ")");
+		btn_all.setText(R.string.type_all);
+		btn_all.append(" (" + dbMgr.getWordsCount(groupName, WordType.NONE) + ")");
+
 		TextView btn_n = (TextView) findViewById(R.id.type_select_noun_text);
-		btn_n.setText("명사 (" + dbMgr.getWordsCount(groupName, WordType.NOUN) + ")");
+		btn_n.setText(R.string.type_n);
+		btn_n.append(" (" + dbMgr.getWordsCount(groupName, WordType.NOUN) + ")");
+
 		TextView btn_v = (TextView) findViewById(R.id.type_select_verb_text);
-		btn_v.setText("동사 (" + dbMgr.getWordsCount(groupName, WordType.VERB) + ")");
+		btn_v.setText(R.string.type_v);
+		btn_v.append(" (" + dbMgr.getWordsCount(groupName, WordType.VERB) + ")");
+
 		TextView btn_a = (TextView) findViewById(R.id.type_select_adjective_text);
-		btn_a.setText("형용사 (" + dbMgr.getWordsCount(groupName, WordType.ADJECTIVE) + ")");
+		btn_a.setText(R.string.type_a);
+		btn_a.append(" (" + dbMgr.getWordsCount(groupName, WordType.ADJECTIVE) + ")");
+
 		TextView btn_ad = (TextView) findViewById(R.id.type_select_adverb_text);
-		btn_ad.setText("부사 (" + dbMgr.getWordsCount(groupName, WordType.ADVERB) + ")");
+		btn_ad.setText(R.string.type_ad);
+		btn_ad.append(" (" + dbMgr.getWordsCount(groupName, WordType.ADVERB) + ")");
+
 		TextView btn_e = (TextView) findViewById(R.id.type_select_etc_text);
-		btn_e.setText("기타 (" + dbMgr.getWordsCount(groupName, WordType.ETC) + ")");
+		btn_e.setText(R.string.type_e);
+		btn_e.append(" (" + dbMgr.getWordsCount(groupName, WordType.ETC) + ")");
 	}
 
 	public void alertZero() {

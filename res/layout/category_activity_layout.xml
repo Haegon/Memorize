@@ -19,7 +19,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/category_btn"
             android:onClick="onClick"
-            android:text="학습 하기"
+            android:text="@string/study"
             android:textAlignment="center"
             android:textSize="25dp" />
 
@@ -31,7 +31,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/category_btn"
             android:onClick="onClick"
-            android:text="단어 보고 뜻 찾기"
+            android:text="@string/find_meaning"
             android:textAlignment="center"
             android:textSize="25dp" />
 
@@ -43,7 +43,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/category_btn"
             android:onClick="onClick"
-            android:text="뜻 보고 단어 찾기"
+            android:text="@string/find_word"
             android:textAlignment="center"
             android:textSize="25dp" />
 
@@ -55,7 +55,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/category_btn"
             android:onClick="onClick"
-            android:text="뜻 보고 단어 쓰기"
+            android:text="@string/write_word"
             android:textAlignment="center"
             android:textSize="25dp" />
     </LinearLayout>

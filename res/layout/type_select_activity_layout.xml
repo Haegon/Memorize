@@ -44,21 +44,18 @@
 
         <TextView
             android:id="@+id/type_select_all_text"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="20dp"
+            android:layout_marginLeft="30dp"
             android:layout_gravity="center|center_vertical"
-            android:layout_marginLeft="45dp"
-            android:layout_marginRight="15dp"
             android:gravity="center"
             android:textSize="20dp" />
 
         <TextView
             android:id="@+id/type_select_noun_text"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="20dp"
             android:layout_gravity="center|center_vertical"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="45dp"
             android:gravity="center"
             android:textSize="20dp" />
     </LinearLayout>
@@ -104,21 +101,18 @@
 
         <TextView
             android:id="@+id/type_select_verb_text"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="20dp"
+            android:layout_marginLeft="30dp"
             android:layout_gravity="center|center_vertical"
-            android:layout_marginLeft="45dp"
-            android:layout_marginRight="15dp"
             android:gravity="center"
             android:textSize="20dp" />
 
         <TextView
             android:id="@+id/type_select_adjective_text"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="20dp"
             android:layout_gravity="center|center_vertical"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="45dp"
             android:gravity="center"
             android:textSize="20dp" />
     </LinearLayout>
@@ -164,21 +158,18 @@
 
         <TextView
             android:id="@+id/type_select_adverb_text"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="20dp"
+            android:layout_marginLeft="30dp"
             android:layout_gravity="center|center_vertical"
-            android:layout_marginLeft="45dp"
-            android:layout_marginRight="15dp"
             android:gravity="center"
             android:textSize="20dp" />
 
         <TextView
             android:id="@+id/type_select_etc_text"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="20dp"
             android:layout_gravity="center|center_vertical"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="45dp"
             android:gravity="center"
             android:textSize="20dp" />
     </LinearLayout>

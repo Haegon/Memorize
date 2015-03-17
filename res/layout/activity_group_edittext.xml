@@ -10,7 +10,7 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="단어장 이름을 입력 하십시오"
+        android:text="@string/enter_your_voca_name"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText

@@ -10,14 +10,12 @@ import jxl.CellType;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,10 +29,12 @@ import android.widget.Toast;
 import com.gohn.memorize.R;
 import com.gohn.memorize.adpator.FindFileAdapter;
 import com.gohn.memorize.manager.WordsDBMgr;
+import com.gohn.memorize.model.ReadXlsx;
 import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.model.WordType;
 
 public class FindFileActivity extends BaseActivity {
+	
 	Context context = this;
 
 	View mHeaderView = null;
@@ -48,7 +48,7 @@ public class FindFileActivity extends BaseActivity {
 	public WordsDBMgr dbMgr = null;
 
 	File file;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -69,11 +69,10 @@ public class FindFileActivity extends BaseActivity {
 
 				if (!file.isDirectory()) {
 
-					String ext = file.getName().substring(file.getName().lastIndexOf("."));
-					if (ext.contains(".xls") && !ext.contains(".xlsx")) {
-						Log.d("gohn", "excel : " + file.getAbsolutePath());
+					final String ext = file.getName().substring(file.getName().lastIndexOf("."));
+					if (ext.contains(".xls") || ext.contains(".xlsx") || ext.contains(".csv")) {
+						// Log.d("gohn", "excel : " + file.getAbsolutePath());
 
-						
 						LayoutInflater li = LayoutInflater.from(context);
 						View promptsView = li.inflate(R.layout.activity_group_edittext, null);
 
@@ -85,65 +84,24 @@ public class FindFileActivity extends BaseActivity {
 						final EditText userInput = (EditText) promptsView.findViewById(R.id.set_group_edittext);
 
 						// set dialog message
-						alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+						alertDialogBuilder.setCancelable(false).setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
-								
-								File inputWorkbook = new File(file.getAbsolutePath());
-								Workbook w = null;
 
-								try {
-									w = Workbook.getWorkbook(inputWorkbook);
-								} catch (BiffException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+								ArrayList<WordSet> words = new ArrayList<WordSet>();
+
+								if (ext.contains(".xls") && !ext.contains(".xlsx")) {
+									words = ReadXls(file.getAbsolutePath());		
+									//words = ReadXlsx.Read(file.getAbsolutePath());
+								} else if (ext.contains(".xlsx")) {
+									words = ReadXlsx.Read(file.getAbsolutePath());
+								} else if (ext.contains(".cvs")) {
+
 								}
 
-								// Get the first sheet
-								Sheet sheet = w.getSheet(0);
-								// Loop over first 10 column and lines
-
-								final ArrayList<WordSet> words = new ArrayList<WordSet>();
-
-								for (int r = 0; r < sheet.getRows(); r++) {
-
-									WordSet word = new WordSet();
-
-									boolean b = false;
-
-									for (int c = 0; c < sheet.getColumns(); c++) {
-
-										Cell cell = sheet.getCell(c, r);
-
-										if (cell.getType() == CellType.LABEL) {
-
-											String content = cell.getContents();
-
-											switch (c) {
-											case 0:
-												if (!WordType.isType(content))
-													b = true;
-												word.Type = content;
-												break;
-											case 1:
-												word.Word = content;
-												break;
-											case 2:
-												word.Meaning = content;
-												break;
-											}
-										}
-									}
-									if (b)
-										words.add(word);
-								}
-								
 								dbMgr.addWordsToDB(userInput.getText().toString(), words);
 								finish();
 							}
-						}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+						}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 								dialog.cancel();
 							}
@@ -196,6 +154,64 @@ public class FindFileActivity extends BaseActivity {
 		});
 	}
 
+	private ArrayList<WordSet> ReadXls(String filePath) {
+
+		ArrayList<WordSet> words = new ArrayList<WordSet>();
+
+		File inputWorkbook = new File(filePath);
+		// File inputWorkbook = new File(file.getAbsolutePath());
+		Workbook w = null;
+
+		try {
+			w = Workbook.getWorkbook(inputWorkbook);
+		} catch (BiffException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// Get the first sheet
+		Sheet sheet = w.getSheet(0);
+		// Loop over first 10 column and lines
+
+		for (int r = 0; r < sheet.getRows(); r++) {
+
+			WordSet word = new WordSet();
+
+			boolean b = false;
+
+			for (int c = 0; c < sheet.getColumns(); c++) {
+
+				Cell cell = sheet.getCell(c, r);
+
+				if (cell.getType() == CellType.LABEL) {
+
+					String content = cell.getContents();
+
+					switch (c) {
+					case 0:
+						if (!WordType.isType(content))
+							b = true;
+						word.Type = content;
+						break;
+					case 1:
+						word.Word = content;
+						break;
+					case 2:
+						word.Meaning = content;
+						break;
+					}
+				}
+			}
+			if (b)
+				words.add(word);
+		}
+
+		return words;
+	}
+
 	public ArrayList<File> GetFiles(String DirectoryPath) {
 		ArrayList<File> MyFiles = new ArrayList<File>();
 
@@ -215,7 +231,7 @@ public class FindFileActivity extends BaseActivity {
 		}
 		for (int i = 0; i < files.length; i++) {
 			if (!files[i].isHidden() && !files[i].isDirectory() && files[i].getAbsolutePath().contains(".xls")) {
-				if (files[i].getAbsolutePath().contains(".xls") && !files[i].getAbsolutePath().contains(".xlsx")) {
+				if (files[i].getAbsolutePath().contains(".xls") || files[i].getAbsolutePath().contains(".xlsx") || files[i].getAbsolutePath().contains(".cvs")) {
 					MyFiles.add(files[i]);
 				}
 			}
@@ -265,5 +281,4 @@ public class FindFileActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onConfigurationChanged(newConfig);
 	}
-
 }

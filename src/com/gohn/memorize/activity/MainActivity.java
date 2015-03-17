@@ -70,10 +70,10 @@ public class MainActivity extends BaseActivity {
 
 				final int p = position;
 
-				CharSequence s[] = new CharSequence[] { "삭제", "이름 바꾸기", "취소" };
+				CharSequence s[] = new CharSequence[] {getResources().getString(R.string.group_delete), getResources().getString(R.string.group_chance), getResources().getString(R.string.cancel) };
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
-				builder.setTitle("단어장 설정");
+				builder.setTitle(R.string.group_settings);
 				builder.setItems(s, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {

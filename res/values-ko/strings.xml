@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="main_add">단어장 추가</string>
+    <string name="main_help">도움말</string>
+    <string name="main_opt">설정</string>
+    <string name="list_parent_folder">.. 상위 폴더로</string>
+    <string name="enter_your_voca_name">단어장 이름을 입력하세요.</string>
+    <string name="create">생성</string>
+    <string name="cancel">취소</string>
+    <string name="study">학습하기</string>
+    <string name="find_meaning">단어보고 뜻 찾기</string>
+    <string name="find_word">뜻보고 단어 찾기</string>
+    <string name="write_word">뜻보고 단어 쓰기</string>
+    <string name="type_all">모두</string>
+    <string name="type_n">명사</string>
+    <string name="type_v">동사</string>
+    <string name="type_a">형용사</string>
+    <string name="type_ad">부사</string>
+    <string name="type_e">기타</string>
+    <string name="check">정답 확인</string>
+    <string name="next">다음 문제</string>
+    <string name="prev">이전</string>
+    <string name="result_again">다시 풀기</string>
+    <string name="result_wrong">틀린문제 다시 풀기</string>
+    <string name="result_save">틀린문제 저장</string>
+    <string name="result_home">단어장으로 돌아가기</string>
+    <string name="result_save_mention">추가할 단어장의 유형을 선택하여 주십시오.</string>
+    <string name="result_save_new">새 단어장</string>
+    <string name="result_save_old">기존 단어장</string>
+    <string name="result_problems">문제 중,</string>
+    <string name="result_correct">개 맞았습니다.</string>
+    <string name="result_point">점</string>
+    <string name="group_delete">삭제</string>
+    <string name="group_chance">이름 변경</string>
+    <string name="group_settings">단어장 설정</string>
+    
+</resources>
