@@ -10,7 +10,7 @@ public class WordType {
 
 	public static Boolean isType(String type) {
 
-		if (type == VERB || type == ADJECTIVE || type == NOUN || type == ADVERB || type == ETC)
+		if (type.equals(VERB) || type.equals(ADJECTIVE) || type.equals(NOUN) || type.equals(ADVERB) || type.equals(ETC))
 			return true;
 
 		return false;

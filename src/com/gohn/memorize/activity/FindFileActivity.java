@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,7 +35,7 @@ import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.model.WordType;
 
 public class FindFileActivity extends BaseActivity {
-	
+
 	Context context = this;
 
 	View mHeaderView = null;
@@ -71,7 +72,6 @@ public class FindFileActivity extends BaseActivity {
 
 					final String ext = file.getName().substring(file.getName().lastIndexOf("."));
 					if (ext.contains(".xls") || ext.contains(".xlsx") || ext.contains(".csv")) {
-						// Log.d("gohn", "excel : " + file.getAbsolutePath());
 
 						LayoutInflater li = LayoutInflater.from(context);
 						View promptsView = li.inflate(R.layout.activity_group_edittext, null);
@@ -87,19 +87,22 @@ public class FindFileActivity extends BaseActivity {
 						alertDialogBuilder.setCancelable(false).setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 
-								ArrayList<WordSet> words = new ArrayList<WordSet>();
+								new Thread(new Runnable() {
+									public void run() {
 
-								if (ext.contains(".xls") && !ext.contains(".xlsx")) {
-									words = ReadXls(file.getAbsolutePath());		
-									//words = ReadXlsx.Read(file.getAbsolutePath());
-								} else if (ext.contains(".xlsx")) {
-									words = ReadXlsx.Read(file.getAbsolutePath());
-								} else if (ext.contains(".cvs")) {
+										ArrayList<WordSet> words = new ArrayList<WordSet>();
 
-								}
+										if (ext.contains(".xls") && !ext.contains(".xlsx")) {
+											words = ReadXls(file.getAbsolutePath());
+										} else if (ext.contains(".xlsx")) {
+											words = ReadXlsx.Read(file.getAbsolutePath());
+										} else if (ext.contains(".cvs")) {
 
-								dbMgr.addWordsToDB(userInput.getText().toString(), words);
-								finish();
+										}
+										dbMgr.addWordsToDB(userInput.getText().toString(), words);
+										finish();
+									}
+								}).start();
 							}
 						}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
@@ -210,6 +213,10 @@ public class FindFileActivity extends BaseActivity {
 		}
 
 		return words;
+	}
+
+	private ArrayList<WordSet> ReadXlsx(String filePath) {
+		return null;
 	}
 
 	public ArrayList<File> GetFiles(String DirectoryPath) {
