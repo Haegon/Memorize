@@ -1,4 +1,4 @@
-package com.gohn.memorize.model;
+package com.gohn.memorize.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,6 +18,8 @@ import com.aspose.cells.Cells;
 import com.aspose.cells.Row;
 import com.aspose.cells.Workbook;
 import com.aspose.cells.Worksheet;
+import com.gohn.memorize.model.WordSet;
+import com.gohn.memorize.model.WordType;
 
 public class ReadXlsx {
 	public static ArrayList<WordSet> Read(String filePath) {

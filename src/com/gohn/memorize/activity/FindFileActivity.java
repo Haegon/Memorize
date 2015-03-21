@@ -16,7 +16,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,9 +29,10 @@ import android.widget.Toast;
 import com.gohn.memorize.R;
 import com.gohn.memorize.adpator.FindFileAdapter;
 import com.gohn.memorize.manager.WordsDBMgr;
-import com.gohn.memorize.model.ReadXlsx;
 import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.model.WordType;
+import com.gohn.memorize.util.ReadCSV;
+import com.gohn.memorize.util.ReadXlsx;
 
 public class FindFileActivity extends BaseActivity {
 
@@ -96,8 +96,8 @@ public class FindFileActivity extends BaseActivity {
 											words = ReadXls(file.getAbsolutePath());
 										} else if (ext.contains(".xlsx")) {
 											words = ReadXlsx.Read(file.getAbsolutePath());
-										} else if (ext.contains(".cvs")) {
-
+										} else if (ext.contains(".csv")) {
+											words = ReadCSV.Read(file.getAbsolutePath());
 										}
 										dbMgr.addWordsToDB(userInput.getText().toString(), words);
 										finish();
@@ -237,8 +237,8 @@ public class FindFileActivity extends BaseActivity {
 			}
 		}
 		for (int i = 0; i < files.length; i++) {
-			if (!files[i].isHidden() && !files[i].isDirectory() && files[i].getAbsolutePath().contains(".xls")) {
-				if (files[i].getAbsolutePath().contains(".xls") || files[i].getAbsolutePath().contains(".xlsx") || files[i].getAbsolutePath().contains(".cvs")) {
+			if (!files[i].isHidden() && !files[i].isDirectory()) {
+				if (files[i].getAbsolutePath().contains(".xls") || files[i].getAbsolutePath().contains(".xlsx") || files[i].getAbsolutePath().contains(".csv")) {
 					MyFiles.add(files[i]);
 				}
 			}

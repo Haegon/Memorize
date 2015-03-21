@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.gohn.memorize.util;
+package com.gohn.memorize.util.billing;
 
 /**
  * Exception thrown when something went wrong with in-app billing.

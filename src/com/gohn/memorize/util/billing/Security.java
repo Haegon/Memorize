@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.gohn.memorize.util;
+package com.gohn.memorize.util.billing;
 
 import android.text.TextUtils;
 import android.util.Log;

@@ -100,7 +100,7 @@ public class FindFileAdapter extends BaseAdapter {
 			File file = mData.get(position);
 			String ext = file.getName().substring(file.getName().lastIndexOf("."));
 			Log.d("gohn", ext);
-			if (ext.contains(".xls") || ext.contains(".xlsx") || ext.contains(".cvs")) {
+			if (ext.contains(".xls") || ext.contains(".xlsx") || ext.contains(".csv")) {
 				viewHolder.mNameTv.setTextColor(Color.BLACK);
 				viewHolder.mIcon.setImageResource(R.raw.excel);
 			} else {

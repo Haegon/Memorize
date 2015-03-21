@@ -2,23 +2,15 @@ package com.gohn.memorize.activity;
 
 import java.util.ArrayList;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 
 import com.gohn.memorize.R;
-import com.gohn.memorize.util.IabHelper;
-import com.gohn.memorize.util.IabResult;
-import com.gohn.memorize.util.Inventory;
-import com.gohn.memorize.util.Purchase;
+import com.gohn.memorize.util.billing.IabHelper;
+import com.gohn.memorize.util.billing.IabResult;
+import com.gohn.memorize.util.billing.Inventory;
+import com.gohn.memorize.util.billing.Purchase;
 
 public class DonationActivity extends BaseActivity {
 
