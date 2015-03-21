@@ -28,11 +28,10 @@ public class ReadCSV {
 
 				for (;;) {
 					String[] sa = reader.readNext();
-					
+
 					if (sa == null)
 						break;
 
-					Log.d("gohn", sa[0] + "@" + sa[1] + "@" + sa[2]);
 					WordSet word = new WordSet();
 
 					word.Type = sa[0];

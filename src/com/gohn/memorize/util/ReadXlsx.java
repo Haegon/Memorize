@@ -23,8 +23,6 @@ import com.gohn.memorize.model.WordType;
 
 public class ReadXlsx {
 	public static ArrayList<WordSet> Read(String filePath) {
-		Log.d("gohn", "@@@@@ Read " + filePath);
-
 		try {
 			File simpleXlsxInternalStoragePath = new File(filePath);
 			InputStream fileStream = new FileInputStream(simpleXlsxInternalStoragePath);

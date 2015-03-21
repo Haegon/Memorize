@@ -43,7 +43,7 @@ public class WordsDBMgr {
 		mDatabase = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
 
 		mDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(" + "_id INTEGER PRIMARY KEY AUTOINCREMENT," + GROUP + " TEXT," + TYPE + " type TEXT," + WORD + " word TEXT," + MEANING
-				+ " meaning TEXT" + ");");
+				+ " meaning TEXT, unique(" + GROUP + "," + WORD + ")" + ");");
 		mDatabase.execSQL("CREATE INDEX IF NOT EXISTS group_idx ON " + TABLE_NAME + " (" + GROUP + ");");
 		mDatabase.execSQL("CREATE INDEX IF NOT EXISTS type_idx ON " + TABLE_NAME + " (" + TYPE + ");");
 		mDatabase.execSQL("CREATE INDEX IF NOT EXISTS word_idx ON " + TABLE_NAME + " (" + WORD + ");");
@@ -130,7 +130,7 @@ public class WordsDBMgr {
 	public String[] getColumns() {
 		return new String[] { WordsDBMgr.GROUP, WordsDBMgr.TYPE, WordsDBMgr.WORD, WordsDBMgr.MEANING };
 	}
-	
+
 	public void addWordsToDB(String group, ArrayList<WordSet> set) {
 
 		for (int i = 0; i < set.size(); i++) {
@@ -142,7 +142,7 @@ public class WordsDBMgr {
 			insert(cv);
 		}
 	}
-	
+
 	public ArrayList<VocaGroup> getVocaGroups() {
 
 		String[] columns = new String[] { WordsDBMgr.GROUP, "count(" + WordsDBMgr.GROUP + ")" };
@@ -156,6 +156,21 @@ public class WordsDBMgr {
 				vg.Name = c.getString(0);
 				vg.Numbers = c.getInt(1);
 				groups.add(vg);
+			}
+			return groups;
+		}
+		return null;
+	}
+
+	public ArrayList<String> getGroupNames() {
+		String query = "select groupName from Words group by groupName";
+		Cursor c = rawQuery(query, new String[] {});
+
+		if (c != null) {
+			ArrayList<String> groups = new ArrayList<String>();
+
+			while (c.moveToNext()) {
+				groups.add(c.getString(0));
 			}
 			return groups;
 		}

@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -86,6 +87,10 @@ public class FindFileActivity extends BaseActivity {
 						// set dialog message
 						alertDialogBuilder.setCancelable(false).setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
+
+								if (dbMgr.getGroupNames().contains(userInput.getText().toString())) {
+									Log.d("gohn", "SAME NAME");
+								}
 
 								new Thread(new Runnable() {
 									public void run() {
