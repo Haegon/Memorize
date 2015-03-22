@@ -15,6 +15,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.gohn.memorize.R;
@@ -74,8 +76,8 @@ public class FindFileActivity extends BaseActivity {
 					final String ext = file.getName().substring(file.getName().lastIndexOf("."));
 					if (ext.contains(".xls") || ext.contains(".xlsx") || ext.contains(".csv")) {
 
-						LayoutInflater li = LayoutInflater.from(context);
-						View promptsView = li.inflate(R.layout.activity_group_edittext, null);
+						final LayoutInflater li = LayoutInflater.from(context);
+						final View promptsView = li.inflate(R.layout.activity_group_edittext, null);
 
 						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
@@ -130,6 +132,13 @@ public class FindFileActivity extends BaseActivity {
 										finish();
 									}
 								}).start();
+
+								// 단어장을 불러오고 있다는 진행 바를 보여줌.
+								final View popupView = li.inflate(R.layout.progress_loading, null);
+								AlertDialog.Builder ad = new AlertDialog.Builder(context);
+								ad.setView(popupView);
+								AlertDialog alertDialog = ad.create();
+								alertDialog.show();
 							}
 						}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {

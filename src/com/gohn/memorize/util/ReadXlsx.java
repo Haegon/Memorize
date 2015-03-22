@@ -35,7 +35,7 @@ public class ReadXlsx {
 		return null;
 	}
 
-	private static ArrayList<WordSet> readExcel(final InputStream fileStream) {
+	public static ArrayList<WordSet> readExcel(final InputStream fileStream) {
 
 		ArrayList<WordSet> words = new ArrayList<WordSet>();
 

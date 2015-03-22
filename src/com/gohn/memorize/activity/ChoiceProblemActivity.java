@@ -427,7 +427,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 								// 단어장 이름이 비어있을때
 								if (userInput.getText().toString().equals("")) {
 									AlertDialog.Builder builder = new AlertDialog.Builder(ChoiceProblemActivity.this);
-									builder.setMessage(R.string.find_duplicate).setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+									builder.setMessage(R.string.no_name).setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
 										public void onClick(DialogInterface dialog, int id) {
 											// do things
 										}

@@ -1,5 +1,8 @@
 package com.gohn.memorize.activity;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +16,9 @@ import android.widget.TextView;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.manager.WordsDBMgr;
+import com.gohn.memorize.model.WordSet;
+import com.gohn.memorize.util.ReadCSV;
+import com.gohn.memorize.util.ReadXlsx;
 
 @SuppressLint("NewApi")
 public class LoadingActivity extends BaseActivity {
@@ -27,18 +33,32 @@ public class LoadingActivity extends BaseActivity {
 
 		ImageView imgView = (ImageView) findViewById(R.id.loading_image);
 		imgView.setScaleType(ScaleType.FIT_XY);
+		dbMgr = WordsDBMgr.getInstance(this);
 
 		Thread t = new Thread() {
 			public void run() {
 				try {
-					sleep(1500);
+					if (!dbMgr.getGroupNames().contains("토익")) {
+						TextView tv = (TextView) findViewById(R.id.loading_text);
+						tv.setVisibility(tv.VISIBLE);
+
+						ArrayList<WordSet> words = new ArrayList<WordSet>();
+						words = ReadXlsx.readExcel(getAssets().open("toeic.xlsx"));
+						dbMgr.addWordsToDB("토익", words);
+						finish();
+					} else {
+						sleep(1500);
+					}
 					startActivity(new Intent(getApplicationContext(), MainActivity.class));
 					finish();
 				} catch (InterruptedException e) {
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		};
 		t.start();
-		dbMgr = WordsDBMgr.getInstance(this);
+
 	}
 }
