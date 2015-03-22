@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -49,8 +50,9 @@ public class ChoiceProblemActivity extends BaseActivity {
 	int exerciseType;
 	int page = 0;
 	int answer = -1;
-	
+
 	Vibrator vibe;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -67,7 +69,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 		exerciseInit();
 		viewInit();
 		showPage();
-		
+
 		vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 	}
 
@@ -156,7 +158,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 
 	// 문제를 넣으면 보기와 정답유무를 알고있는 클래스를 리턴해주는 함수.
 	public Exercise makeGuessMeaningExercise(WordSet wordSet) {
-
+		Log.d("gohn", "@@@@@@@@@@@@@@@@@@@@@@@@@");
 		// 리턴한 문제 클래스 생성.
 		Exercise e = new Exercise();
 		// 보기는 5개의 리스트로 관리된다.
@@ -172,7 +174,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 		// 보기에 넣을 단어 리스트를 만들어줄 리스트를 생성한다.
 		ArrayList<WordSet> ws = wordMap.get(wordSet.Type);
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < (wordsSet.size() >= 5 ? 5 : wordsSet.size()); i++) {
 			// 랜덤한 숫자를 가져온다.
 			Integer n = rnd.nextInt(ws.size());
 			// 인덱스가 겹치지 않도록 랜덤하게 가져온다.
@@ -192,6 +194,12 @@ public class ChoiceProblemActivity extends BaseActivity {
 			a++;
 			// 문제 리스트에 추가 한다.
 			answerItems.add(new AnswerItem(ws.get(n).Meaning));
+		}
+
+		if (wordsSet.size() < 5) {
+			for (int i = 0; i < 5- wordsSet.size() ; i++) {
+				answerItems.add(new AnswerItem(""));
+			}
 		}
 
 		// 5개의 보기에 정답이 없는경우 5개중 하나를 택해서 정답을 꽂아준다.
@@ -415,6 +423,33 @@ public class ChoiceProblemActivity extends BaseActivity {
 						// set dialog message
 						alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
+								
+								// 단어장 이름이 비어있을때
+								if (userInput.getText().toString().equals("")) {
+									AlertDialog.Builder builder = new AlertDialog.Builder(ChoiceProblemActivity.this);
+									builder.setMessage(R.string.find_duplicate).setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+										public void onClick(DialogInterface dialog, int id) {
+											// do things
+										}
+									});
+									AlertDialog alert = builder.create();
+									alert.show();
+									return;
+								}
+								
+								// 동일한 단어장 이름이 있을때
+								if (dbMgr.getGroupNames().contains(userInput.getText().toString())) {
+									AlertDialog.Builder builder = new AlertDialog.Builder(ChoiceProblemActivity.this);
+									builder.setMessage("Vocabulary name is duplicated").setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+										public void onClick(DialogInterface dialog, int id) {
+											// do things
+										}
+									});
+									AlertDialog alert = builder.create();
+									alert.show();
+									return;
+								}
+								
 								final ArrayList<WordSet> words = new ArrayList<WordSet>();
 								for (int i = 0; i < exercises.size(); i++) {
 									words.add(exercises.get(i).Question);

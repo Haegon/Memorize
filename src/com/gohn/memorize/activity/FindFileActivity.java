@@ -88,8 +88,30 @@ public class FindFileActivity extends BaseActivity {
 						alertDialogBuilder.setCancelable(false).setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 
+								// 단어장 이름이 비어있을때
+								if (userInput.getText().toString().equals("")) {
+									AlertDialog.Builder builder = new AlertDialog.Builder(context);
+									builder.setMessage(R.string.no_name).setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+										public void onClick(DialogInterface dialog, int id) {
+											// do things
+										}
+									});
+									AlertDialog alert = builder.create();
+									alert.show();
+									return;
+								}
+
+								// 동일한 단어장 이름이 있을때
 								if (dbMgr.getGroupNames().contains(userInput.getText().toString())) {
-									Log.d("gohn", "SAME NAME");
+									AlertDialog.Builder builder = new AlertDialog.Builder(context);
+									builder.setMessage(R.string.find_duplicate).setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+										public void onClick(DialogInterface dialog, int id) {
+											// do things
+										}
+									});
+									AlertDialog alert = builder.create();
+									alert.show();
+									return;
 								}
 
 								new Thread(new Runnable() {
@@ -129,10 +151,8 @@ public class FindFileActivity extends BaseActivity {
 					showPrev();
 					return;
 				}
-
 				showNext(file.getName());
 			}
-
 		});
 
 		mListView.setOnItemLongClickListener(new OnItemLongClickListener() {

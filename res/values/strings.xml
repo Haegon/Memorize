@@ -42,5 +42,8 @@
     <string name="group_delete">Delete</string>
     <string name="group_chance">Change Name</string>
     <string name="group_settings">Vocabulary Settings</string>
-
+    <string name="find_duplicate">Vocabulary name is duplicated.</string>
+    <string name="no_voca">There are not enough voca to test for this type.\nPlease use All type test or add new vocabulary.</string>
+    <string name="no_name">Please enter valid vocabulary name.</string>
+    
 </resources>
