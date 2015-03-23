@@ -38,5 +38,19 @@
     <string name="no_voca">해당 유형으로 등록된 단어가 없어 테스트를 진행 할 수 없습니다.\n모든 단어 테스트를 이용하시거나 새로운 단어장을 추가해주세요.</string>
     <string name="no_name">단어장 이름이 비어 있습니다. 다시 입력해주세요.</string>
     <string name="find_add_msg">단어장을 불러오고 있습니다.\n잠시만 기다려 주세요.</string>
-
+    <string name="main_word">단어</string>
+    <string name="pref_basic">기본 설정</string>
+    <string name="pref_basic_random">문제를 랜덤하게 나오게 하기</string>
+    <string name="pref_basic_random_des_on">문제가 엑셀 파일 순서대로 출제됩니다.</string>
+    <string name="pref_basic_random_des_off">문제가 엑셀 파일 순서대로 출제되지 않습니다.</string>
+    <string name="pref_info">어플 정보</string>
+    <string name="pref_info_version">버전</string>
+    <string name="pref_info_feedback">피드백 보내기</string>
+    <string name="pref_info_feedback_des">개발자에게 메일을 보냅니다.</string>
+    <string name="pref_info_donation">기부하기</string>
+    <string name="pref_info_donation_des">기부를 하면 개발자에게 큰 힘이 됩니다.</string>
+    <string name="yes">예</string>
+    <string name="no">아니오</string>
+    <string name="voca_add_oldone">에 틀린단어를 추가 하시겠습니까?</string>
+    
 </resources>

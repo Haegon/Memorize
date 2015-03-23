@@ -18,15 +18,17 @@ public class GroupAdapter extends BaseAdapter {
 	Context mContext = null;
 	public ArrayList<VocaGroup> mData = null;
 	LayoutInflater mLayout = null;
+	String word;
 
 	class ViewHolder {
 		TextViewEx mNameTv;
 		TextViewEx mNumbersTv;
 	}
 
-	public GroupAdapter(Context context, ArrayList<VocaGroup> data) {
+	public GroupAdapter(Context context, ArrayList<VocaGroup> data, String w) {
 		mContext = context;
 		mData = data;
+		word = w;
 		mLayout = LayoutInflater.from(mContext);
 	}
 
@@ -84,8 +86,7 @@ public class GroupAdapter extends BaseAdapter {
 		}
 
 		viewHolder.mNameTv.setText(mData.get(position).Name);
-		viewHolder.mNumbersTv.setText(mData.get(position).Numbers + " 단어");
-
+		viewHolder.mNumbersTv.setText(mData.get(position).Numbers + " " + word);
 		return itemLayout;
 	}
 }

@@ -41,7 +41,7 @@ public class SelectGroupActivity extends BaseActivity {
 
 		dbMgr = WordsDBMgr.getInstance(this);
 
-		mAdapter = new GroupAdapter(this, dbMgr.getVocaGroups());
+		mAdapter = new GroupAdapter(this, dbMgr.getVocaGroups(), getResources().getString(R.string.main_word));
 
 		mListView = (ListView) findViewById(R.id.select_group_list);
 		mListView.setAdapter(mAdapter);
@@ -71,13 +71,12 @@ public class SelectGroupActivity extends BaseActivity {
 				};
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(SelectGroupActivity.this);
-				builder.setMessage(String.format("[ %s ] 에 틀린단어를 추가 하시겠습니까?", mAdapter.mData.get(position).Name))
-					.setPositiveButton("예", dialogClickListener)
-					.setNegativeButton("아니오", dialogClickListener).show();
+				builder.setMessage(String.format("[ %s ] %s", mAdapter.mData.get(position).Name, getResources().getString(R.string.voca_add_oldone)))
+						.setPositiveButton(R.string.yes, dialogClickListener).setNegativeButton(R.string.no, dialogClickListener).show();
 			}
 		});
 	}
-	
+
 	public void goHome() {
 		Intent intent = new Intent();
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

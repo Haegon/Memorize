@@ -46,5 +46,19 @@
     <string name="no_voca">There are not enough voca to test for this type.\nPlease use All type test or add new vocabulary.</string>
     <string name="no_name">Please enter valid vocabulary name.</string>
     <string name="find_add_msg">Vocabulary is being loaded.\nPlease Wait</string>
-
+    <string name="main_word">Words</string>
+    <string name="pref_basic">Basic Settings</string>
+    <string name="pref_basic_random">Test Order Randomly</string>
+    <string name="pref_basic_random_des_on">The problem will be questions as Excel file order.</string>
+    <string name="pref_basic_random_des_off">The problem will not be questions as Excel file order.</string>
+    <string name="pref_info">Applicaton Infomation</string>
+    <string name="pref_info_version">Version</string>
+    <string name="pref_info_feedback">Send Feedback</string>
+    <string name="pref_info_feedback_des">Send an email to the developer.</string>
+    <string name="pref_info_donation">Donation</string>
+    <string name="pref_info_donation_des">The donation would be a big help to the developer.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="voca_add_oldone">Would you like to add wrong problems to this vocabulary group?</string>
+    
 </resources>

@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity {
 
 		dbMgr = WordsDBMgr.getInstance(this);
 
-		mAdapter = new GroupAdapter(this, dbMgr.getVocaGroups());
+		mAdapter = new GroupAdapter(this, dbMgr.getVocaGroups(),getResources().getString(R.string.main_word));
 
 		mListView = (ListView) findViewById(R.id.group_list_view);
 		mListView.setAdapter(mAdapter);
