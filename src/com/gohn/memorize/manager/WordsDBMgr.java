@@ -134,11 +134,17 @@ public class WordsDBMgr {
 	public void addWordsToDB(String group, ArrayList<WordSet> set) {
 
 		for (int i = 0; i < set.size(); i++) {
+
+			WordSet word = set.get(i);
+			
+			if (word.Type.trim().equals("") || word.Word.trim().equals("") || word.Meaning.trim().equals(""))
+				continue;
+
 			ContentValues cv = new ContentValues();
 			cv.put(WordsDBMgr.GROUP, group);
-			cv.put(WordsDBMgr.TYPE, set.get(i).Type);
-			cv.put(WordsDBMgr.WORD, set.get(i).Word);
-			cv.put(WordsDBMgr.MEANING, set.get(i).Meaning);
+			cv.put(WordsDBMgr.TYPE, word.Type);
+			cv.put(WordsDBMgr.WORD, word.Word);
+			cv.put(WordsDBMgr.MEANING, word.Meaning);
 			insert(cv);
 		}
 	}

@@ -26,6 +26,9 @@
     <string name="type_a">Adjective</string>
     <string name="type_ad">Adverb</string>
     <string name="type_e">E.T.C</string>
+    <string name="type_study_mention">Please select study mode.</string>
+    <string name="type_open">Open Mode</string>
+    <string name="type_blind">Blind Mode</string>
     <string name="check">Check</string>
     <string name="next">Next</string>
     <string name="prev">Prev</string>

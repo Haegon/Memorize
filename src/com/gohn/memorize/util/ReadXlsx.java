@@ -53,8 +53,9 @@ public class ReadXlsx {
 				word.Word = cells.get(r, 1).getStringValue();
 				word.Meaning = cells.get(r, 2).getStringValue();
 
-				if (WordType.isType(word.Type))
-					words.add(word);
+				if (!WordType.isType(word.Type))
+					word.Type = WordType.ETC;
+				words.add(word);
 			}
 		} catch (Exception e) {
 			e.printStackTrace(System.out);

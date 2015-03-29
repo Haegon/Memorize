@@ -27,19 +27,20 @@ public class ReadCSV {
 			try {
 
 				for (;;) {
-					String[] sa = reader.readNext();
+					String[] row= reader.readNext();
 
-					if (sa == null)
+					if (row == null)
 						break;
 
 					WordSet word = new WordSet();
 
-					word.Type = sa[0];
-					word.Word = sa[1];
-					word.Meaning = sa[2];
+					word.Type = row[0];
+					word.Word = row[1];
+					word.Meaning = row[2];
 
-					if (WordType.isType(word.Type))
-						words.add(word);
+					if (!WordType.isType(word.Type))
+						word.Type = WordType.ETC;
+					words.add(word);
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

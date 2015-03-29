@@ -1,15 +1,20 @@
 package com.gohn.memorize.activity;
 
+import java.util.ArrayList;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.manager.WordsDBMgr;
 import com.gohn.memorize.model.ExerciseType;
+import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.model.WordType;
 
 public class TypeSelectActivity extends BaseActivity {
@@ -68,7 +73,7 @@ public class TypeSelectActivity extends BaseActivity {
 
 	public void onClick(View v) {
 
-		Intent intent = new Intent();
+		final Intent intent = new Intent();
 		intent.putExtra(WordsDBMgr.GROUP, groupName);
 
 		boolean zero = false;
@@ -106,23 +111,45 @@ public class TypeSelectActivity extends BaseActivity {
 			break;
 		}
 
+		if (zero)
+			alertZero();
+		
 		switch (getIntent().getExtras().getInt(ExerciseType.toStr())) {
 		case R.id.category_study_btn:
-			intent.setClass(this, StudyActivity.class);
+			
+			DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					switch (which) {
+					// 블라인드 모드
+					case DialogInterface.BUTTON_POSITIVE:
+						intent.putExtra("mode", "blind");
+						break;
+					// 오픈 모드 
+					case DialogInterface.BUTTON_NEGATIVE:
+						intent.putExtra("mode", "open");						
+						break;
+					}
+					intent.setClass(TypeSelectActivity.this, StudyActivity.class);
+					startActivityForResult(intent, 3);
+				}
+			};
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(TypeSelectActivity.this);
+			builder.setMessage(R.string.type_study_mention).setPositiveButton(R.string.type_blind, dialogClickListener).setNegativeButton(R.string.type_open, dialogClickListener).show();
+			
+			
 			break;
 		case R.id.category_find_meaning_btn:
 		case R.id.category_find_word_btn:
 			intent.putExtra(ExerciseType.toStr(), exerciseType);
 			intent.setClass(this, ChoiceProblemActivity.class);
+			startActivityForResult(intent, 3);
 			break;
 		case R.id.category_write_word_btn:
 			intent.setClass(this, WriteProblemActivity.class);
+			startActivityForResult(intent, 3);
 			break;
 		}
-
-		if (zero)
-			alertZero();
-		else
-			startActivityForResult(intent, 3);
 	}
 }

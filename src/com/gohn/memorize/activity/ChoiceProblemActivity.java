@@ -153,12 +153,14 @@ public class ChoiceProblemActivity extends BaseActivity {
 		if (isFinish()) {
 			Button againBtn = (Button) findViewById(R.id.result_again_btn);
 			againBtn.setVisibility(View.GONE);
+			
+			Button saveBtn = (Button) findViewById(R.id.result_save_btn);
+			saveBtn.setVisibility(View.GONE);
 		}
 	}
 
 	// 문제를 넣으면 보기와 정답유무를 알고있는 클래스를 리턴해주는 함수.
 	public Exercise makeGuessMeaningExercise(WordSet wordSet) {
-		Log.d("gohn", "@@@@@@@@@@@@@@@@@@@@@@@@@");
 		// 리턴한 문제 클래스 생성.
 		Exercise e = new Exercise();
 		// 보기는 5개의 리스트로 관리된다.

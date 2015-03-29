@@ -17,7 +17,10 @@
     <string name="type_v">동사</string>
     <string name="type_a">형용사</string>
     <string name="type_ad">부사</string>
-    <string name="type_e">기타</string>
+    <string name="type_e">기타</string>    
+    <string name="type_study_mention">학습 방법을 선택해 주세요.</string>
+    <string name="type_open">오픈 모드</string>
+    <string name="type_blind">블라인드 모드</string>
     <string name="check">정답 확인</string>
     <string name="next">다음 문제</string>
     <string name="prev">이전</string>

@@ -15,9 +15,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
-import android.opengl.Visibility;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,7 +24,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.gohn.memorize.R;
@@ -35,6 +32,7 @@ import com.gohn.memorize.manager.WordsDBMgr;
 import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.model.WordType;
 import com.gohn.memorize.util.ReadCSV;
+import com.gohn.memorize.util.ReadXls;
 import com.gohn.memorize.util.ReadXlsx;
 
 public class FindFileActivity extends BaseActivity {
@@ -122,7 +120,7 @@ public class FindFileActivity extends BaseActivity {
 										ArrayList<WordSet> words = new ArrayList<WordSet>();
 
 										if (ext.contains(".xls") && !ext.contains(".xlsx")) {
-											words = ReadXls(file.getAbsolutePath());
+											words = ReadXls.Read(file.getAbsolutePath());
 										} else if (ext.contains(".xlsx")) {
 											words = ReadXlsx.Read(file.getAbsolutePath());
 										} else if (ext.contains(".csv")) {
@@ -189,64 +187,6 @@ public class FindFileActivity extends BaseActivity {
 				Toast.makeText(FindFileActivity.this, "OnNothing Selected", Toast.LENGTH_LONG).show();
 			}
 		});
-	}
-
-	private ArrayList<WordSet> ReadXls(String filePath) {
-
-		ArrayList<WordSet> words = new ArrayList<WordSet>();
-
-		File inputWorkbook = new File(filePath);
-		// File inputWorkbook = new File(file.getAbsolutePath());
-		Workbook w = null;
-
-		try {
-			w = Workbook.getWorkbook(inputWorkbook);
-		} catch (BiffException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// Get the first sheet
-		Sheet sheet = w.getSheet(0);
-		// Loop over first 10 column and lines
-
-		for (int r = 0; r < sheet.getRows(); r++) {
-
-			WordSet word = new WordSet();
-
-			boolean b = false;
-
-			for (int c = 0; c < sheet.getColumns(); c++) {
-
-				Cell cell = sheet.getCell(c, r);
-
-				if (cell.getType() == CellType.LABEL) {
-
-					String content = cell.getContents();
-
-					switch (c) {
-					case 0:
-						if (!WordType.isType(content))
-							b = true;
-						word.Type = content;
-						break;
-					case 1:
-						word.Word = content;
-						break;
-					case 2:
-						word.Meaning = content;
-						break;
-					}
-				}
-			}
-			if (b)
-				words.add(word);
-		}
-
-		return words;
 	}
 
 	private ArrayList<WordSet> ReadXlsx(String filePath) {
