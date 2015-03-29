@@ -32,6 +32,7 @@
     <string name="check">Check</string>
     <string name="next">Next</string>
     <string name="prev">Prev</string>
+    <string name="result_again_study">Study Again</string>
     <string name="result_again">Test Again</string>
     <string name="result_wrong">Wrong Problem Again</string>
     <string name="result_save">Wrong Problem Save</string>
@@ -63,5 +64,28 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="voca_add_oldone">Would you like to add wrong problems to this vocabulary group?</string>
-    
+    <string name="help_1"> \"VOCA DIY\" app is memorizing the words you want to memorize words by uploading directly.
+\n\n You must save yourself the words you want to memorize the Excel file.
+\n\n When you save an Excel file There is a simple rule.
+\n\n The user must enter a value in a total of three columns.
+\n\n The first column is the part of speech of the word, 
+the second column is the word, 
+and the third column is the meaning of the word.
+\n\n You entered parts of speech helps to provide a great view from the multiple-choice questions.</string>
+    <string name="help_2">Alphabet to write the part of speech is defined by part of speech.
+             \n  [ n ]: Noun
+             \n  [ v ]: Verb
+             \n  [ a ]: Adjective
+             \n  [ ad ]: Adverb
+             \n  [ e ]: Other Parts of Speech
+             \n\n If a word has two meaning that if you type:</string>
+    <string name="help_3">Word learning can be a total of four types.
+             \n\n First, just learn the words.
+             \n Second, looking at the problem of finding meaning in the word-choice questions.
+             \n Third, looking at the problem of finding word in the meaning-choice questions.
+             \n Fourth, the problem will write the words to see yourself.
+             \n\n Wrong answers can be seen right back test,
+add a new vocabulary or
+you can also add to the existing vocabulary.
+             \n\n You can change the order option of questions in the \"Settings\" view.</string>
 </resources>

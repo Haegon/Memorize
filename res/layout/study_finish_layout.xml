@@ -41,7 +41,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/category_btn"
             android:onClick="onClick"
-            android:text="처음부터 다시 학습"
+            android:text="@string/result_again_study"
             android:textAlignment="center"
             android:textSize="25dp" />
 
@@ -53,7 +53,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/category_btn"
             android:onClick="onClick"
-            android:text="단어장으로 돌아가기"
+            android:text="@string/result_home"
             android:textAlignment="center"
             android:textSize="25dp" />
     </LinearLayout>

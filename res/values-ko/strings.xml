@@ -17,13 +17,14 @@
     <string name="type_v">동사</string>
     <string name="type_a">형용사</string>
     <string name="type_ad">부사</string>
-    <string name="type_e">기타</string>    
+    <string name="type_e">기타</string>
     <string name="type_study_mention">학습 방법을 선택해 주세요.</string>
     <string name="type_open">오픈 모드</string>
     <string name="type_blind">블라인드 모드</string>
     <string name="check">정답 확인</string>
     <string name="next">다음 문제</string>
     <string name="prev">이전</string>
+    <string name="result_again_study">다시 학습</string>
     <string name="result_again">다시 풀기</string>
     <string name="result_wrong">틀린문제 다시 풀기</string>
     <string name="result_save">틀린문제 저장</string>
@@ -55,5 +56,25 @@
     <string name="yes">예</string>
     <string name="no">아니오</string>
     <string name="voca_add_oldone">에 틀린단어를 추가 하시겠습니까?</string>
-    
+    <string name="help_1"> \"VOCA DIY\"는 사용자가 직접 외우고 싶은 단어를 업로드 하여 단어를 외우는 앱입니다. 
+\n\n 사용자는 자신이 외우고자 하는 단어들을 엑셀파일에 저장해야 합니다.
+\n\n 엑셀파일로 저장할 때는 간단한 규칙이 있습니다.
+\n\n 사용자는 총 3개의 열에 값을 입력 해야합니다.
+\n\n 첫번째 열은 단어의 품사, 두번째 열은 단어, 세번째 열은 단어의 뜻 입니다.
+\n\n 사용자가 입력한 품사는 객관식 문제에서 훌륭한 보기를 제공하는데 도움을 줍니다.</string>
+    <string name="help_2"> 품사에 쓸 수 있는 알파벳은 품사별로 정해져 있습니다. 
+            \n  [ n ] : 명사
+            \n  [ v ] : 동사
+            \n  [ a ] : 형용사
+            \n  [ ad ] : 부사
+            \n  [ e ] : 그 외 품사
+            \n\n 만약 하나의 단어가 두가지 뜻을 가지고 있다면 아래와 같이 입력하면 됩니다.</string>
+    <string name="help_3">단어 학습은 총 3가지 유형으로 할 수 있습니다.
+            \n\n 첫번째, 단어 학습 하기.
+            \n 두번째, 단어를 보고 객관식 문항에서 뜻을 찾는 문제.
+            \n 세번째, 뜻을 보고 객관식 문항에서 단어를 찾는 문제.
+            \n 네번째, 뜻을 보고 단어를 직접 쓰는 문제.
+            \n\n 틀린 문제는 바로 다시 풀 수도 있고, 틀린 문제만 새로운 단어장으로 추가 하거나, 기존 단어장에 추가할 수도 있습니다.
+            \n\n 설정 창에서 엑셀파일에 입력된 순서대로 학습할 것인지 임의의 순서로 학습할 것인지 선택할 수 있습니다.</string>
+
 </resources>
