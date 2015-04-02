@@ -1,16 +1,15 @@
 package com.gohn.memorize.activity;
 
-import java.util.ArrayList;
+import java.util.Locale;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,7 +23,6 @@ import android.widget.Toast;
 import com.gohn.memorize.R;
 import com.gohn.memorize.adpator.GroupAdapter;
 import com.gohn.memorize.manager.WordsDBMgr;
-import com.gohn.memorize.model.VocaGroup;
 
 public class MainActivity extends BaseActivity {
 
@@ -45,7 +43,7 @@ public class MainActivity extends BaseActivity {
 
 		dbMgr = WordsDBMgr.getInstance(this);
 
-		mAdapter = new GroupAdapter(this, dbMgr.getVocaGroups(),getResources().getString(R.string.main_word));
+		mAdapter = new GroupAdapter(this, dbMgr.getVocaGroups(), getResources().getString(R.string.main_word));
 
 		mListView = (ListView) findViewById(R.id.group_list_view);
 		mListView.setAdapter(mAdapter);
@@ -70,7 +68,7 @@ public class MainActivity extends BaseActivity {
 
 				final int p = position;
 
-				CharSequence s[] = new CharSequence[] {getResources().getString(R.string.group_delete), getResources().getString(R.string.group_chance), getResources().getString(R.string.cancel) };
+				CharSequence s[] = new CharSequence[] { getResources().getString(R.string.group_delete), getResources().getString(R.string.group_chance), getResources().getString(R.string.cancel) };
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
 				builder.setTitle(R.string.group_settings);
@@ -143,6 +141,17 @@ public class MainActivity extends BaseActivity {
 				Toast.makeText(MainActivity.this, "OnNothing Selected", Toast.LENGTH_LONG).show();
 			}
 		});
+
+		if (mAdapter.getCount() == 0 && Locale.KOREA.getCountry().equals(getResources().getConfiguration().locale.getCountry())) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+			builder.setMessage("단어장에 등록된 단어가 없습니다. \n설정 화면에서 기본 단어를 추가해 주세요.").setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					// do things
+				}
+			});
+			AlertDialog alert = builder.create();
+			alert.show();
+		}
 	}
 
 	@Override

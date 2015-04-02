@@ -1,11 +1,16 @@
 package com.gohn.memorize.activity;
 
+import java.util.Locale;
+
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
+import android.util.Log;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.manager.Global;
@@ -20,6 +25,13 @@ public class SettingsActivity extends PreferenceActivity {
 
 		CheckBoxPreference checkRandom = (CheckBoxPreference) findPreference("randomProblem");
 		checkRandom.setOnPreferenceChangeListener(onPreferenceChangeListener);
+
+		Preference pref = (Preference) findPreference("freeAdd");
+		
+		if (!Locale.KOREA.getCountry().equals(getResources().getConfiguration().locale.getCountry())) {
+			PreferenceGroup pg = (PreferenceGroup)findPreference("pref_basic");
+			pg.removePreference(pref);
+		}
 	}
 
 	private void setOnPreferenceChange(Preference mPreference) {

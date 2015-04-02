@@ -18,6 +18,8 @@ public class BaseActivity extends Activity {
 	public void setContentView(int layoutResID) {
 		super.setContentView(layoutResID);
 
+		dbMgr = WordsDBMgr.getInstance(this);
+		
 		if (BaseActivity.mTypeface == null)
 			BaseActivity.mTypeface = Typeface.createFromAsset(getAssets(), "bd_font.mp3");
 

@@ -63,6 +63,9 @@
             android:name="com.gohn.memorize.activity.SelectGroupActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.gohn.memorize.activity.DefaultVocaActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.gohn.memorize.activity.DonationActivity"
             android:label="Donation"
             android:theme="@style/AppTheme" >

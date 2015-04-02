@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="@string/pref_basic" >
+    <PreferenceCategory 
+        android:title="@string/pref_basic" 
+         android:key="pref_basic">
 
         <CheckBoxPreference
             android:id="@+id/pref_random"
@@ -10,6 +12,18 @@
             android:summaryOff="@string/pref_basic_random_des_off"
             android:summaryOn="@string/pref_basic_random_des_on"
             android:title="@string/pref_basic_random" />
+
+        <Preference
+            android:id="@+id/free_add"
+            android:key="freeAdd"
+            android:summary="학습자 난이도에 맞는 기본 단어를 추가하세요."
+            android:title="기본 단어 추가하기" >
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="com.gohn.memorize.activity.DefaultVocaActivity"
+                android:targetPackage="com.gohn.memorize" />
+        </Preference>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_info" >

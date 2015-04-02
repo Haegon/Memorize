@@ -35,22 +35,10 @@ public class LoadingActivity extends BaseActivity {
 		Thread t = new Thread() {
 			public void run() {
 				try {
-					if (!dbMgr.getGroupNames().contains("토익") && Locale.KOREA.getCountry().equals(getResources().getConfiguration().locale.getCountry())) {
-						TextView tv = (TextView) findViewById(R.id.loading_text);
-						tv.setVisibility(tv.VISIBLE);
-
-						ArrayList<WordSet> words = new ArrayList<WordSet>();
-						words = ReadXlsx.readExcel(getAssets().open("toeic.xlsx"));
-						dbMgr.addWordsToDB("토익", words);
-						finish();
-					} else {
-						sleep(1500);
-					}
+					sleep(1500);
 					startActivity(new Intent(getApplicationContext(), MainActivity.class));
 					finish();
 				} catch (InterruptedException e) {
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
