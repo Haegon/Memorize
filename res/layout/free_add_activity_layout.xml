@@ -45,7 +45,41 @@
             android:text="중학교 필수 단어 3"
             android:textAlignment="center"
             android:textSize="25dp" />
+        <Button
+            android:id="@+id/high_1"
+            android:layout_width="260dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/category_btn"
+            android:onClick="onClick"
+            android:text="수능 필수 단어 1"
+            android:textAlignment="center"
+            android:textSize="25dp" />
 
+        <Button
+            android:id="@+id/high_2"
+            android:layout_width="260dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/category_btn"
+            android:onClick="onClick"
+            android:text="수능 필수 단어 2"
+            android:textAlignment="center"
+            android:textSize="25dp" />
+
+        <Button
+            android:id="@+id/high_3"
+            android:layout_width="260dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/category_btn"
+            android:onClick="onClick"
+            android:text="수능 필수 단어 3"
+            android:textAlignment="center"
+            android:textSize="25dp" />
         <Button
             android:id="@+id/toeic_1"
             android:layout_width="260dp"

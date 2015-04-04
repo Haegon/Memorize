@@ -2,6 +2,7 @@ package com.gohn.memorize.activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -28,7 +29,7 @@ public class DefaultVocaActivity extends BaseActivity {
 
 	public void onClick(final View v) {
 		final Button btn = (Button) findViewById(v.getId());
-		
+
 		// 동일한 단어장 이름이 있을때
 		if (dbMgr.getGroupNames().contains(btn.getText().toString())) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(DefaultVocaActivity.this);
@@ -41,7 +42,7 @@ public class DefaultVocaActivity extends BaseActivity {
 			alert.show();
 			return;
 		}
-		
+
 		// 단어장을 불러오고 있다는 진행 바를 보여줌.
 		final LayoutInflater li = LayoutInflater.from(DefaultVocaActivity.this);
 		final View popupView = li.inflate(R.layout.progress_loading, null);
@@ -49,7 +50,7 @@ public class DefaultVocaActivity extends BaseActivity {
 		ad.setView(popupView);
 		final AlertDialog alertDialog = ad.create();
 		alertDialog.show();
-		
+
 		new Thread(new Runnable() {
 			public void run() {
 				String name = getResources().getResourceEntryName(v.getId());
@@ -65,5 +66,14 @@ public class DefaultVocaActivity extends BaseActivity {
 				alertDialog.dismiss();
 			}
 		}).start();
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(DefaultVocaActivity.this);
+		builder.setMessage("[ " + btn.getText().toString() + " ] " + "은 메인 화면에서 확인해주세요. ").setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				// do things
+			}
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
 	}
 }
