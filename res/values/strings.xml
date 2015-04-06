@@ -8,6 +8,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
+    <string name="ok">OK</string>
     <string name="action_settings">Settings</string>
     <string name="main_add">Voca Add</string>
     <string name="main_help">Help</string>
@@ -64,6 +65,9 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="voca_add_oldone">Would you like to add wrong problems to this vocabulary group?</string>
+    <string name="load_save">There is a record was studied.\nWould you like to learn from where you did?\n(If the previous record disappears again from the beginning.)</string>
+    <string name="stop_study">Are you sure you want to exit the learning?\nYou can learn content from here when you come back.</string>
+    <string name="exit">Are you sure you want to quit?</string>
     <string name="help_1"> \"VOCA DIY\" app is memorizing the words you want to memorize words by uploading directly.
 \n\n You must save yourself the words you want to memorize the Excel file.
 \n\n When you save an Excel file There is a simple rule.
@@ -88,4 +92,5 @@ and the third column is the meaning of the word.
 add a new vocabulary or
 you can also add to the existing vocabulary.
              \n\n You can change the order option of questions in the \"Settings\" view.</string>
+
 </resources>

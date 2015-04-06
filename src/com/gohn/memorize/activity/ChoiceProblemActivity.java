@@ -1,10 +1,19 @@
 package com.gohn.memorize.activity;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -29,6 +38,8 @@ import com.gohn.memorize.model.Exercise;
 import com.gohn.memorize.model.ExerciseType;
 import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.model.WordType;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class ChoiceProblemActivity extends BaseActivity {
 
@@ -50,27 +61,55 @@ public class ChoiceProblemActivity extends BaseActivity {
 	int exerciseType;
 	int page = 0;
 	int answer = -1;
+	boolean end = false;
 
 	Vibrator vibe;
+
+	JSONObject json;
+	String fileName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.choice_problem_activity_layout);
 
+		json = new JSONObject();
 		dbMgr = WordsDBMgr.getInstance(this);
 		Bundle b = getIntent().getExtras();
 		groupName = b.getString(WordsDBMgr.GROUP);
 		exerciseType = b.getInt(ExerciseType.toStr());
 		wordType = b.getString(WordsDBMgr.TYPE);
 		wordsSet = dbMgr.getWordsSet(groupName, wordType);
-
-		exerciseInit();
-		viewInit();
-		showPage();
-
+		fileName = groupName + "|" + exerciseType + "|" + wordType;
 		vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+		if (isFileExist(fileName)) {
+			DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					switch (which) {
+					case DialogInterface.BUTTON_POSITIVE:
+						readCurrentState();
+						break;
+					case DialogInterface.BUTTON_NEGATIVE:
+						deleteCurrentState();
+						exerciseInit();
+						break;
+					}
+					setContentView(R.layout.choice_problem_activity_layout);
+					viewInit();
+					showPage();
+				}
+			};
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(ChoiceProblemActivity.this);
+			builder.setMessage(R.string.load_save).setPositiveButton(R.string.yes, dialogClickListener).setNegativeButton(R.string.no, dialogClickListener).show();
+		} else {
+			exerciseInit();
+			setContentView(R.layout.choice_problem_activity_layout);
+			viewInit();
+			showPage();
+		}
 	}
 
 	public void exerciseInit() {
@@ -142,6 +181,8 @@ public class ChoiceProblemActivity extends BaseActivity {
 
 	public void showResult() {
 
+		deleteCurrentState();
+
 		setContentView(R.layout.result_layout);
 
 		TextView cntTv = (TextView) findViewById(R.id.result_count_text);
@@ -153,7 +194,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 		if (isFinish()) {
 			Button againBtn = (Button) findViewById(R.id.result_again_btn);
 			againBtn.setVisibility(View.GONE);
-			
+
 			Button saveBtn = (Button) findViewById(R.id.result_save_btn);
 			saveBtn.setVisibility(View.GONE);
 		}
@@ -199,7 +240,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 		}
 
 		if (wordsSet.size() < 5) {
-			for (int i = 0; i < 5- wordsSet.size() ; i++) {
+			for (int i = 0; i < 5 - wordsSet.size(); i++) {
 				answerItems.add(new AnswerItem(""));
 			}
 		}
@@ -345,6 +386,49 @@ public class ChoiceProblemActivity extends BaseActivity {
 		}
 	}
 
+	private void deleteCurrentState() {
+		deleteFile(fileName);
+	}
+
+	private void saveCurrentState() {
+		
+		Thread t = new Thread() {
+			public void run() {
+				try {
+					Gson gson = new Gson();
+
+					json.put("page", page);
+					json.put("list", gson.toJson(exercises));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				writeToFile(fileName, json.toString());
+			}
+		};
+		t.start();
+	}
+
+	private void readCurrentState() {
+		String jstr = readFromFile(fileName);
+		try {
+			JSONObject j = new JSONObject(jstr);
+			
+			page = j.getInt("page");
+
+			String list = j.getString("list");
+			Gson gson = new Gson();
+			exercises = gson.fromJson(list, new TypeToken<ArrayList<Exercise>>() {
+			}.getType());
+
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public void onClick(View v) {
 
 		switch (v.getId()) {
@@ -374,10 +458,12 @@ public class ChoiceProblemActivity extends BaseActivity {
 					answerBtns.get(answer).setTextColor(exercises.get(page).AnswerItems.get(answer).Tint);
 				}
 				checkBtn.setText(R.string.next);
+				saveCurrentState();
 			} else if (checkBtn.getText().equals(getResources().getString(R.string.next))) {
 				page++;
 				if (page >= exercises.size()) {
 					page--;
+					end = true;
 					showResult();
 				} else {
 					showPage();
@@ -387,6 +473,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 			break;
 		case R.id.result_restart_btn:
 			page = 0;
+			end = false;
 			setContentView(R.layout.choice_problem_activity_layout);
 			exerciseInit();
 			viewInit();
@@ -399,6 +486,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 			}
 			exercises = assembleWrongExercises();
 			page = 0;
+			end = false;
 			setContentView(R.layout.choice_problem_activity_layout);
 			viewInit();
 			showPage();
@@ -425,7 +513,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 						// set dialog message
 						alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
-								
+
 								// 단어장 이름이 비어있을때
 								if (userInput.getText().toString().equals("")) {
 									AlertDialog.Builder builder = new AlertDialog.Builder(ChoiceProblemActivity.this);
@@ -438,7 +526,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 									alert.show();
 									return;
 								}
-								
+
 								// 동일한 단어장 이름이 있을때
 								if (dbMgr.getGroupNames().contains(userInput.getText().toString())) {
 									AlertDialog.Builder builder = new AlertDialog.Builder(ChoiceProblemActivity.this);
@@ -451,7 +539,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 									alert.show();
 									return;
 								}
-								
+
 								final ArrayList<WordSet> words = new ArrayList<WordSet>();
 								for (int i = 0; i < exercises.size(); i++) {
 									words.add(exercises.get(i).Question);
@@ -507,4 +595,80 @@ public class ChoiceProblemActivity extends BaseActivity {
 		answerBtns = null;
 		dbMgr = null;
 	}
+
+	@Override
+	public void onBackPressed() {
+
+		if (end)
+			return;
+
+		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				switch (which) {
+				case DialogInterface.BUTTON_POSITIVE:
+					finish();
+					break;
+				case DialogInterface.BUTTON_NEGATIVE:
+					break;
+				}
+			}
+		};
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(ChoiceProblemActivity.this);
+		builder.setMessage(R.string.stop_study).setPositiveButton(R.string.yes, dialogClickListener).setNegativeButton(R.string.no, dialogClickListener).show();
+	}
+
+	private void writeToFile(String path, String data) {
+		try {
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(path, Context.MODE_PRIVATE));
+			outputStreamWriter.write(data);
+			outputStreamWriter.close();
+		} catch (IOException e) {
+			Log.e("Exception", "File write failed: " + e.toString());
+		}
+	}
+
+	private String readFromFile(String path) {
+
+		String ret = "";
+
+		try {
+			InputStream inputStream = openFileInput(path);
+
+			if (inputStream != null) {
+				InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+				String receiveString = "";
+				StringBuilder stringBuilder = new StringBuilder();
+
+				while ((receiveString = bufferedReader.readLine()) != null) {
+					stringBuilder.append(receiveString);
+				}
+
+				inputStream.close();
+				ret = stringBuilder.toString();
+			}
+		} catch (FileNotFoundException e) {
+			Log.e("login activity", "File not found: " + e.toString());
+		} catch (IOException e) {
+			Log.e("login activity", "Can not read file: " + e.toString());
+		}
+
+		return ret;
+	}
+
+	private boolean isFileExist(String path) {
+		try {
+			InputStream inputStream = openFileInput(path);
+		} catch (FileNotFoundException e) {
+			Log.e("login activity", "File not found: " + e.toString());
+			return false;
+		} catch (IOException e) {
+			Log.e("login activity", "Can not read file: " + e.toString());
+			return false;
+		}
+		return true;
+	}
+
 }

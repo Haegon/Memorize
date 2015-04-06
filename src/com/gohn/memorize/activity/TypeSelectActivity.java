@@ -61,7 +61,7 @@ public class TypeSelectActivity extends BaseActivity {
 
 	public void alertZero() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(TypeSelectActivity.this);
-		alert.setPositiveButton("»Æ¿Œ", new DialogInterface.OnClickListener() {
+		alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
@@ -111,8 +111,10 @@ public class TypeSelectActivity extends BaseActivity {
 			break;
 		}
 
-		if (zero)
+		if (zero) {
 			alertZero();
+			return;
+		}
 		
 		switch (getIntent().getExtras().getInt(ExerciseType.toStr())) {
 		case R.id.category_study_btn:

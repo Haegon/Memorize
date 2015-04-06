@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="ok">확인</string>
     <string name="main_add">단어장 추가</string>
     <string name="main_help">도움말</string>
     <string name="main_opt">설정</string>
@@ -56,6 +57,9 @@
     <string name="yes">예</string>
     <string name="no">아니오</string>
     <string name="voca_add_oldone">에 틀린단어를 추가 하시겠습니까?</string>
+    <string name="load_save">공부하던 기록이 있습니다.\n이어서 학습 하시겠습니까?\n(처음부터 다시하면 이전 기록은 사라집니다.)</string>
+    <string name="stop_study">학습을 종료 하시겠습니까?\n여기까지 학습한 내용부터 다음에 이어서 할 수 있습니다.</string>
+    <string name="exit">종료 하시겠습니까?</string>
     <string name="help_1"> \"VOCA DIY\"는 사용자가 직접 외우고 싶은 단어를 업로드 하여 단어를 외우는 앱입니다. 
 \n\n 사용자는 자신이 외우고자 하는 단어들을 엑셀파일에 저장해야 합니다.
 \n\n 엑셀파일로 저장할 때는 간단한 규칙이 있습니다.
