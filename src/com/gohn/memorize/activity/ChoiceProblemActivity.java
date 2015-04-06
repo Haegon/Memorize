@@ -391,13 +391,14 @@ public class ChoiceProblemActivity extends BaseActivity {
 	}
 
 	private void saveCurrentState() {
-		
+
 		Thread t = new Thread() {
 			public void run() {
 				try {
 					Gson gson = new Gson();
 
-					json.put("page", page);
+					// 마지막 문제는 현재 페이지 저장. 그전 문제는 다음 페이지 저장.
+					json.put("page", page + 1 == exercises.size() ? page : page + 1);
 					json.put("list", gson.toJson(exercises));
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -414,7 +415,7 @@ public class ChoiceProblemActivity extends BaseActivity {
 		String jstr = readFromFile(fileName);
 		try {
 			JSONObject j = new JSONObject(jstr);
-			
+
 			page = j.getInt("page");
 
 			String list = j.getString("list");
@@ -422,7 +423,6 @@ public class ChoiceProblemActivity extends BaseActivity {
 			exercises = gson.fromJson(list, new TypeToken<ArrayList<Exercise>>() {
 			}.getType());
 
-			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
