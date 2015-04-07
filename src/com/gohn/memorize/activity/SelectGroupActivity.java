@@ -3,20 +3,14 @@ package com.gohn.memorize.activity;
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ListView;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.adpator.GroupAdapter;

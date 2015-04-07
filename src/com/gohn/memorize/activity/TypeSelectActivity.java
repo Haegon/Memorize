@@ -1,20 +1,15 @@
 package com.gohn.memorize.activity;
 
-import java.util.ArrayList;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.manager.WordsDBMgr;
 import com.gohn.memorize.model.ExerciseType;
-import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.model.WordType;
 
 public class TypeSelectActivity extends BaseActivity {

@@ -1,21 +1,13 @@
 package com.gohn.memorize.activity;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Locale;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import android.widget.TextView;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.manager.WordsDBMgr;
-import com.gohn.memorize.model.WordSet;
-import com.gohn.memorize.util.ReadXlsx;
 
 @SuppressLint("NewApi")
 public class LoadingActivity extends BaseActivity {

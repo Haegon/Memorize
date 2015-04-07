@@ -1,13 +1,12 @@
 package com.gohn.memorize.activity;
 
-import com.gohn.memorize.R;
-import com.gohn.memorize.manager.WordsDBMgr;
-import com.gohn.memorize.model.ExerciseType;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.gohn.memorize.R;
+import com.gohn.memorize.manager.WordsDBMgr;
+import com.gohn.memorize.model.ExerciseType;
 
 public class CategoryActivity extends BaseActivity {
 

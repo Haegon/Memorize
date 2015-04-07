@@ -1,15 +1,9 @@
 package com.gohn.memorize.activity;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import jxl.Cell;
-import jxl.CellType;
-import jxl.Sheet;
-import jxl.Workbook;
-import jxl.read.biff.BiffException;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -30,7 +24,6 @@ import com.gohn.memorize.R;
 import com.gohn.memorize.adpator.FindFileAdapter;
 import com.gohn.memorize.manager.WordsDBMgr;
 import com.gohn.memorize.model.WordSet;
-import com.gohn.memorize.model.WordType;
 import com.gohn.memorize.util.ReadCSV;
 import com.gohn.memorize.util.ReadXls;
 import com.gohn.memorize.util.ReadXlsx;

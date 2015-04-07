@@ -8,9 +8,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
-import android.util.Log;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.manager.Global;

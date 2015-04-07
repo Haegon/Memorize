@@ -1,11 +1,5 @@
 package com.gohn.memorize.activity;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,7 +16,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -41,10 +34,12 @@ import com.gohn.memorize.model.WordType;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class ChoiceProblemActivity extends BaseActivity {
+public class ChoiceProblemActivity extends LearnActivity {
+
+	WordsDBMgr dbMgr;
 
 	ArrayList<Exercise> exercises;
-	ArrayList<WordSet> wordsSet;
+	ArrayList<WordSet> wordsSet = new ArrayList<WordSet>();
 	Map<String, ArrayList<WordSet>> wordMap;
 
 	TextView word;
@@ -53,36 +48,23 @@ public class ChoiceProblemActivity extends BaseActivity {
 	Button checkBtn;
 	ArrayList<Button> answerBtns;
 
-	String groupName;
-	String wordType;
-
-	WordsDBMgr dbMgr;
-
-	int exerciseType;
 	int page = 0;
 	int answer = -1;
-	boolean end = false;
-
-	Vibrator vibe;
-
-	JSONObject json;
-	String fileName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
-		json = new JSONObject();
 		dbMgr = WordsDBMgr.getInstance(this);
 		Bundle b = getIntent().getExtras();
 		groupName = b.getString(WordsDBMgr.GROUP);
 		exerciseType = b.getInt(ExerciseType.toStr());
 		wordType = b.getString(WordsDBMgr.TYPE);
-		wordsSet = dbMgr.getWordsSet(groupName, wordType);
 		fileName = groupName + "|" + exerciseType + "|" + wordType;
 		vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-
+		wordsSet = dbMgr.getWordsSet(groupName, wordType);
+		
 		if (isFileExist(fileName)) {
 			DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 				@Override
@@ -347,13 +329,6 @@ public class ChoiceProblemActivity extends BaseActivity {
 		return true;
 	}
 
-	public void goHome() {
-		Intent intent = new Intent();
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		intent.setClass(this, MainActivity.class);
-		startActivity(intent);
-	}
-
 	public void onAnswerClick(View v) {
 
 		if (exercises.get(page).Solve)
@@ -404,7 +379,6 @@ public class ChoiceProblemActivity extends BaseActivity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 				writeToFile(fileName, json.toString());
 			}
 		};
@@ -595,80 +569,4 @@ public class ChoiceProblemActivity extends BaseActivity {
 		answerBtns = null;
 		dbMgr = null;
 	}
-
-	@Override
-	public void onBackPressed() {
-
-		if (end)
-			return;
-
-		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				switch (which) {
-				case DialogInterface.BUTTON_POSITIVE:
-					finish();
-					break;
-				case DialogInterface.BUTTON_NEGATIVE:
-					break;
-				}
-			}
-		};
-
-		AlertDialog.Builder builder = new AlertDialog.Builder(ChoiceProblemActivity.this);
-		builder.setMessage(R.string.stop_study).setPositiveButton(R.string.yes, dialogClickListener).setNegativeButton(R.string.no, dialogClickListener).show();
-	}
-
-	private void writeToFile(String path, String data) {
-		try {
-			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(path, Context.MODE_PRIVATE));
-			outputStreamWriter.write(data);
-			outputStreamWriter.close();
-		} catch (IOException e) {
-			Log.e("Exception", "File write failed: " + e.toString());
-		}
-	}
-
-	private String readFromFile(String path) {
-
-		String ret = "";
-
-		try {
-			InputStream inputStream = openFileInput(path);
-
-			if (inputStream != null) {
-				InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-				String receiveString = "";
-				StringBuilder stringBuilder = new StringBuilder();
-
-				while ((receiveString = bufferedReader.readLine()) != null) {
-					stringBuilder.append(receiveString);
-				}
-
-				inputStream.close();
-				ret = stringBuilder.toString();
-			}
-		} catch (FileNotFoundException e) {
-			Log.e("login activity", "File not found: " + e.toString());
-		} catch (IOException e) {
-			Log.e("login activity", "Can not read file: " + e.toString());
-		}
-
-		return ret;
-	}
-
-	private boolean isFileExist(String path) {
-		try {
-			InputStream inputStream = openFileInput(path);
-		} catch (FileNotFoundException e) {
-			Log.e("login activity", "File not found: " + e.toString());
-			return false;
-		} catch (IOException e) {
-			Log.e("login activity", "Can not read file: " + e.toString());
-			return false;
-		}
-		return true;
-	}
-
 }

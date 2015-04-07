@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-import android.content.Intent;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,8 +24,12 @@ import com.gohn.memorize.manager.WordsDBMgr;
 import com.gohn.memorize.model.ExerciseType;
 import com.gohn.memorize.model.ExerciseWrite;
 import com.gohn.memorize.model.WordSet;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-public class WriteProblemActivity extends BaseActivity {
+public class WriteProblemActivity extends LearnActivity {
+
+	WordsDBMgr dbMgr;
 
 	ArrayList<ExerciseWrite> exercises;
 	ArrayList<WordSet> wordsSet;
@@ -32,25 +41,48 @@ public class WriteProblemActivity extends BaseActivity {
 	EditText editText;
 	TextView rightAnswer;
 
-	WordsDBMgr dbMgr;
-
-	int exerciseType;
 	int page = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.write_problem_activity_layout);
 
 		dbMgr = WordsDBMgr.getInstance(this);
 		Bundle b = getIntent().getExtras();
+		groupName = b.getString(WordsDBMgr.GROUP);
 		exerciseType = b.getInt(ExerciseType.toStr());
-		wordsSet = dbMgr.getWordsSet(b.getString(WordsDBMgr.GROUP), b.getString(WordsDBMgr.TYPE));
+		wordType = b.getString(WordsDBMgr.TYPE);
+		fileName = groupName + "|" + exerciseType + "|" + wordType;
+		wordsSet = dbMgr.getWordsSet(groupName, wordType);
 
-		exerciseInit();
-		viewInit();
-		showPage();
+		if (isFileExist(fileName)) {
+			DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					switch (which) {
+					case DialogInterface.BUTTON_POSITIVE:
+						readCurrentState();
+						break;
+					case DialogInterface.BUTTON_NEGATIVE:
+						deleteCurrentState();
+						exerciseInit();
+						break;
+					}
+					setContentView(R.layout.write_problem_activity_layout);
+					viewInit();
+					showPage();
+				}
+			};
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(WriteProblemActivity.this);
+			builder.setMessage(R.string.load_save).setPositiveButton(R.string.yes, dialogClickListener).setNegativeButton(R.string.no, dialogClickListener).show();
+		} else {
+			setContentView(R.layout.write_problem_activity_layout);
+			exerciseInit();
+			viewInit();
+			showPage();
+		}
 	}
 
 	public void exerciseInit() {
@@ -79,7 +111,7 @@ public class WriteProblemActivity extends BaseActivity {
 
 	public void showPage() {
 
-		count.setText(page + " / " + exercises.size());
+		count.setText((page + 1) + " / " + exercises.size());
 		word.setText(exercises.get(page).Question.Meaning);
 		if (exercises.get(page).Solve) {
 			checkBtn.setText("다음 문제");
@@ -167,13 +199,6 @@ public class WriteProblemActivity extends BaseActivity {
 		return true;
 	}
 
-	public void goHome() {
-		Intent intent = new Intent();
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		intent.setClass(this, MainActivity.class);
-		startActivity(intent);
-	}
-
 	public void onClick(View v) {
 
 		switch (v.getId()) {
@@ -187,7 +212,7 @@ public class WriteProblemActivity extends BaseActivity {
 			if (editText.getText().toString().isEmpty())
 				return;
 
-			if (checkBtn.getText().equals("정답 확인")) {
+			if (checkBtn.getText().equals(getResources().getString(R.string.check))) {
 				exercises.get(page).Solve = true;
 
 				exercises.get(page).AnswerItems.Answer = editText.getText().toString();
@@ -196,9 +221,12 @@ public class WriteProblemActivity extends BaseActivity {
 				if (exercises.get(page).Question.Word.toLowerCase().equals(editText.getText().toString().toLowerCase())) {
 					exercises.get(page).AnswerItems.Tint = ColorEx.VOCA;
 					exercises.get(page).Correct = true;
+				} else {
+					vibe.vibrate(150);
 				}
+				saveCurrentState();
 				showPage();
-			} else if (checkBtn.getText().equals("다음 문제")) {
+			} else if (checkBtn.getText().equals(getResources().getString(R.string.next))) {
 				page++;
 				if (page >= exercises.size()) {
 					page--;
@@ -232,6 +260,48 @@ public class WriteProblemActivity extends BaseActivity {
 		case R.id.result_home_btn:
 			goHome();
 			break;
+		}
+	}
+
+	private void deleteCurrentState() {
+		deleteFile(fileName);
+	}
+
+	private void saveCurrentState() {
+
+		Thread t = new Thread() {
+			public void run() {
+				try {
+					Gson gson = new Gson();
+
+					// 마지막 문제는 현재 페이지 저장. 그전 문제는 다음 페이지 저장.
+					json.put("page", page + 1 == exercises.size() ? page : page + 1);
+					json.put("list", gson.toJson(exercises));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				writeToFile(fileName, json.toString());
+			}
+		};
+		t.start();
+	}
+
+	private void readCurrentState() {
+		String jstr = readFromFile(fileName);
+		try {
+			JSONObject j = new JSONObject(jstr);
+
+			page = j.getInt("page");
+
+			String list = j.getString("list");
+			Gson gson = new Gson();
+			exercises = gson.fromJson(list, new TypeToken<ArrayList<ExerciseWrite>>() {
+			}.getType());
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

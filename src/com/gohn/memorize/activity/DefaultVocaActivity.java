@@ -2,7 +2,6 @@ package com.gohn.memorize.activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
