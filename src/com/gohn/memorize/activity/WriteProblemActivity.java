@@ -9,8 +9,11 @@ import org.json.JSONObject;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -146,7 +149,7 @@ public class WriteProblemActivity extends LearnActivity {
 			Button againBtn = (Button) findViewById(R.id.result_again_btn);
 			againBtn.setVisibility(View.GONE);
 			Button saveBtn = (Button) findViewById(R.id.result_save_btn);
-			saveBtn .setVisibility(View.GONE);
+			saveBtn.setVisibility(View.GONE);
 		}
 	}
 
@@ -266,6 +269,88 @@ public class WriteProblemActivity extends LearnActivity {
 		case R.id.result_home_btn:
 			goHome();
 			break;
+		case R.id.result_save_btn:
+			exercises = assembleWrongExercises();
+			DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					switch (which) {
+					case DialogInterface.BUTTON_POSITIVE:
+
+						LayoutInflater li = LayoutInflater.from(WriteProblemActivity.this);
+						View promptsView = li.inflate(R.layout.activity_group_edittext, null);
+						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(WriteProblemActivity.this);
+						// set prompts.xml to alertdialog builder
+						alertDialogBuilder.setView(promptsView);
+
+						final EditText userInput = (EditText) promptsView.findViewById(R.id.set_group_edittext);
+
+						// set dialog message
+						alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+
+								// 단어장 이름이 비어있을때
+								if (userInput.getText().toString().equals("")) {
+									AlertDialog.Builder builder = new AlertDialog.Builder(WriteProblemActivity.this);
+									builder.setMessage(R.string.no_name).setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+										public void onClick(DialogInterface dialog, int id) {
+											// do things
+										}
+									});
+									AlertDialog alert = builder.create();
+									alert.show();
+									return;
+								}
+
+								// 동일한 단어장 이름이 있을때
+								if (dbMgr.getGroupNames().contains(userInput.getText().toString())) {
+									AlertDialog.Builder builder = new AlertDialog.Builder(WriteProblemActivity.this);
+									builder.setMessage("Vocabulary name is duplicated").setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+										public void onClick(DialogInterface dialog, int id) {
+											// do things
+										}
+									});
+									AlertDialog alert = builder.create();
+									alert.show();
+									return;
+								}
+
+								final ArrayList<WordSet> words = new ArrayList<WordSet>();
+								for (int i = 0; i < exercises.size(); i++) {
+									words.add(exercises.get(i).Question);
+								}
+								dbMgr.addWordsToDB(userInput.getText().toString(), words);
+								goHome();
+							}
+						}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.cancel();
+							}
+						});
+
+						// create alert dialog
+						AlertDialog alertDialog = alertDialogBuilder.create();
+
+						// show it
+						alertDialog.show();
+						break;
+
+					case DialogInterface.BUTTON_NEGATIVE:
+						// No button clicked
+						Intent intent = new Intent();
+						for (int i = 0; i < exercises.size(); i++) {
+							intent.putExtra(exercises.get(i).Question.Word, exercises.get(i).Question.Meaning);
+						}
+						dbMgr.worngExercisesWrite = exercises;
+						intent.setClass(getApplicationContext(), SelectGroupActivity.class);
+						intent.putExtra("type", "write");
+						startActivity(intent);
+						break;
+					}
+				}
+			};
+			AlertDialog.Builder builder = new AlertDialog.Builder(WriteProblemActivity.this);
+			builder.setMessage(R.string.result_save_mention).setPositiveButton(R.string.result_save_new, dialogClickListener).setNegativeButton(R.string.result_save_old, dialogClickListener).show();
 		}
 	}
 

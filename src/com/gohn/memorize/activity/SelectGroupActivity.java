@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -35,6 +36,8 @@ public class SelectGroupActivity extends BaseActivity {
 
 		dbMgr = WordsDBMgr.getInstance(this);
 
+		final boolean isWrite = getIntent().getExtras().getString("type").equals("write") ? true : false;
+
 		mAdapter = new GroupAdapter(this, dbMgr.getVocaGroups(), getResources().getString(R.string.main_word));
 
 		mListView = (ListView) findViewById(R.id.select_group_list);
@@ -51,13 +54,18 @@ public class SelectGroupActivity extends BaseActivity {
 						switch (which) {
 						case DialogInterface.BUTTON_POSITIVE:
 							final ArrayList<WordSet> words = new ArrayList<WordSet>();
-							for (int i = 0; i < dbMgr.worngExercises.size(); i++) {
-								words.add(dbMgr.worngExercises.get(i).Question);
+							if (isWrite) {
+								for (int i = 0; i < dbMgr.worngExercisesWrite.size(); i++) {
+									words.add(dbMgr.worngExercisesWrite.get(i).Question);
+								}
+							} else {
+								for (int i = 0; i < dbMgr.worngExercises.size(); i++) {
+									words.add(dbMgr.worngExercises.get(i).Question);
+								}
 							}
 							dbMgr.addWordsToDB(mAdapter.mData.get(position).Name, words);
 							goHome();
 							break;
-
 						case DialogInterface.BUTTON_NEGATIVE:
 							break;
 						}

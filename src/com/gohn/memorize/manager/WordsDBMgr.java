@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.gohn.memorize.model.Exercise;
+import com.gohn.memorize.model.ExerciseWrite;
 import com.gohn.memorize.model.VocaGroup;
 import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.model.WordType;
@@ -23,6 +24,7 @@ public class WordsDBMgr {
 	public static final String MEANING = "meaning";
 
 	public ArrayList<Exercise> worngExercises = new ArrayList<Exercise>();
+	public ArrayList<ExerciseWrite> worngExercisesWrite = new ArrayList<ExerciseWrite>();
 	static final int DB_VERSION = 1;
 
 	Context mContext = null;
@@ -135,7 +137,7 @@ public class WordsDBMgr {
 		for (int i = 0; i < set.size(); i++) {
 
 			WordSet word = set.get(i);
-			
+
 			if (word.Type.trim().equals("") || word.Word.trim().equals("") || word.Meaning.trim().equals(""))
 				continue;
 
