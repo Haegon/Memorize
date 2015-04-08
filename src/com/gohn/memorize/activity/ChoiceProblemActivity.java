@@ -33,6 +33,7 @@ import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.model.WordType;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.purplebrain.adbuddiz.sdk.AdBuddiz;
 
 public class ChoiceProblemActivity extends LearnActivity {
 
@@ -64,7 +65,7 @@ public class ChoiceProblemActivity extends LearnActivity {
 		fileName = groupName + "|" + exerciseType + "|" + wordType;
 		vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		wordsSet = dbMgr.getWordsSet(groupName, wordType);
-		
+
 		if (isFileExist(fileName)) {
 			DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 				@Override
@@ -163,6 +164,7 @@ public class ChoiceProblemActivity extends LearnActivity {
 
 	public void showResult() {
 
+		AdBuddiz.showAd(learnActivity);
 		deleteCurrentState();
 
 		setContentView(R.layout.result_layout);

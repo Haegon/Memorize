@@ -47,7 +47,7 @@ public class DonationActivity extends BaseActivity {
 		list.add("donation_5000");
 		list.add("donation_10000");
 		JSONObject products = RequestItem(list);
-		
+
 		ArrayList<Button> btnList = new ArrayList<Button>();
 		btnList.add((Button) findViewById(R.id.donation_1000_btn));
 		btnList.add((Button) findViewById(R.id.donation_3000_btn));
@@ -60,9 +60,9 @@ public class DonationActivity extends BaseActivity {
 				btnList.get(i).setText(a);
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 
 	public void onClick(View v) {
@@ -262,9 +262,10 @@ public class DonationActivity extends BaseActivity {
 					try {
 						object = new JSONObject(thisResponse);
 						String sku = object.getString("productId");
-						String price = object.getString("price");
-						Log.d("gohn", sku + ":" + price);
-						items.put(sku, price);
+						String price = object.getString("price_amount_micros");
+						String locale = object.getString("price_currency_code");
+						Log.d("gohn", sku + " : " + locale + " " + Long.parseLong(price) / 1000000);
+						items.put(sku, locale + " " + Long.parseLong(price) / 1000000);
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}

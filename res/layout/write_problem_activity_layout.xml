@@ -57,7 +57,7 @@
             android:layout_marginRight="10dp"
             android:background="@drawable/num_btn"
             android:onClick="onClick"
-            android:text="이전"
+            android:text="@string/prev"
             android:textAlignment="center"
             android:textColor="#FFF"
             android:textSize="20dp" />
@@ -69,7 +69,7 @@
             android:layout_gravity="top"
             android:background="@drawable/check_btn"
             android:onClick="onClick"
-            android:text="정답 확인"
+            android:text="@string/check"
             android:textAlignment="center"
             android:textColor="#FFF"
             android:textSize="20dp" />

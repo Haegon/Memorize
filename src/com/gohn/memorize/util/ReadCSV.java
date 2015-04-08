@@ -1,13 +1,10 @@
 package com.gohn.memorize.util;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import android.util.Log;
 
 import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.model.WordType;

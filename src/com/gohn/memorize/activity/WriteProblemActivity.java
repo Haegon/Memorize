@@ -11,7 +11,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +25,7 @@ import com.gohn.memorize.model.ExerciseWrite;
 import com.gohn.memorize.model.WordSet;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.purplebrain.adbuddiz.sdk.AdBuddiz;
 
 public class WriteProblemActivity extends LearnActivity {
 
@@ -113,34 +113,40 @@ public class WriteProblemActivity extends LearnActivity {
 
 		count.setText((page + 1) + " / " + exercises.size());
 		word.setText(exercises.get(page).Question.Meaning);
+
+		editText.setText(exercises.get(page).AnswerItem.Answer);
 		if (exercises.get(page).Solve) {
-			checkBtn.setText("다음 문제");
+			checkBtn.setText(R.string.next);
 		} else {
-			checkBtn.setText("정답 확인");
+			checkBtn.setText(R.string.check);
 		}
 
 		// editText.setText(exercises.get(page).AnswerItems.Answer);
-		editText.setTextColor(exercises.get(page).AnswerItems.Tint);
+		editText.setTextColor(exercises.get(page).AnswerItem.Tint);
 
 		if (!exercises.get(page).Correct) {
-			rightAnswer.setText(exercises.get(page).AnswerItems.RightAnswer);
+			rightAnswer.setText(exercises.get(page).AnswerItem.RightAnswer);
 			rightAnswer.setTextColor(ColorEx.VOCA);
 		}
 	}
 
 	public void showResult() {
+		AdBuddiz.showAd(learnActivity);
 
+		deleteCurrentState();
 		setContentView(R.layout.result_layout);
 
 		TextView cntTv = (TextView) findViewById(R.id.result_count_text);
-		cntTv.setText(exercises.size() + " 문제 중 " + correctedCount() + " 개 맞았습니다.");
+		cntTv.setText(exercises.size() + " " + getResources().getString(R.string.result_problems) + " " + correctedCount() + " " + getResources().getString(R.string.result_correct));
 
 		TextView scrTv = (TextView) findViewById(R.id.result_score_text);
-		scrTv.setText(correctedCount() * 100 / exercises.size() + " 점");
+		scrTv.setText(correctedCount() * 100 / exercises.size() + " " + getResources().getString(R.string.result_point));
 
 		if (isFinish()) {
 			Button againBtn = (Button) findViewById(R.id.result_again_btn);
 			againBtn.setVisibility(View.GONE);
+			Button saveBtn = (Button) findViewById(R.id.result_save_btn);
+			saveBtn .setVisibility(View.GONE);
 		}
 	}
 
@@ -215,11 +221,11 @@ public class WriteProblemActivity extends LearnActivity {
 			if (checkBtn.getText().equals(getResources().getString(R.string.check))) {
 				exercises.get(page).Solve = true;
 
-				exercises.get(page).AnswerItems.Answer = editText.getText().toString();
-				exercises.get(page).AnswerItems.RightAnswer = exercises.get(page).Question.Word;
+				exercises.get(page).AnswerItem.Answer = editText.getText().toString();
+				exercises.get(page).AnswerItem.RightAnswer = exercises.get(page).Question.Word;
 
 				if (exercises.get(page).Question.Word.toLowerCase().equals(editText.getText().toString().toLowerCase())) {
-					exercises.get(page).AnswerItems.Tint = ColorEx.VOCA;
+					exercises.get(page).AnswerItem.Tint = ColorEx.VOCA;
 					exercises.get(page).Correct = true;
 				} else {
 					vibe.vibrate(150);
