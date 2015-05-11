@@ -1,4 +1,4 @@
-package com.gohn.memorize.activity;
+﻿package com.gohn.memorize.activity;
 
 import java.util.ArrayList;
 

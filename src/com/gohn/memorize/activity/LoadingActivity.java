@@ -1,4 +1,4 @@
-package com.gohn.memorize.activity;
+﻿package com.gohn.memorize.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

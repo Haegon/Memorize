@@ -1,4 +1,4 @@
-package com.gohn.memorize.activity;
+ï»¿package com.gohn.memorize.activity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -140,7 +140,7 @@ public class StudyActivity extends LearnActivity {
 			showPage();
 			break;
 		case R.id.study_next_btn:
-			// Á¤´äÈ®ÀÎÀ» ¾ÈÇÑ °æ¿ì´Â È®ÀÎ ¹öÆ°¿ªÇÒÀ» ÇÏ°í È®ÀÎÇÑ°æ¿ì´Â ´ÙÀ½¹®Á¦
+			// ì •ë‹µí™•ì¸ì„ ì•ˆí•œ ê²½ìš°ëŠ” í™•ì¸ ë²„íŠ¼ì—­í• ì„ í•˜ê³  í™•ì¸í•œê²½ìš°ëŠ” ë‹¤ìŒë¬¸ì œ
 			saveCurrentState();
 			if (wordsSet.get(page).IsOpen) {
 				page++;
@@ -181,7 +181,7 @@ public class StudyActivity extends LearnActivity {
 				try {
 					Gson gson = new Gson();
 
-					// ¸¶Áö¸· ¹®Á¦´Â ÇöÀç ÆäÀÌÁö ÀúÀå. ±×Àü ¹®Á¦´Â ´ÙÀ½ ÆäÀÌÁö ÀúÀå.
+					// ë§ˆì§€ë§‰ ë¬¸ì œëŠ” í˜„ì¬ í˜ì´ì§€ ì €ì¥. ê·¸ì „ ë¬¸ì œëŠ” ë‹¤ìŒ í˜ì´ì§€ ì €ì¥.
 					json.put("page", page + 1 == wordsSet.size() ? page : page + 1);
 					json.put("list", gson.toJson(wordsSet));
 				} catch (JSONException e) {

@@ -1,4 +1,4 @@
-package com.gohn.memorize.model;
+﻿package com.gohn.memorize.model;
 
 public class WordType {
 	public static final String NONE = "x";

@@ -1,4 +1,4 @@
-package com.gohn.memorize.activity;
+﻿package com.gohn.memorize.activity;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -29,7 +29,7 @@ public class BaseActivity extends Activity {
 		dbMgr = WordsDBMgr.getInstance(this);
 		
 		if (BaseActivity.mTypeface == null)
-			BaseActivity.mTypeface = Typeface.createFromAsset(getAssets(), "bd_font.mp3");
+			BaseActivity.mTypeface = Typeface.createFromAsset(getAssets(), "yoon2.mp3");
 
 		ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
 		setGlobalFont(root);

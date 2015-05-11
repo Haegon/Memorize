@@ -1,4 +1,4 @@
-package com.gohn.memorize.adpator;
+﻿package com.gohn.memorize.adpator;
 
 import java.util.ArrayList;
 

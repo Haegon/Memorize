@@ -1,4 +1,4 @@
-package com.gohn.memorize.manager;
+﻿package com.gohn.memorize.manager;
 
 import java.util.ArrayList;
 

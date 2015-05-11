@@ -1,4 +1,4 @@
-package com.gohn.memorize.activity;
+ï»¿package com.gohn.memorize.activity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -81,7 +81,7 @@ public class FindFileActivity extends BaseActivity {
 						alertDialogBuilder.setCancelable(false).setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 
-								// ´Ü¾îÀå ÀÌ¸§ÀÌ ºñ¾îÀÖÀ»¶§
+								// ë‹¨ì–´ì¥ ì´ë¦„ì´ ë¹„ì–´ìˆì„ë•Œ
 								if (userInput.getText().toString().equals("")) {
 									AlertDialog.Builder builder = new AlertDialog.Builder(context);
 									builder.setMessage(R.string.no_name).setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -94,7 +94,7 @@ public class FindFileActivity extends BaseActivity {
 									return;
 								}
 
-								// µ¿ÀÏÇÑ ´Ü¾îÀå ÀÌ¸§ÀÌ ÀÖÀ»¶§
+								// ë™ì¼í•œ ë‹¨ì–´ì¥ ì´ë¦„ì´ ìˆì„ë•Œ
 								if (dbMgr.getGroupNames().contains(userInput.getText().toString())) {
 									AlertDialog.Builder builder = new AlertDialog.Builder(context);
 									builder.setMessage(R.string.find_duplicate).setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -124,7 +124,7 @@ public class FindFileActivity extends BaseActivity {
 									}
 								}).start();
 
-								// ´Ü¾îÀåÀ» ºÒ·¯¿À°í ÀÖ´Ù´Â ÁøÇà ¹Ù¸¦ º¸¿©ÁÜ.
+								// ë‹¨ì–´ì¥ì„ ë¶ˆëŸ¬ì˜¤ê³  ìˆë‹¤ëŠ” ì§„í–‰ ë°”ë¥¼ ë³´ì—¬ì¤Œ.
 								final View popupView = li.inflate(R.layout.progress_loading, null);
 								AlertDialog.Builder ad = new AlertDialog.Builder(context);
 								ad.setView(popupView);

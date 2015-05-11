@@ -1,4 +1,4 @@
-package com.gohn.memorize.activity;
+ï»¿package com.gohn.memorize.activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class DefaultVocaActivity extends BaseActivity {
 	public void onClick(final View v) {
 		final Button btn = (Button) findViewById(v.getId());
 
-		// µ¿ÀÏÇÑ ´Ü¾îÀå ÀÌ¸§ÀÌ ÀÖÀ»¶§
+		// ë™ì¼í•œ ë‹¨ì–´ì¥ ì´ë¦„ì´ ìˆì„ë•Œ
 		if (dbMgr.getGroupNames().contains(btn.getText().toString())) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(DefaultVocaActivity.this);
 			builder.setMessage(R.string.find_duplicate).setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -42,7 +42,7 @@ public class DefaultVocaActivity extends BaseActivity {
 			return;
 		}
 
-		// ´Ü¾îÀåÀ» ºÒ·¯¿À°í ÀÖ´Ù´Â ÁøÇà ¹Ù¸¦ º¸¿©ÁÜ.
+		// ë‹¨ì–´ì¥ì„ ë¶ˆëŸ¬ì˜¤ê³  ìˆë‹¤ëŠ” ì§„í–‰ ë°”ë¥¼ ë³´ì—¬ì¤Œ.
 		final LayoutInflater li = LayoutInflater.from(DefaultVocaActivity.this);
 		final View popupView = li.inflate(R.layout.progress_loading, null);
 		AlertDialog.Builder ad = new AlertDialog.Builder(DefaultVocaActivity.this);
@@ -67,7 +67,7 @@ public class DefaultVocaActivity extends BaseActivity {
 		}).start();
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(DefaultVocaActivity.this);
-		builder.setMessage("[ " + btn.getText().toString() + " ] " + "Àº ¸ŞÀÎ È­¸é¿¡¼­ È®ÀÎÇØÁÖ¼¼¿ä. ").setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		builder.setMessage("[ " + btn.getText().toString() + " ] " + "ì€ ë©”ì¸ í™”ë©´ì—ì„œ í™•ì¸í•´ì£¼ì„¸ìš”. ").setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				// do things
 			}

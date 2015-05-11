@@ -1,4 +1,4 @@
-package com.gohn.memorize.model;
+﻿package com.gohn.memorize.model;
 
 public class ExerciseWrite {
 	public WordSet Question;

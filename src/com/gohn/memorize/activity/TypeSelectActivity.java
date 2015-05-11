@@ -1,4 +1,4 @@
-package com.gohn.memorize.activity;
+ï»¿package com.gohn.memorize.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -118,11 +118,11 @@ public class TypeSelectActivity extends BaseActivity {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					switch (which) {
-					// ºí¶óÀÎµå ¸ğµå
+					// ë¸”ë¼ì¸ë“œ ëª¨ë“œ
 					case DialogInterface.BUTTON_POSITIVE:
 						intent.putExtra("mode", "blind");
 						break;
-					// ¿ÀÇÂ ¸ğµå 
+					// ì˜¤í”ˆ ëª¨ë“œ 
 					case DialogInterface.BUTTON_NEGATIVE:
 						intent.putExtra("mode", "open");						
 						break;

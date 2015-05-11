@@ -1,4 +1,4 @@
-package com.gohn.memorize.activity;
+ï»¿package com.gohn.memorize.activity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -184,27 +184,27 @@ public class ChoiceProblemActivity extends LearnActivity {
 		}
 	}
 
-	// ¹®Á¦¸¦ ³ÖÀ¸¸é º¸±â¿Í Á¤´äÀ¯¹«¸¦ ¾Ë°íÀÖ´Â Å¬·¡½º¸¦ ¸®ÅÏÇØÁÖ´Â ÇÔ¼ö.
+	// ë¬¸ì œë¥¼ ë„£ìœ¼ë©´ ë³´ê¸°ì™€ ì •ë‹µìœ ë¬´ë¥¼ ì•Œê³ ìˆëŠ” í´ë˜ìŠ¤ë¥¼ ë¦¬í„´í•´ì£¼ëŠ” í•¨ìˆ˜.
 	public Exercise makeGuessMeaningExercise(WordSet wordSet) {
-		// ¸®ÅÏÇÑ ¹®Á¦ Å¬·¡½º »ı¼º.
+		// ë¦¬í„´í•œ ë¬¸ì œ í´ë˜ìŠ¤ ìƒì„±.
 		Exercise e = new Exercise();
-		// º¸±â´Â 5°³ÀÇ ¸®½ºÆ®·Î °ü¸®µÈ´Ù.
+		// ë³´ê¸°ëŠ” 5ê°œì˜ ë¦¬ìŠ¤íŠ¸ë¡œ ê´€ë¦¬ëœë‹¤.
 		ArrayList<AnswerItem> answerItems = new ArrayList<AnswerItem>();
 
-		// ÀüÃ¼ º¸±â ¸®½ºÆ®¿¡¼­ °¡Á®¿Ã º¸±âÀÇ ÀÎµ¦½º ¸®½ºÆ®
-		// 5°³ÀÇ º¸±â¸¸ ³ÖÀ»°ÍÀÓ.
+		// ì „ì²´ ë³´ê¸° ë¦¬ìŠ¤íŠ¸ì—ì„œ ê°€ì ¸ì˜¬ ë³´ê¸°ì˜ ì¸ë±ìŠ¤ ë¦¬ìŠ¤íŠ¸
+		// 5ê°œì˜ ë³´ê¸°ë§Œ ë„£ì„ê²ƒì„.
 		ArrayList<Integer> idxs = new ArrayList<Integer>();
 		boolean have = false;
 		Random rnd = new Random(System.nanoTime());
 		int a = 0;
 
-		// º¸±â¿¡ ³ÖÀ» ´Ü¾î ¸®½ºÆ®¸¦ ¸¸µé¾îÁÙ ¸®½ºÆ®¸¦ »ı¼ºÇÑ´Ù.
+		// ë³´ê¸°ì— ë„£ì„ ë‹¨ì–´ ë¦¬ìŠ¤íŠ¸ë¥¼ ë§Œë“¤ì–´ì¤„ ë¦¬ìŠ¤íŠ¸ë¥¼ ìƒì„±í•œë‹¤.
 		ArrayList<WordSet> ws = wordMap.get(wordSet.Type);
 
 		for (int i = 0; i < (wordsSet.size() >= 5 ? 5 : wordsSet.size()); i++) {
-			// ·£´ıÇÑ ¼ıÀÚ¸¦ °¡Á®¿Â´Ù.
+			// ëœë¤í•œ ìˆ«ìë¥¼ ê°€ì ¸ì˜¨ë‹¤.
 			Integer n = rnd.nextInt(ws.size());
-			// ÀÎµ¦½º°¡ °ãÄ¡Áö ¾Êµµ·Ï ·£´ıÇÏ°Ô °¡Á®¿Â´Ù.
+			// ì¸ë±ìŠ¤ê°€ ê²¹ì¹˜ì§€ ì•Šë„ë¡ ëœë¤í•˜ê²Œ ê°€ì ¸ì˜¨ë‹¤.
 			while (idxs.contains(n)) {
 				if (wordType.equals(WordType.NONE) && !ws.get(n).Type.equals(wordSet.Type)) {
 					continue;
@@ -212,14 +212,14 @@ public class ChoiceProblemActivity extends LearnActivity {
 				n = rnd.nextInt(ws.size());
 			}
 			idxs.add(n);
-			// ÀÎµ¦½º¿¡ ÇØ´çÇÏ´Â ´Ü¾î°¡ ¹®Á¦ÀÇ Á¤´ä°ú ÀÏÄ¡ÇÏ¸é
-			// Á¤´äÀÌ º¸±â Áß¿¡ ÀÖ´Ù°í ÇÏ°í Á¤´äÀ» Àû¾î ³õ´Â´Ù.
+			// ì¸ë±ìŠ¤ì— í•´ë‹¹í•˜ëŠ” ë‹¨ì–´ê°€ ë¬¸ì œì˜ ì •ë‹µê³¼ ì¼ì¹˜í•˜ë©´
+			// ì •ë‹µì´ ë³´ê¸° ì¤‘ì— ìˆë‹¤ê³  í•˜ê³  ì •ë‹µì„ ì ì–´ ë†“ëŠ”ë‹¤.
 			if (ws.get(n).Meaning.equals(wordSet.Meaning)) {
 				have = true;
 				e.AnswerNo = a;
 			}
 			a++;
-			// ¹®Á¦ ¸®½ºÆ®¿¡ Ãß°¡ ÇÑ´Ù.
+			// ë¬¸ì œ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€ í•œë‹¤.
 			answerItems.add(new AnswerItem(ws.get(n).Meaning));
 		}
 
@@ -229,7 +229,7 @@ public class ChoiceProblemActivity extends LearnActivity {
 			}
 		}
 
-		// 5°³ÀÇ º¸±â¿¡ Á¤´äÀÌ ¾ø´Â°æ¿ì 5°³Áß ÇÏ³ª¸¦ ÅÃÇØ¼­ Á¤´äÀ» ²È¾ÆÁØ´Ù.
+		// 5ê°œì˜ ë³´ê¸°ì— ì •ë‹µì´ ì—†ëŠ”ê²½ìš° 5ê°œì¤‘ í•˜ë‚˜ë¥¼ íƒí•´ì„œ ì •ë‹µì„ ê½‚ì•„ì¤€ë‹¤.
 		if (!have) {
 			int r = (int) (Math.random() * 5);
 			answerItems.get(r).Answer = wordSet.Meaning;
@@ -251,7 +251,7 @@ public class ChoiceProblemActivity extends LearnActivity {
 		Random rnd = new Random(System.nanoTime());
 		int a = 0;
 
-		// º¸±â¿¡ ³ÖÀ» ´Ü¾î ¸®½ºÆ®¸¦ ¸¸µé¾îÁÙ ¸®½ºÆ®¸¦ »ı¼ºÇÑ´Ù.
+		// ë³´ê¸°ì— ë„£ì„ ë‹¨ì–´ ë¦¬ìŠ¤íŠ¸ë¥¼ ë§Œë“¤ì–´ì¤„ ë¦¬ìŠ¤íŠ¸ë¥¼ ìƒì„±í•œë‹¤.
 		ArrayList<WordSet> ws = wordMap.get(wordSet.Type);
 
 		for (int i = 0; i < 5; i++) {
@@ -374,7 +374,7 @@ public class ChoiceProblemActivity extends LearnActivity {
 				try {
 					Gson gson = new Gson();
 
-					// ¸¶Áö¸· ¹®Á¦´Â ÇöÀç ÆäÀÌÁö ÀúÀå. ±×Àü ¹®Á¦´Â ´ÙÀ½ ÆäÀÌÁö ÀúÀå.
+					// ë§ˆì§€ë§‰ ë¬¸ì œëŠ” í˜„ì¬ í˜ì´ì§€ ì €ì¥. ê·¸ì „ ë¬¸ì œëŠ” ë‹¤ìŒ í˜ì´ì§€ ì €ì¥.
 					json.put("page", page + 1 == exercises.size() ? page : page + 1);
 					json.put("list", gson.toJson(exercises));
 				} catch (JSONException e) {
@@ -490,7 +490,7 @@ public class ChoiceProblemActivity extends LearnActivity {
 						alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 
-								// ´Ü¾îÀå ÀÌ¸§ÀÌ ºñ¾îÀÖÀ»¶§
+								// ë‹¨ì–´ì¥ ì´ë¦„ì´ ë¹„ì–´ìˆì„ë•Œ
 								if (userInput.getText().toString().equals("")) {
 									AlertDialog.Builder builder = new AlertDialog.Builder(ChoiceProblemActivity.this);
 									builder.setMessage(R.string.no_name).setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -503,7 +503,7 @@ public class ChoiceProblemActivity extends LearnActivity {
 									return;
 								}
 
-								// µ¿ÀÏÇÑ ´Ü¾îÀå ÀÌ¸§ÀÌ ÀÖÀ»¶§
+								// ë™ì¼í•œ ë‹¨ì–´ì¥ ì´ë¦„ì´ ìˆì„ë•Œ
 								if (dbMgr.getGroupNames().contains(userInput.getText().toString())) {
 									AlertDialog.Builder builder = new AlertDialog.Builder(ChoiceProblemActivity.this);
 									builder.setMessage("Vocabulary name is duplicated").setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {

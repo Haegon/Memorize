@@ -1,4 +1,4 @@
-package com.gohn.memorize.activity;
+ï»¿package com.gohn.memorize.activity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -289,7 +289,7 @@ public class WriteProblemActivity extends LearnActivity {
 						alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 
-								// ´Ü¾îÀå ÀÌ¸§ÀÌ ºñ¾îÀÖÀ»¶§
+								// ë‹¨ì–´ì¥ ì´ë¦„ì´ ë¹„ì–´ìˆì„ë•Œ
 								if (userInput.getText().toString().equals("")) {
 									AlertDialog.Builder builder = new AlertDialog.Builder(WriteProblemActivity.this);
 									builder.setMessage(R.string.no_name).setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -302,7 +302,7 @@ public class WriteProblemActivity extends LearnActivity {
 									return;
 								}
 
-								// µ¿ÀÏÇÑ ´Ü¾îÀå ÀÌ¸§ÀÌ ÀÖÀ»¶§
+								// ë™ì¼í•œ ë‹¨ì–´ì¥ ì´ë¦„ì´ ìˆì„ë•Œ
 								if (dbMgr.getGroupNames().contains(userInput.getText().toString())) {
 									AlertDialog.Builder builder = new AlertDialog.Builder(WriteProblemActivity.this);
 									builder.setMessage("Vocabulary name is duplicated").setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -365,7 +365,7 @@ public class WriteProblemActivity extends LearnActivity {
 				try {
 					Gson gson = new Gson();
 
-					// ¸¶Áö¸· ¹®Á¦´Â ÇöÀç ÆäÀÌÁö ÀúÀå. ±×Àü ¹®Á¦´Â ´ÙÀ½ ÆäÀÌÁö ÀúÀå.
+					// ë§ˆì§€ë§‰ ë¬¸ì œëŠ” í˜„ì¬ í˜ì´ì§€ ì €ì¥. ê·¸ì „ ë¬¸ì œëŠ” ë‹¤ìŒ í˜ì´ì§€ ì €ì¥.
 					json.put("page", page + 1 == exercises.size() ? page : page + 1);
 					json.put("list", gson.toJson(exercises));
 				} catch (JSONException e) {

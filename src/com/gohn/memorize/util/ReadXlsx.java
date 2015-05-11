@@ -1,4 +1,4 @@
-package com.gohn.memorize.util;
+﻿package com.gohn.memorize.util;
 
 import java.io.File;
 import java.io.FileInputStream;

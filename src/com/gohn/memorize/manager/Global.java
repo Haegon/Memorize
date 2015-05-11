@@ -1,4 +1,4 @@
-package com.gohn.memorize.manager;
+﻿package com.gohn.memorize.manager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
