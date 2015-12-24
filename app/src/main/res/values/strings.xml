@@ -1,0 +1,110 @@
+<resources>
+    <string name="app_name">VOCA DIY</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_file">엑셀 파일 선택</string>
+    <string name="title_activity_find_file">Find File</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <string name="action_example">Example action</string>
+    <string name="ok">OK</string>
+    <string name="main_add">Voca Add</string>
+    <string name="main_help">Help</string>
+    <string name="main_opt">More</string>
+    <string name="list_parent_folder">.. Parent Folder</string>
+    <string name="enter_your_voca_name">Enter Your Vocabulary Name.</string>
+    <string name="create">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="study">Study</string>
+    <string name="find_meaning">Find Meaning</string>
+    <string name="find_word">Find Word</string>
+    <string name="write_word">Write Word</string>
+    <string name="type_all">All</string>
+    <string name="type_n">Noun</string>
+    <string name="type_v">Verb</string>
+    <string name="type_a">Adjective</string>
+    <string name="type_ad">Adverb</string>
+    <string name="type_e">E.T.C</string>
+    <string name="type_study_mention">Please select study mode.</string>
+    <string name="type_open">Open Mode</string>
+    <string name="type_blind">Blind Mode</string>
+    <string name="check">Check</string>
+    <string name="next">Next</string>
+    <string name="prev">Prev</string>
+    <string name="result_again_study">Study Again</string>
+    <string name="result_again">Test Again</string>
+    <string name="result_wrong">Wrong Problem Again</string>
+    <string name="result_save">Wrong Problem Save</string>
+    <string name="result_home">Go To Main</string>
+    <string name="result_save_mention">Please select the type of vocabulary added.</string>
+    <string name="result_save_new">Brand New</string>
+    <string name="result_save_old">Existing One</string>
+    <string name="result_problems">Problems,</string>
+    <string name="result_correct">Correct.</string>
+    <string name="result_point">pnt</string>
+    <string name="group_delete">Delete</string>
+    <string name="group_chance">Change Name</string>
+    <string name="group_settings">Vocabulary Settings</string>
+    <string name="find_duplicate">Vocabulary name is duplicated.</string>
+    <string name="no_voca">There are not enough voca to test for this type.\nPlease use All type test or add new vocabulary.</string>
+    <string name="no_name">Please enter valid vocabulary name.</string>
+    <string name="find_add_msg">Vocabulary is being loaded.\nPlease Wait</string>
+    <string name="main_word">Words</string>
+    <string name="pref_basic">Basic Settings</string>
+    <string name="pref_basic_random">Test Order Randomly</string>
+    <string name="pref_basic_random_des_on">The problem will be questions as Excel file order.</string>
+    <string name="pref_basic_random_des_off">The problem will not be questions as Excel file order.</string>
+    <string name="pref_info">Applicaton Infomation</string>
+    <string name="pref_info_version">Version</string>
+    <string name="pref_info_feedback">Send Feedback</string>
+    <string name="pref_info_feedback_des">Send an email to the developer.</string>
+    <string name="pref_info_donation">Donation</string>
+    <string name="pref_info_donation_des">The donation would be a big help to the developer.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="voca_add_oldone">Would you like to add wrong problems to this vocabulary group?</string>
+    <string name="load_save">There is a record was studied.\nWould you like to learn from where you did?\n(If the previous record disappears again from the beginning.)</string>
+    <string name="stop_study">Are you sure you want to exit the learning?\nYou can learn content from here when you come back.</string>
+    <string name="exit">Are you sure you want to quit?</string>
+    <string name="help_1"> \"VOCA DIY\" app is memorizing the words you want to memorize words by uploading directly.
+\n\n You must save yourself the words you want to memorize the Excel file.
+\n\n When you save an Excel file There is a simple rule.
+\n\n The user must enter a value in a total of three columns.
+\n\n The first column is the part of speech of the word,
+the second column is the word,
+and the third column is the meaning of the word.
+\n\n You entered parts of speech helps to provide a great view from the multiple-choice questions.</string>
+    <string name="help_2">Alphabet to write the part of speech is defined by part of speech.
+             \n  [ n ]: Noun
+             \n  [ v ]: Verb
+             \n  [ a ]: Adjective
+             \n  [ ad ]: Adverb
+             \n  [ e ]: Other Parts of Speech
+             \n\n If a word has two meaning that if you type:</string>
+    <string name="help_3">Word learning can be a total of four types.
+             \n\n First, just learn the words.
+             \n Second, looking at the problem of finding meaning in the word-choice questions.
+             \n Third, looking at the problem of finding word in the meaning-choice questions.
+             \n Fourth, the problem will write the words to see yourself.
+             \n\n Wrong answers can be seen right back test,
+add a new vocabulary or
+you can also add to the existing vocabulary.
+             \n\n You can change the order option of questions in the \"Settings\" view.</string>
+
+
+</resources>
