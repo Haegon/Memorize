@@ -13,6 +13,7 @@ import com.gohn.memorize.model.WordType;
 import com.gohn.memorize.util.GLog;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Gohn on 15. 12. 24..
@@ -179,6 +180,7 @@ public class DBMgr {
                 VocaGroup vg = new VocaGroup(c.getString(0),c.getInt(1));
                 groups.add(vg);
             }
+            Collections.reverse(groups);
             return groups;
         }
         return null;

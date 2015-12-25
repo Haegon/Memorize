@@ -5,8 +5,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="title_activity_file">엑셀 파일 선택</string>
-    <string name="title_activity_find_file">Find File</string>
+    <string name="title_activity_file">Choose Excel File</string>
+    <string name="title_activity_category">Choose Study Type</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

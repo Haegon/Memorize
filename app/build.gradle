@@ -27,4 +27,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.5'
     compile 'io.realm:realm-android:0.86.1'
     compile 'net.sourceforge.jexcelapi:jxl:2.6.12'
+    compile 'com.github.gabrielemariotti.cards:cardslib-core:2.1.0'
+    compile 'com.github.gabrielemariotti.cards:cardslib-recyclerview:2.1.0'
 }

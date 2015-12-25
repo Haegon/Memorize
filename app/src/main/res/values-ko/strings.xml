@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="title_activity_file">엑셀 파일 선택</string>
+    <string name="title_activity_category">학습 유형 선택</string>
+
     <string name="ok">확인</string>
     <string name="main_add">단어장 추가</string>
     <string name="main_help">도움말</string>
@@ -41,7 +44,7 @@
     <string name="group_settings">단어장 설정</string>
     <string name="find_duplicate">동일한 단어장 이름이 존재합니다.</string>
     <string name="no_voca">해당 유형으로 등록된 단어가 없어 테스트를 진행 할 수 없습니다.\n모든 단어 테스트를 이용하시거나 새로운 단어장을 추가해주세요.</string>
-    <string name="no_name">단어장 이름이 비어 있습니다.\n다시 입력해주세요.</string>
+    <string name="no_name">단어장 이름이 비어 있습니다. 다시 입력해주세요.</string>
     <string name="find_add_msg">단어장을 불러오고 있습니다.\n잠시만 기다려 주세요.</string>
     <string name="main_word">단어</string>
     <string name="pref_basic">기본 설정</string>
