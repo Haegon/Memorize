@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/type_margin_width"
+            android:layout_marginRight="@dimen/type_margin_width"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_type_all"
+                android:layout_width="@dimen/type_circle_size"
+                android:layout_height="@dimen/type_circle_size"
+                android:layout_margin="@dimen/type_margin_button"
+                android:background="@drawable/selector_btn_circle_normal"
+                android:text="All"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/type_font_size_initial" />
+
+            <TextView
+                android:id="@+id/txt_type_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/type_margin_button"
+                android:text="모두 (46)"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/type_font_size_description" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/type_margin_width"
+            android:layout_marginRight="@dimen/type_margin_width"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_type_n"
+                android:layout_width="@dimen/type_circle_size"
+                android:layout_height="@dimen/type_circle_size"
+                android:layout_margin="@dimen/type_margin_button"
+                android:background="@drawable/selector_btn_circle_normal"
+                android:text="N"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/type_font_size_initial" />
+
+            <TextView
+                android:id="@+id/txt_type_n"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/type_margin_button"
+                android:text="명사 (10)"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/type_font_size_description" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/type_margin_width"
+            android:layout_marginRight="@dimen/type_margin_width"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_type_v"
+                android:layout_width="@dimen/type_circle_size"
+                android:layout_height="@dimen/type_circle_size"
+                android:layout_margin="@dimen/type_margin_button"
+                android:background="@drawable/selector_btn_circle_normal"
+                android:text="V"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/type_font_size_initial" />
+
+            <TextView
+                android:id="@+id/txt_type_v"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/type_margin_button"
+                android:text="동사 (10)"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/type_font_size_description" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/type_margin_width"
+            android:layout_marginRight="@dimen/type_margin_width"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_type_adj"
+                android:layout_width="@dimen/type_circle_size"
+                android:layout_height="@dimen/type_circle_size"
+                android:layout_margin="@dimen/type_margin_button"
+                android:background="@drawable/selector_btn_circle_normal"
+                android:text="Adj"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/type_font_size_initial" />
+
+            <TextView
+                android:id="@+id/txt_type_adj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/type_margin_button"
+                android:text="형용사 (10)"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/type_font_size_description" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/type_margin_width"
+            android:layout_marginRight="@dimen/type_margin_width"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_type_adv"
+                android:layout_width="@dimen/type_circle_size"
+                android:layout_height="@dimen/type_circle_size"
+                android:layout_margin="@dimen/type_margin_button"
+                android:background="@drawable/selector_btn_circle_normal"
+                android:text="Adv"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/type_font_size_initial" />
+
+            <TextView
+                android:id="@+id/txt_type_adv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/type_margin_button"
+                android:text="부사 (46)"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/type_font_size_description" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/type_margin_width"
+            android:layout_marginRight="@dimen/type_margin_width"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_type_etc"
+                android:layout_width="@dimen/type_circle_size"
+                android:layout_height="@dimen/type_circle_size"
+                android:layout_margin="@dimen/type_margin_button"
+                android:background="@drawable/selector_btn_circle_normal"
+                android:text="Etc"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/type_font_size_initial" />
+
+            <TextView
+                android:id="@+id/txt_type_etc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/type_margin_button"
+                android:text="기타 (10)"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/type_font_size_description" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
+

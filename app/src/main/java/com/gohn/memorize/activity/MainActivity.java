@@ -1,5 +1,8 @@
 package com.gohn.memorize.activity;
 
+import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,14 +13,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 import com.gohn.memorize.R;
+import com.gohn.memorize.common.CommonData;
 import com.gohn.memorize.manager.DBMgr;
 import com.gohn.memorize.model.VocaGroup;
 import com.gohn.memorize.util.BackPressCloseHandler;
+import com.gohn.memorize.util.GLog;
 
 import java.util.ArrayList;
 
@@ -31,7 +38,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     CardArrayRecyclerViewAdapter mCardArrayAdapter;
-
+    CardRecyclerView mRecyclerView;
 //    RecyclerView
 
     BackPressCloseHandler backPressCloseHandler;
@@ -45,47 +52,10 @@ public class MainActivity extends AppCompatActivity
 
         initView();
 
-        ArrayList<VocaGroup> vocaGroups = DBMgr.getInstance().getVocaGroups();
+        mCardArrayAdapter = new CardArrayRecyclerViewAdapter(this, getCards());
 
-        ArrayList<Card> cards = new ArrayList<Card>();
-
-        for (VocaGroup vocaGroup : vocaGroups) {
-            final String name = vocaGroup.getName();
-
-            Card card = new Card(this);
-            card.setTitle(vocaGroup.getNumbers() + getResources().getString(R.string.main_word));
-//            card.size
-
-            CardHeader header = new CardHeader(this);
-            header.setTitle(name);
-            header.setPopupMenu(R.menu.group, new CardHeader.OnClickCardHeaderPopupMenuListener() {
-                @Override
-                public void onMenuItemClick(BaseCard card, MenuItem item) {
-//                    Toast.makeText(MainActivity.this, "Click on " + item.getTitle(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-//            card.setInnerLayout(R.layout.mylayout);
-
-            card.addCardHeader(header);
-            card.setOnClickListener(new Card.OnCardClickListener() {
-                @Override
-                public void onClick(Card card, View view) {
-//                    Snackbar.make(view,message,Snackbar.LENGTH_LONG).show();
-                    Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
-                    intent.putExtra(DBMgr.GROUP, name);
-                    startActivity(intent);
-                }
-            });
-            cards.add(card);
-        }
-
-        mCardArrayAdapter = new CardArrayRecyclerViewAdapter(this, cards);
-
-        //Staggered grid view
-        CardRecyclerView mRecyclerView = (CardRecyclerView)findViewById(R.id.carddemo_recyclerview);
+        mRecyclerView = (CardRecyclerView)findViewById(R.id.carddemo_recyclerview);
         mRecyclerView.setHasFixedSize(false);
-//        mRecyclerView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //Set the empty view
@@ -108,7 +78,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-                startActivity(new Intent(MainActivity.this, FileActivity.class));
+                startActivityForResult(new Intent(MainActivity.this, FileActivity.class), CommonData.REQUEST_CODE_FILE_ACTIVITY);
             }
         });
 
@@ -120,6 +90,77 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    ArrayList<Card> getCards() {
+        ArrayList<VocaGroup> vocaGroups = DBMgr.getInstance().getVocaGroups();
+
+        ArrayList<Card> cards = new ArrayList<Card>();
+
+        for (VocaGroup vocaGroup : vocaGroups) {
+            final String name = vocaGroup.getName();
+
+            Card card = new Card(this);
+            card.setTitle(vocaGroup.getNumbers() + getResources().getString(R.string.main_word));
+
+            CardHeader header = new CardHeader(this);
+            header.setTitle(name);
+            header.setPopupMenu(R.menu.group, new CardHeader.OnClickCardHeaderPopupMenuListener() {
+                @Override
+                public void onMenuItemClick(final BaseCard card, MenuItem item) {
+                    final String cardHeaderTitle = ((Card) card).getCardHeader().getTitle();
+
+                    switch (item.getItemId()) {
+                        case R.id.menu_group_delete:
+                            DBMgr.getInstance().delete(DBMgr.GROUP + "=?", new String[]{cardHeaderTitle});
+                            mCardArrayAdapter.remove((Card) card);
+                            break;
+                        case R.id.menu_group_change_name:
+                            LayoutInflater li = LayoutInflater.from(MainActivity.this);
+                            View promptsView = li.inflate(R.layout.dialog_input_group_name, null);
+
+                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                            alertDialogBuilder.setView(promptsView);
+
+                            final EditText userInput = (EditText) promptsView.findViewById(R.id.et_group_name);
+
+                            alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    ContentValues cv = new ContentValues();
+                                    cv.put(DBMgr.GROUP, userInput.getText().toString());
+                                    DBMgr.getInstance().update(cv, DBMgr.GROUP + "=?", new String[]{cardHeaderTitle});
+                                    ((Card)card).getCardHeader().setTitle(userInput.getText().toString());
+                                }
+                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            // create alert dialog
+                            AlertDialog alertDialog = alertDialogBuilder.create();
+
+                            // show it
+                            alertDialog.show();
+                            break;
+                    }
+                    mCardArrayAdapter.notifyDataSetChanged();
+                }
+            });
+
+            card.addCardHeader(header);
+            card.setOnClickListener(new Card.OnCardClickListener() {
+                @Override
+                public void onClick(Card card, View view) {
+                    Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
+                    intent.putExtra(DBMgr.GROUP, name);
+                    startActivity(intent);
+                }
+            });
+            cards.add(card);
+        }
+
+        return cards;
     }
 
     @Override
@@ -146,6 +187,9 @@ public class MainActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
+
+
 //        int id = item.getItemId();
 //
 //        //noinspection SimplifiableIfStatement
@@ -179,5 +223,24 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, intent);
+
+
+        GLog.Debug("requestCode : " + requestCode + " , resultCode : " + resultCode);
+
+        if (requestCode == CommonData.REQUEST_CODE_FILE_ACTIVITY) {
+
+            if ( resultCode == CommonData.RESULT_REFRESH ) {
+                GLog.Debug("requestCode : " + requestCode + " , resultCode : " + resultCode);
+
+                mCardArrayAdapter.setCards(getCards());
+                mCardArrayAdapter.notifyDataSetChanged();
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@
 
     <string name="title_activity_file">엑셀 파일 선택</string>
     <string name="title_activity_category">학습 유형 선택</string>
+    <string name="title_activity_type">품사 선택</string>
 
     <string name="ok">확인</string>
     <string name="main_add">단어장 추가</string>

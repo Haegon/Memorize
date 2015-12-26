@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_category_study"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/selector_btn_ractangle_normal"
+        android:text="@string/study"
+        android:textSize="@dimen/category_font_size" />
+
+    <Button
+        android:id="@+id/btn_category_find_meaning"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/selector_btn_ractangle_normal"
+        android:text="@string/find_meaning"
+        android:textSize="@dimen/category_font_size" />
+
+    <Button
+        android:id="@+id/btn_category_find_word"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/selector_btn_ractangle_normal"
+        android:text="@string/find_word"
+        android:textSize="@dimen/category_font_size" />
+
+    <Button
+        android:id="@+id/btn_category_write"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/selector_btn_ractangle_normal"
+        android:text="@string/write_word"
+        android:textSize="@dimen/category_font_size" />
+
+</LinearLayout>
+

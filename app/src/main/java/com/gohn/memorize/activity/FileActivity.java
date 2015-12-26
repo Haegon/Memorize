@@ -6,9 +6,6 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +30,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class FileActivity extends AppCompatActivity {
+public class FileActivity extends BaseActivity {
 
     Context context = this;
 
@@ -49,8 +46,6 @@ public class FileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_file);
-
 
         dbMgr = DBMgr.getInstance();
         initView();
@@ -78,11 +73,14 @@ public class FileActivity extends AppCompatActivity {
 
     void initView() {
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        View newView = LayoutInflater.from(this).inflate(R.layout.content_file, null);
+        contentView.addView(newView);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
 
         int actionBarTitle = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
         TextView tv = (TextView) getWindow().findViewById(actionBarTitle);
@@ -175,6 +173,8 @@ public class FileActivity extends AppCompatActivity {
 
 
                                         dbMgr.addWordsToDB(etGroupName.getText().toString(), words);
+
+                                        setResult(CommonData.RESULT_REFRESH);
                                         finish();
                                     }
                                 }).start();

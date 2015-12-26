@@ -23,16 +23,18 @@ public class CommonData {
     public static final String YOUTUBE_DEVELOPER_KEY = "AIzaSyDQ0tKdx9qoaI23O9pTv8eXNSCixVaXhiw";
     public static final int RECOVERY_DIALOG_REQUEST = 1;
 
+
+    public static int REQUEST_CODE_FILE_ACTIVITY = 10001;
+
     public static String FONT_BOLD = "bd_font.mp3";
     public static String FONT_REGULAR = "noto.mp3";
-    public static String DBKEY_USER = "key_user";
-    public static String DBKEY_SCORE = "key_score";
-    public static String INTENT_KEY_TTS = "key_tts";
-    public static String INTENT_KEY_CENTER = "key_center";
-    public static String INTENT_KEY_VIDEO_CATEGORY = "key_video_category";
-    public static String INTENT_KEY_SCORE = "key_score";
-    public static String INTENT_KEY_HAS_RECORD = "key_record";
-    public static String INTENT_KEY_TYPE = "key_type";
+    public static String DBKEY_USER = "db_user";
+    public static String DBKEY_SCORE = "db_score";
+
+    public static int RESULT_REFRESH = 20001;
+
+    public static String INTENT_KEY_REFRESH = "intent_refresh";
+
 
     public static String PROBLEM_INFO = "problem_info";
 
