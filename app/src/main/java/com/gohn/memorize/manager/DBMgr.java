@@ -31,6 +31,21 @@ public class DBMgr {
     public static final String MEANING = "meaning";
 
 
+    public ArrayList<Exercise> getWorngExercises() {
+        return worngExercises;
+    }
+
+    public void setWorngExercises(ArrayList<Exercise> worngExercises) {
+        this.worngExercises = worngExercises;
+    }
+
+    public ArrayList<ExerciseWrite> getWorngExercisesWrite() {
+        return worngExercisesWrite;
+    }
+
+    public void setWorngExercisesWrite(ArrayList<ExerciseWrite> worngExercisesWrite) {
+        this.worngExercisesWrite = worngExercisesWrite;
+    }
 
     ArrayList<Exercise> worngExercises = new ArrayList<Exercise>();
     ArrayList<ExerciseWrite> worngExercisesWrite = new ArrayList<ExerciseWrite>();

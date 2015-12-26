@@ -108,8 +108,8 @@ public class TypeActivity extends BaseActivity implements View.OnClickListener{
             case R.id.btn_category_find_meaning:
             case R.id.btn_category_find_word:
                 intent.putExtra(ExerciseType.toStr(), exerciseType);
-//                intent.setClass(this, ChoiceProblemActivity.class);
-//                startActivity(intent);
+                intent.setClass(this, ChoiceProblemActivity.class);
+                startActivity(intent);
                 break;
             case R.id.btn_category_write:
 //                intent.setClass(this, WriteProblemActivity.class);
@@ -119,6 +119,15 @@ public class TypeActivity extends BaseActivity implements View.OnClickListener{
     }
 
     void initView() {
+
+        findViewById(R.id.btn_type_all).setOnClickListener(this);
+        findViewById(R.id.btn_type_n).setOnClickListener(this);
+        findViewById(R.id.btn_type_v).setOnClickListener(this);
+        findViewById(R.id.btn_type_adj).setOnClickListener(this);
+        findViewById(R.id.btn_type_adv).setOnClickListener(this);
+        findViewById(R.id.btn_type_etc).setOnClickListener(this);
+
+
         TextView btn_all = (TextView) findViewById(R.id.txt_type_all);
         btn_all.setText(R.string.type_all);
         btn_all.append(" (" + dbMgr.getWordsCount(groupName, WordType.NONE) + ")");

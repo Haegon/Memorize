@@ -8,6 +8,7 @@
     <string name="title_activity_file">Choose Excel File</string>
     <string name="title_activity_category">Choose Study Type</string>
     <string name="title_activity_type">Choose Word Class</string>
+    <string name="title_activity_choice_problem">Multiple Choice Question</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

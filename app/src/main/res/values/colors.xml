@@ -5,6 +5,9 @@
     <color name="colorAccent">#c0ca33</color>
 
     <color name="app_main">#99667F</color>
+    <color name="app_light_gray">#bcbcbc</color>
 
     <color name="btn_down">#d2e1d2</color>
+
+
 </resources>
