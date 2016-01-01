@@ -27,7 +27,7 @@
             android:layout_weight="5"
             android:gravity="center"
             android:textColor="@android:color/black"
-            android:textSize="100dp" />
+            android:textSize="90dp"/>
 
 
     </LinearLayout>

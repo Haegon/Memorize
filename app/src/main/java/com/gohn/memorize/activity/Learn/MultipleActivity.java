@@ -21,8 +21,15 @@ import com.gohn.memorize.manager.DBMgr;
 import com.gohn.memorize.model.AnswerItem;
 import com.gohn.memorize.model.Exercise;
 import com.gohn.memorize.model.ExerciseType;
+import com.gohn.memorize.model.IAlertDialogTwoButtonHanlder;
 import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.model.WordType;
+import com.gohn.memorize.util.Dialog;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,40 +68,31 @@ public class MultipleActivity extends LearnActivity implements View.OnClickListe
         wordsSet = dbMgr.getWordsSet(groupName, wordType);
 
         // TODO 학습 기록이 있는지 캐시에 기록하자 paper 쓰자
-//		if (isFileExist(fileName)) {
-//			DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-//				@Override
-//				public void onClick(DialogInterface dialog, int which) {
-//					switch (which) {
-//						case DialogInterface.BUTTON_POSITIVE:
-//							readCurrentState();
-//							break;
-//						case DialogInterface.BUTTON_NEGATIVE:
-//							deleteCurrentState();
-//							exerciseInit();
-//							break;
-//					}
-//					setContentView(R.layout.content_multiple);
-//					initView();
-//					showPage();
-//				}
-//			};
-//
-//			AlertDialog.Builder builder = new AlertDialog.Builder(ChoiceProblemActivity.this);
-//			builder.setMessage(R.string.load_save).setPositiveButton(R.string.yes, dialogClickListener).setNegativeButton(R.string.no, dialogClickListener).show();
-//		} else {
-        exerciseInit();
-//			setContentView(R.layout.content_multiple);
+        if (isFileExist(fileName)) {
+            Dialog.showTwoButtonAlert(this, R.string.load_save, new IAlertDialogTwoButtonHanlder() {
+                @Override
+                public void onPositive() {
+                    readCurrentState();
+                    startStudy();
+                }
 
-//		View newView = LayoutInflater.from(this).inflate(R.layout.content_multiple, null);
-//		contentView.addView(newView);
+                @Override
+                public void onNegative() {
+                    deleteCurrentState();
+                    exerciseInit();
+                    startStudy();
+                }
+            });
+        } else {
+            exerciseInit();
+            startStudy();
+        }
+    }
 
+    void startStudy() {
         setContentView(R.layout.content_multiple);
-
-
         initView();
         showPage();
-//		}
     }
 
     public void exerciseInit() {
@@ -345,40 +343,39 @@ public class MultipleActivity extends LearnActivity implements View.OnClickListe
 
     private void saveCurrentState() {
 
-//		Thread t = new Thread() {
-//			public void run() {
-//				try {
-//					Gson gson = new Gson();
-//
-//					// ??? ??? ?? ??? ??. ?? ??? ?? ??? ??.
-//					json.put("page", page + 1 == exercises.size() ? page : page + 1);
-//					json.put("list", gson.toJson(exercises));
-//				} catch (JSONException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				writeToFile(fileName, json.toString());
-//			}
-//		};
-//		t.start();
+		Thread t = new Thread() {
+			public void run() {
+				try {
+					Gson gson = new Gson();
+
+					json.put("page", page + 1 == exercises.size() ? page : page + 1);
+					json.put("list", gson.toJson(exercises));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				writeToFile(fileName, json.toString());
+			}
+		};
+		t.start();
     }
 
     private void readCurrentState() {
-//		String jstr = readFromFile(fileName);
-//		try {
-//			JSONObject j = new JSONObject(jstr);
-//
-//			page = j.getInt("page");
-//
-//			String list = j.getString("list");
-//			Gson gson = new Gson();
-//			exercises = gson.fromJson(list, new TypeToken<ArrayList<Exercise>>() {
-//			}.getType());
-//
-//		} catch (JSONException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		String jstr = readFromFile(fileName);
+		try {
+			JSONObject j = new JSONObject(jstr);
+
+			page = j.getInt("page");
+
+			String list = j.getString("list");
+			Gson gson = new Gson();
+			exercises = gson.fromJson(list, new TypeToken<ArrayList<Exercise>>() {
+			}.getType());
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     @Override
@@ -466,10 +463,8 @@ public class MultipleActivity extends LearnActivity implements View.OnClickListe
                 case R.id.result_restart_btn:
                     page = 0;
                     end = false;
-                    setContentView(R.layout.content_multiple);
                     exerciseInit();
-                    initView();
-                    showPage();
+                    startStudy();
                     break;
                 case R.id.result_again_btn:
                     if (isFinish()) {
@@ -479,9 +474,7 @@ public class MultipleActivity extends LearnActivity implements View.OnClickListe
                     exercises = assembleWrongExercises();
                     page = 0;
                     end = false;
-                    setContentView(R.layout.content_multiple);
-                    initView();
-                    showPage();
+                    startStudy();
                     break;
                 case R.id.result_home_btn:
                     goHome();
@@ -555,7 +548,7 @@ public class MultipleActivity extends LearnActivity implements View.OnClickListe
 
                                     Intent intent = new Intent();
                                     intent.setClass(getApplicationContext(), GroupActivity.class);
-                                    intent.putExtra(CommonData.INTENT_KEY_PROBLEM_TYPE,CommonData.INTENT_VALUE_MULTIPLE);
+                                    intent.putExtra(CommonData.INTENT_KEY_PROBLEM_TYPE, CommonData.INTENT_VALUE_MULTIPLE);
                                     startActivity(intent);
                                     break;
                             }
