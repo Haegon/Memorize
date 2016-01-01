@@ -31,24 +31,24 @@ public class DBMgr {
     public static final String MEANING = "meaning";
 
 
-    public ArrayList<Exercise> getWorngExercises() {
-        return worngExercises;
+    public ArrayList<Exercise> getWrongExercises() {
+        return wrongExercises;
     }
 
-    public void setWorngExercises(ArrayList<Exercise> worngExercises) {
-        this.worngExercises = worngExercises;
+    public void setWrongExercises(ArrayList<Exercise> wrongExercises) {
+        this.wrongExercises = wrongExercises;
     }
 
-    public ArrayList<ExerciseWrite> getWorngExercisesWrite() {
-        return worngExercisesWrite;
+    public ArrayList<ExerciseWrite> getWrongExercisesWrite() {
+        return wrongExercisesWrite;
     }
 
-    public void setWorngExercisesWrite(ArrayList<ExerciseWrite> worngExercisesWrite) {
-        this.worngExercisesWrite = worngExercisesWrite;
+    public void setWrongExercisesWrite(ArrayList<ExerciseWrite> wrongExercisesWrite) {
+        this.wrongExercisesWrite = wrongExercisesWrite;
     }
 
-    ArrayList<Exercise> worngExercises = new ArrayList<Exercise>();
-    ArrayList<ExerciseWrite> worngExercisesWrite = new ArrayList<ExerciseWrite>();
+    ArrayList<Exercise> wrongExercises = new ArrayList<Exercise>();
+    ArrayList<ExerciseWrite> wrongExercisesWrite = new ArrayList<ExerciseWrite>();
 
     Context context;
     boolean isInit;

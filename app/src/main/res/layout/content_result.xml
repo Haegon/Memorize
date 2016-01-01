@@ -1,0 +1,158 @@
+﻿<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/result_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/result_count_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="25dp" />
+
+        <TextView
+            android:id="@+id/result_score_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="100dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/result_restart_btn"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/selector_btn_ractangle_normal"
+            android:text="@string/result_again"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="25dp" />
+
+        <Button
+            android:id="@+id/result_again_btn"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/selector_btn_ractangle_normal"
+            android:text="@string/result_wrong"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="25dp" />
+
+        <Button
+            android:id="@+id/result_save_btn"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/selector_btn_ractangle_normal"
+            android:text="@string/result_save"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="25dp" />
+
+        <Button
+            android:id="@+id/result_home_btn"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/selector_btn_ractangle_normal"
+            android:text="@string/result_home"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="25dp" />
+    </LinearLayout>
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical"-->
+        <!--android:paddingLeft="50dp"-->
+        <!--android:paddingRight="50dp"-->
+        <!--android:paddingTop="20dp">-->
+
+        <!--<Button-->
+            <!--android:id="@+id/result_restart_btn"-->
+            <!--android:layout_width="260dp"-->
+            <!--android:layout_height="55dp"-->
+            <!--android:layout_gravity="bottom"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@drawable/selector_btn_ractangle_normal"-->
+            <!--android:text="@string/result_again"-->
+            <!--android:textAlignment="center"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textSize="23dp" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/result_again_btn"-->
+            <!--android:layout_width="260dp"-->
+            <!--android:layout_height="55dp"-->
+            <!--android:layout_gravity="bottom"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@drawable/selector_btn_ractangle_normal"-->
+            <!--android:text="@string/result_wrong"-->
+            <!--android:textAlignment="center"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textSize="23dp" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/result_save_btn"-->
+            <!--android:layout_width="260dp"-->
+            <!--android:layout_height="55dp"-->
+            <!--android:layout_gravity="bottom"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@drawable/selector_btn_ractangle_normal"-->
+            <!--android:text="@string/result_save"-->
+            <!--android:textAlignment="center"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textSize="23dp" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/result_home_btn"-->
+            <!--android:layout_width="260dp"-->
+            <!--android:layout_height="55dp"-->
+            <!--android:layout_gravity="bottom"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@drawable/selector_btn_ractangle_normal"-->
+            <!--android:text="@string/result_home"-->
+            <!--android:textAlignment="center"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textSize="23dp" />-->
+    <!--</LinearLayout>-->
+
+</LinearLayout>

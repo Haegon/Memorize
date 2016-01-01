@@ -4,11 +4,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import com.gohn.memorize.R;
+import com.gohn.memorize.activity.Learn.MultipleActivity;
+import com.gohn.memorize.activity.Learn.StudyActivity;
+import com.gohn.memorize.activity.Learn.WriteActivity;
 import com.gohn.memorize.manager.DBMgr;
 import com.gohn.memorize.model.ExerciseType;
 import com.gohn.memorize.model.WordType;
@@ -23,8 +25,9 @@ public class TypeActivity extends BaseActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        View newView = LayoutInflater.from(this).inflate(R.layout.content_type, null);
-        contentView.addView(newView);
+        setContentView(R.layout.content_type);
+//        View newView = LayoutInflater.from(this).inflate(R.layout.content_type, null);
+//        contentView.addView(newView);
 
         dbMgr = DBMgr.getInstance();
 
@@ -95,8 +98,8 @@ public class TypeActivity extends BaseActivity implements View.OnClickListener{
                                 intent.putExtra("mode", "open");
                                 break;
                         }
-//                        intent.setClass(TypeActivity.this, StudyActivity.class);
-//                        startActivity(intent);
+                        intent.setClass(TypeActivity.this, StudyActivity.class);
+                        startActivity(intent);
                     }
                 };
 
@@ -108,12 +111,12 @@ public class TypeActivity extends BaseActivity implements View.OnClickListener{
             case R.id.btn_category_find_meaning:
             case R.id.btn_category_find_word:
                 intent.putExtra(ExerciseType.toStr(), exerciseType);
-                intent.setClass(this, ChoiceProblemActivity.class);
+                intent.setClass(this, MultipleActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btn_category_write:
-//                intent.setClass(this, WriteProblemActivity.class);
-//                startActivity(intent);
+                intent.setClass(this, WriteActivity.class);
+                startActivity(intent);
                 break;
         }
     }

@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.gohn.memorize.R;
@@ -17,7 +19,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
+        super.setContentView(R.layout.activity_base);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -37,5 +39,15 @@ public class BaseActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void setContentView(int layoutId) {
+        if ( contentView.getChildCount() > 0 ) {
+            contentView.removeAllViews();
+        }
+
+        View content = LayoutInflater.from(this).inflate(layoutId, null);
+        contentView.addView(content);
     }
 }

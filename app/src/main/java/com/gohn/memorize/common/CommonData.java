@@ -33,7 +33,10 @@ public class CommonData {
 
     public static int RESULT_REFRESH = 20001;
 
-    public static String INTENT_KEY_REFRESH = "intent_refresh";
+    public static String INTENT_KEY_PROBLEM_TYPE = "key_problem_type";
+
+    public static String INTENT_VALUE_MULTIPLE = "value_multiple";
+    public static String INTENT_VALUE_WRITE = "value_write";
 
 
     public static String PROBLEM_INFO = "problem_info";

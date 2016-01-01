@@ -9,14 +9,25 @@
 
     <dimen name="cardview_margin">8dp</dimen>
 
-    <dimen name="card_base_empty_height">30dp</dimen>
+
 
     <dimen name="category_font_size">25sp</dimen>
-    <dimen name="type_font_size_initial">50sp</dimen>
+    <dimen name="type_font_size_initial">40sp</dimen>
     <dimen name="type_font_size_description">20sp</dimen>
-    <dimen name="type_circle_size">120dp</dimen>
-    <dimen name="type_margin_width">15dp</dimen>
+    <dimen name="type_circle_size">100dp</dimen>
+    <dimen name="type_margin_width">20dp</dimen>
     <dimen name="type_margin_button">5dp</dimen>
 
+
+    <!-- OverRide-->
+
+    <!-- height-->
+    <dimen name="card_base_empty_height">30dp</dimen>
+
+    <!-- RecyclerView -->
+    <dimen name="native_recyclerview_card_margin_left">8dp</dimen>
+    <dimen name="native_recyclerview_card_margin_right">8dp</dimen>
+    <dimen name="native_recyclerview_card_margin_bottom">6dp</dimen>
+    <dimen name="native_recyclerview_card_margin_top">6dp</dimen>
 </resources>
 

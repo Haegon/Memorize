@@ -48,13 +48,34 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.CategoryActivity" />
         </activity>
-        <activity android:name=".activity.ChoiceProblemActivity"
+        <activity android:name=".activity.Learn.MultipleActivity"
             android:label="@string/title_activity_choice_problem"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.TypeActivity" />
+        </activity>
+        <activity android:name=".activity.Learn.StudyActivity"
+            android:label="@string/title_activity_study"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.TypeActivity" />
+        </activity>
+        <activity android:name=".activity.Learn.WriteActivity"
+            android:label="@string/title_activity_write"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.TypeActivity" />
+        </activity>
+        <activity android:name=".activity.GroupActivity"
+            android:label="@string/title_activity_select_group"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
 
     </application>

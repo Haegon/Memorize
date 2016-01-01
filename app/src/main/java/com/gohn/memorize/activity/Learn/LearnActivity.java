@@ -1,14 +1,18 @@
-package com.gohn.memorize.activity;
+package com.gohn.memorize.activity.Learn;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Vibrator;
+import android.view.MenuItem;
 
 import com.gohn.memorize.R;
+import com.gohn.memorize.activity.BaseActivity;
+import com.gohn.memorize.activity.MainActivity;
 import com.gohn.memorize.manager.DBMgr;
+import com.gohn.memorize.model.IAlertDialogTwoButtonHanlder;
+import com.gohn.memorize.util.Dialog;
 
 import org.json.JSONObject;
 
@@ -27,8 +31,8 @@ public class LearnActivity extends BaseActivity {
 	protected Activity learnActivity;
 
 	@Override
-	public void setContentView(int layoutResID) {
-		super.setContentView(layoutResID);
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
 		dbMgr = DBMgr.getInstance();
 
@@ -49,25 +53,33 @@ public class LearnActivity extends BaseActivity {
 
 	@Override
 	public void onBackPressed() {
+        onQuitButton();
+	}
 
-		if (end)
-			return;
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home:
+                onQuitButton();
+				break;
+		}
+		return true;
+	}
 
-		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				switch (which) {
-					case DialogInterface.BUTTON_POSITIVE:
-//						AdBuddiz.showAd(learnActivity);
-						finish();
-						break;
-					case DialogInterface.BUTTON_NEGATIVE:
-						break;
-				}
-			}
-		};
+	void onQuitButton() {
+        if (end)
+            return;
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(LearnActivity.this);
-		builder.setMessage(R.string.stop_study).setPositiveButton(R.string.yes, dialogClickListener).setNegativeButton(R.string.no, dialogClickListener).show();
+        Dialog.showTwoButtonAlert(this, R.string.stop_study, new IAlertDialogTwoButtonHanlder() {
+            @Override
+            public void onPositive() {
+                finish();
+            }
+
+            @Override
+            public void onNegative() {
+
+            }
+        });
 	}
 }

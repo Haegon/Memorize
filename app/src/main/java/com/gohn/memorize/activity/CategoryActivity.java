@@ -2,7 +2,6 @@ package com.gohn.memorize.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import com.gohn.memorize.R;
@@ -16,9 +15,9 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        View newView = LayoutInflater.from(this).inflate(R.layout.content_category, null);
-        contentView.addView(newView);
+        setContentView(R.layout.content_category);
+//        View newView = LayoutInflater.from(this).inflate(R.layout.content_category, null);
+//        contentView.addView(newView);
 
         findViewById(R.id.btn_category_study).setOnClickListener(this);
         findViewById(R.id.btn_category_find_meaning).setOnClickListener(this);

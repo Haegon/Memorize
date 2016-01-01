@@ -41,7 +41,7 @@ public class WordSet {
         return isOpen;
     }
 
-    public void setIsOpen(boolean isOpen) {
+    public void setOpen(boolean isOpen) {
         this.isOpen = isOpen;
     }
 

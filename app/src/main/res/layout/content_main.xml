@@ -56,8 +56,6 @@
             android:id="@+id/carddemo_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="@dimen/cardview_margin"
-            android:paddingRight="@dimen/cardview_margin"
             card:list_card_layout_resourceID="@layout/native_recyclerview_card_layout" />
 
     </FrameLayout>

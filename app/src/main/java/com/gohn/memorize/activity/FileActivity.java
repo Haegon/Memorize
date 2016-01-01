@@ -46,6 +46,7 @@ public class FileActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.content_file);
 
         dbMgr = DBMgr.getInstance();
         initView();
@@ -72,15 +73,6 @@ public class FileActivity extends BaseActivity {
     }
 
     void initView() {
-
-        View newView = LayoutInflater.from(this).inflate(R.layout.content_file, null);
-        contentView.addView(newView);
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
 
         int actionBarTitle = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
         TextView tv = (TextView) getWindow().findViewById(actionBarTitle);

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import com.gohn.memorize.R;
 import com.gohn.memorize.model.IAlertDialogOneButtonHanlder;
 import com.gohn.memorize.model.IAlertDialogTwoButtonHanlder;
 
@@ -15,7 +16,20 @@ public class Dialog {
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
 
         alert.setMessage(message);
-        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                hanlder.onOk();
+            }
+        });
+        alert.show();
+    }
+
+    public static void showOneButtonAlert(Context context, int message, final IAlertDialogOneButtonHanlder hanlder) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+
+        alert.setMessage(message);
+        alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 hanlder.onOk();
@@ -28,13 +42,13 @@ public class Dialog {
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
 
         alert.setMessage(message);
-        alert.setPositiveButton("예", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 hanlder.onPositive();
             }
         });
-        alert.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 hanlder.onNegative();
@@ -42,5 +56,22 @@ public class Dialog {
         });
         alert.show();
     }
+    public static void showTwoButtonAlert(Context context, int messageID, final IAlertDialogTwoButtonHanlder hanlder) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
 
+        alert.setMessage(messageID);
+        alert.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                hanlder.onPositive();
+            }
+        });
+        alert.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                hanlder.onNegative();
+            }
+        });
+        alert.show();
+    }
 }

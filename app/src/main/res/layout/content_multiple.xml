@@ -1,0 +1,149 @@
+﻿<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/choice_problem_word_count"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center|center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/app_gray"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/choice_problem_word_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center|center_vertical"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@android:color/black"
+            android:textSize="45dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/line_gray" />
+
+        <!-- 선택 버튼들-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <Button
+                android:id="@+id/choice_problem_a1_btn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:textAlignment="center"
+                android:textSize="27dp" />
+
+            <Button
+                android:id="@+id/choice_problem_a2_btn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:textAlignment="center"
+                android:textSize="27dp" />
+
+            <Button
+                android:id="@+id/choice_problem_a3_btn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:textAlignment="center"
+                android:textSize="27dp" />
+
+            <Button
+                android:id="@+id/choice_problem_a4_btn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:textAlignment="center"
+                android:textSize="27dp" />
+
+            <Button
+                android:id="@+id/choice_problem_a5_btn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:textAlignment="center"
+                android:textSize="27dp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <!-- 넘기기 버튼 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_prev"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:background="@drawable/selector_btn_circle_gray"
+                android:gravity="center"
+                android:text="@string/prev"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="20dp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_vertical">
+
+            <Button
+                android:id="@+id/btn_next"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_gravity="center"
+                android:background="@drawable/selector_btn_circle_green"
+                android:gravity="center"
+                android:text="@string/check"
+                android:textAlignment="center"
+                android:textColor="#FFF"
+                android:textSize="20dp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>

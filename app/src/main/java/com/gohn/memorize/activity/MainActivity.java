@@ -76,8 +76,6 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                 startActivityForResult(new Intent(MainActivity.this, FileActivity.class), CommonData.REQUEST_CODE_FILE_ACTIVITY);
             }
         });
@@ -129,7 +127,8 @@ public class MainActivity extends AppCompatActivity
                                     ContentValues cv = new ContentValues();
                                     cv.put(DBMgr.GROUP, userInput.getText().toString());
                                     DBMgr.getInstance().update(cv, DBMgr.GROUP + "=?", new String[]{cardHeaderTitle});
-                                    ((Card)card).getCardHeader().setTitle(userInput.getText().toString());
+                                    ((Card) card).getCardHeader().setTitle(userInput.getText().toString());
+                                    mCardArrayAdapter.notifyDataSetChanged();
                                 }
                             }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
@@ -144,7 +143,6 @@ public class MainActivity extends AppCompatActivity
                             alertDialog.show();
                             break;
                     }
-                    mCardArrayAdapter.notifyDataSetChanged();
                 }
             });
 

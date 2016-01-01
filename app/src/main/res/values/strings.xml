@@ -8,7 +8,10 @@
     <string name="title_activity_file">Choose Excel File</string>
     <string name="title_activity_category">Choose Study Type</string>
     <string name="title_activity_type">Choose Word Class</string>
+    <string name="title_activity_study">Study</string>
     <string name="title_activity_choice_problem">Multiple Choice Question</string>
+    <string name="title_activity_write">Write alphabets correctly</string>
+    <string name="title_activity_select_group">Select group to add</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -83,6 +86,7 @@
     <string name="load_save">There is a record was studied.\nWould you like to learn from where you did?\n(If the previous record disappears again from the beginning.)</string>
     <string name="stop_study">Are you sure you want to exit the learning?\nYou can learn content from here when you come back.</string>
     <string name="exit">Are you sure you want to quit?</string>
+    <string name="click_answer">Please select the correct answer from examples.</string>
     <string name="help_1"> \"VOCA DIY\" app is memorizing the words you want to memorize words by uploading directly.
 \n\n You must save yourself the words you want to memorize the Excel file.
 \n\n When you save an Excel file There is a simple rule.
