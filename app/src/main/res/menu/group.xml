@@ -5,7 +5,12 @@
         android:orderInCategory="100"
         android:title="@string/group_change" />
     <item
+        android:id="@+id/menu_group_copy"
+        android:orderInCategory="200"
+        android:title="@string/group_copy"/>
+
+    <item
         android:id="@+id/menu_group_delete"
-        android:orderInCategory="100"
+        android:orderInCategory="300"
         android:title="@string/group_delete"/>
 </menu>

@@ -6,8 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -67,7 +65,7 @@ public class MainActivity extends AppCompatActivity
 
         mCardArrayAdapter = new CardArrayRecyclerViewAdapter(this, getCards());
 
-        mRecyclerView = (CardRecyclerView)findViewById(R.id.carddemo_recyclerview);
+        mRecyclerView = (CardRecyclerView) findViewById(R.id.carddemo_recyclerview);
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -143,7 +141,8 @@ public class MainActivity extends AppCompatActivity
                                 .withName(R.string.navi_setting)
                                 .withIcon(R.drawable.ic_setting)
                                 .withIdentifier(R.string.navi_setting)
-                                .withSelectable(false),
+                                .withSelectable(false)
+                                .withTextColor(Color.BLACK),
 
 //                        new SwitchDrawerItem()
 //                                .withName(R.string.pref_basic_random)
@@ -203,7 +202,7 @@ public class MainActivity extends AppCompatActivity
                                                     .withDescriptionTextColor(Color.GRAY)
                                                     .withLevel(2)
                                                     .withIcon(R.drawable.ic_clip)
-                                                    .withChecked(Global.getBoolean(MainActivity.this,CommonData.GLOBAL_KEY_RANDOM,false))
+                                                    .withChecked(Global.getBoolean(MainActivity.this, CommonData.GLOBAL_KEY_RANDOM, false))
                                                     .withIdentifier(R.string.pref_basic_random)
                                                     .withOnCheckedChangeListener(onCheckedChangeListener)
                                                     .withSelectable(false)
@@ -301,11 +300,11 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
 
-            if ( drawerItem == null ) return;
+            if (drawerItem == null) return;
 
             switch (drawerItem.getIdentifier()) {
                 case R.string.pref_basic_random:
-                    Global.setBoolean(MainActivity.this,CommonData.GLOBAL_KEY_RANDOM,isChecked);
+                    Global.setBoolean(MainActivity.this, CommonData.GLOBAL_KEY_RANDOM, isChecked);
                     break;
             }
         }
@@ -333,6 +332,10 @@ public class MainActivity extends AppCompatActivity
                         case R.id.menu_group_delete:
                             DBMgr.getInstance().delete(DBMgr.GROUP + "=?", new String[]{cardHeaderTitle});
                             mCardArrayAdapter.remove((Card) card);
+                            break;
+                        case R.id.menu_group_copy:
+                            // TODO : 복사기능 넣자
+
                             break;
                         case R.id.menu_group_change_name:
                             Dialog.showSettingGroupNameView(MainActivity.this, new ISettingGroupNameViewHanlder() {
@@ -398,7 +401,6 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
 
 
-
 //        int id = item.getItemId();
 //
 //        //noinspection SimplifiableIfStatement
@@ -412,25 +414,25 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-//        if (id == R.id.nav_camara) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
+//        // Handle navigation view item clicks here.
+//        int id = item.getItemId();
 //
-//        } else if (id == R.id.nav_slideshow) {
+////        if (id == R.id.nav_camara) {
+////            // Handle the camera action
+////        } else if (id == R.id.nav_gallery) {
+////
+////        } else if (id == R.id.nav_slideshow) {
+////
+////        } else if (id == R.id.nav_manage) {
+////
+////        } else if (id == R.id.nav_share) {
+////
+////        } else if (id == R.id.nav_send) {
+////
+////        }
 //
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -444,7 +446,7 @@ public class MainActivity extends AppCompatActivity
 
         if (requestCode == CommonData.REQUEST_CODE_FILE_ACTIVITY) {
 
-            if ( resultCode == CommonData.RESULT_REFRESH ) {
+            if (resultCode == CommonData.RESULT_REFRESH) {
                 GLog.Debug("requestCode : " + requestCode + " , resultCode : " + resultCode);
 
                 mCardArrayAdapter.setCards(getCards());
