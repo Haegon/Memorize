@@ -18,9 +18,10 @@
     <string name="navi_help">Help</string>
     <string name="navi_info">Application Info</string>
     <string name="navi_mail">Feedback</string>
-    <string name="navi_donate">Donate</string>
+    <string name="navi_donate">Buying food for Developer</string>
     <string name="navi_grade">Rate</string>
     <string name="navi_share">Share this app</string>
+    <string name="navi_setting">Settings</string>
 
     <string name="action_example">Example action</string>
     <string name="ok">OK</string>
@@ -69,7 +70,7 @@
     <string name="main_word">Words</string>
     <string name="pref_basic">Basic Settings</string>
     <string name="pref_basic_random">Test Order Randomly</string>
-    <string name="pref_basic_random_des_on">The problem will be questions as Excel file order.</string>
+    <string name="pref_basic_random_des_on">Based on Excel file order.</string>
     <string name="pref_basic_random_des_off">The problem will not be questions as Excel file order.</string>
     <string name="pref_info">Applicaton Infomation</string>
     <string name="pref_info_version">Version</string>
