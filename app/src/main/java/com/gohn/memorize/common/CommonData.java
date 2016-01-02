@@ -38,6 +38,8 @@ public class CommonData {
     public static String INTENT_VALUE_MULTIPLE = "value_multiple";
     public static String INTENT_VALUE_WRITE = "value_write";
 
+    public static String GLOBAL_KEY_RANDOM = "global_key_random";
+
 
     public static String PROBLEM_INFO = "problem_info";
 

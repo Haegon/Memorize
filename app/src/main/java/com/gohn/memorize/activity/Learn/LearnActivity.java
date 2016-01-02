@@ -12,7 +12,9 @@ import com.gohn.memorize.R;
 import com.gohn.memorize.activity.BaseActivity;
 import com.gohn.memorize.activity.MainActivity;
 import com.gohn.memorize.manager.DBMgr;
+import com.gohn.memorize.model.ExerciseType;
 import com.gohn.memorize.model.IAlertDialogTwoButtonHanlder;
+import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.util.Dialog;
 import com.gohn.memorize.util.GLog;
 
@@ -24,58 +26,75 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 
 public class LearnActivity extends BaseActivity {
 
-	protected DBMgr dbMgr;
-	protected JSONObject json;
-	protected String fileName;
+    protected DBMgr dbMgr;
+    protected JSONObject json;
+    protected String fileName;
 
-	protected String groupName;
-	protected String wordType;
-	protected int exerciseType;
-	protected Vibrator vibe;
-	protected boolean end = false;
+    protected String groupName;
+    protected String wordType;
+    protected int exerciseType;
+    protected Vibrator vibe;
+    protected boolean end = false;
 
-	protected Activity learnActivity;
+    protected ArrayList<WordSet> wordsSet;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    protected Activity learnActivity;
 
-		dbMgr = DBMgr.getInstance();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		json = new JSONObject();
-		vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-		learnActivity = this;
+        dbMgr = DBMgr.getInstance();
+        Bundle b = getIntent().getExtras();
+        groupName = b.getString(DBMgr.GROUP);
+        exerciseType = b.getInt(ExerciseType.toStr());
+        wordType = b.getString(DBMgr.TYPE);
+        fileName = groupName + "|" + exerciseType + "|" + wordType;
+        vibe = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        wordsSet = dbMgr.getWordsSet(groupName, wordType);
+
+
+        json = new JSONObject();
+        vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        learnActivity = this;
 
 //		AdBuddiz.cacheAds(learnActivity);
 //		AdBuddiz.setPublisherKey("2397c3d7-a8b7-4935-9869-794fc416499c");
-	}
+    }
 
-	protected void goHome() {
-		Intent intent = new Intent();
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-		intent.setClass(this, MainActivity.class);
-		startActivity(intent);
-	}
+    protected void goHome() {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setClass(this, MainActivity.class);
+        startActivity(intent);
+    }
 
-	@Override
-	public void onBackPressed() {
-        onQuitButton();
-	}
+    @Override
+    public void onBackPressed() {
+        if (end)
+            finish();
+        else
+            onQuitButton();
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case android.R.id.home:
-                onQuitButton();
-				break;
-		}
-		return true;
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (end)
+                    finish();
+                else
+                    onQuitButton();
+                break;
+        }
+        return true;
+    }
 
-	void onQuitButton() {
+    void onQuitButton() {
         if (end)
             return;
 
@@ -90,7 +109,7 @@ public class LearnActivity extends BaseActivity {
 
             }
         });
-	}
+    }
 
     public boolean isFileExist(String path) {
         try {

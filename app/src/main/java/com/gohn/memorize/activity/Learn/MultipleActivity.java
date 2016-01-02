@@ -5,11 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Vibrator;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,14 +14,14 @@ import com.gohn.memorize.R;
 import com.gohn.memorize.activity.GroupActivity;
 import com.gohn.memorize.common.CommonData;
 import com.gohn.memorize.extention.ColorEx;
-import com.gohn.memorize.manager.DBMgr;
 import com.gohn.memorize.model.AnswerItem;
 import com.gohn.memorize.model.Exercise;
-import com.gohn.memorize.model.ExerciseType;
 import com.gohn.memorize.model.IAlertDialogTwoButtonHanlder;
+import com.gohn.memorize.model.ISettingGroupNameViewHanlder;
 import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.model.WordType;
 import com.gohn.memorize.util.Dialog;
+import com.gohn.memorize.util.Global;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -42,7 +39,7 @@ public class MultipleActivity extends LearnActivity implements View.OnClickListe
 //	DBMgr dbMgr;
 
     ArrayList<Exercise> exercises;
-    ArrayList<WordSet> wordsSet = new ArrayList<WordSet>();
+//    ArrayList<WordSet> wordsSet = new ArrayList<WordSet>();
     Map<String, ArrayList<WordSet>> wordMap;
 
     TextView word;
@@ -59,13 +56,13 @@ public class MultipleActivity extends LearnActivity implements View.OnClickListe
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
 
-        Bundle b = getIntent().getExtras();
-        groupName = b.getString(DBMgr.GROUP);
-        exerciseType = b.getInt(ExerciseType.toStr());
-        wordType = b.getString(DBMgr.TYPE);
-        fileName = groupName + "|" + exerciseType + "|" + wordType;
-        vibe = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        wordsSet = dbMgr.getWordsSet(groupName, wordType);
+//        Bundle b = getIntent().getExtras();
+//        groupName = b.getString(DBMgr.GROUP);
+//        exerciseType = b.getInt(ExerciseType.toStr());
+//        wordType = b.getString(DBMgr.TYPE);
+//        fileName = groupName + "|" + exerciseType + "|" + wordType;
+//        vibe = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+//        wordsSet = dbMgr.getWordsSet(groupName, wordType);
 
         // TODO 학습 기록이 있는지 캐시에 기록하자 paper 쓰자
         if (isFileExist(fileName)) {
@@ -121,9 +118,8 @@ public class MultipleActivity extends LearnActivity implements View.OnClickListe
             }
         }
 
-        // TODO 문제를 랜덤하게 낼것인지 말것인지 설정값 저장해야함
-//		if (Global.getInstance(getApplicationContext()).RandomProblem)
-//			makeExercisesRandomly();
+        if (Global.getBoolean(this,CommonData.GLOBAL_KEY_RANDOM,false))
+			makeExercisesRandomly();
     }
 
     public void initView() {
@@ -134,7 +130,6 @@ public class MultipleActivity extends LearnActivity implements View.OnClickListe
         answerBtns.add((Button) findViewById(R.id.choice_problem_a3_btn));
         answerBtns.add((Button) findViewById(R.id.choice_problem_a4_btn));
         answerBtns.add((Button) findViewById(R.id.choice_problem_a5_btn));
-
 
         count = (TextView) findViewById(R.id.choice_problem_word_count);
         word = (TextView) findViewById(R.id.choice_problem_word_text);
@@ -286,8 +281,8 @@ public class MultipleActivity extends LearnActivity implements View.OnClickListe
 
     public ArrayList<Exercise> assembleWrongExercises() {
 
-//		if (Global.getInstance(getApplicationContext()).RandomProblem)
-//			makeExercisesRandomly();
+		if (Global.getBoolean(this,CommonData.GLOBAL_KEY_RANDOM,false))
+			makeExercisesRandomly();
 
         ArrayList<Exercise> ea = new ArrayList<Exercise>();
 
@@ -486,60 +481,17 @@ public class MultipleActivity extends LearnActivity implements View.OnClickListe
                         public void onClick(DialogInterface dialog, int which) {
                             switch (which) {
                                 case DialogInterface.BUTTON_POSITIVE:
-
-                                    LayoutInflater li = LayoutInflater.from(MultipleActivity.this);
-                                    View promptsView = li.inflate(R.layout.dialog_input_group_name, null);
-                                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MultipleActivity.this);
-
-                                    alertDialogBuilder.setView(promptsView);
-
-                                    final EditText userInput = (EditText) promptsView.findViewById(R.id.et_group_name);
-
-                                    alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-
-                                            if (userInput.getText().toString().equals("")) {
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(MultipleActivity.this);
-                                                builder.setMessage(R.string.no_name).setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int id) {
-                                                        // do things
-                                                    }
-                                                });
-                                                AlertDialog alert = builder.create();
-                                                alert.show();
-                                                return;
-                                            }
-
-                                            if (dbMgr.getGroupNames().contains(userInput.getText().toString())) {
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(MultipleActivity.this);
-                                                builder.setMessage("Vocabulary name is duplicated").setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int id) {
-                                                        // do things
-                                                    }
-                                                });
-                                                AlertDialog alert = builder.create();
-                                                alert.show();
-                                                return;
-                                            }
-
+                                    Dialog.showSettingGroupNameView(MultipleActivity.this, new ISettingGroupNameViewHanlder() {
+                                        @Override
+                                        public void onPositive(String groupName) {
                                             final ArrayList<WordSet> words = new ArrayList<WordSet>();
                                             for (int i = 0; i < exercises.size(); i++) {
                                                 words.add(exercises.get(i).getQuestion());
                                             }
-                                            dbMgr.addWordsToDB(userInput.getText().toString(), words);
+                                            dbMgr.addWordsToDB(groupName, words);
                                             goHome();
                                         }
-                                    }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
                                     });
-
-                                    // create alert dialog
-                                    AlertDialog alertDialog = alertDialogBuilder.create();
-
-                                    // show it
-                                    alertDialog.show();
                                     break;
 
                                 case DialogInterface.BUTTON_NEGATIVE:
@@ -556,25 +508,13 @@ public class MultipleActivity extends LearnActivity implements View.OnClickListe
                     };
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(MultipleActivity.this);
-                    builder.setMessage(R.string.result_save_mention).setPositiveButton(R.string.result_save_new, dialogClickListener).setNegativeButton(R.string.result_save_old, dialogClickListener).show();
+                    builder.setMessage(R.string.result_save_mention);
+                    builder.setPositiveButton(R.string.result_save_new, dialogClickListener);
+                    builder.setNegativeButton(R.string.result_save_old, dialogClickListener);
+                    builder.show();
 
                     break;
             }
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        // TODO Auto-generated method stub
-        super.onDestroy();
-
-        exercises = null;
-        wordsSet = null;
-        word = null;
-        count = null;
-        nextBtn = null;
-        checkBtn = null;
-        answerBtns = null;
-        dbMgr = null;
     }
 }

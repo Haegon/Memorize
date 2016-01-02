@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -15,11 +14,19 @@ import android.widget.TextView;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.activity.GroupActivity;
+import com.gohn.memorize.common.CommonData;
 import com.gohn.memorize.extention.ColorEx;
-import com.gohn.memorize.manager.DBMgr;
-import com.gohn.memorize.model.ExerciseType;
 import com.gohn.memorize.model.ExerciseWrite;
+import com.gohn.memorize.model.IAlertDialogTwoButtonHanlder;
+import com.gohn.memorize.model.ISettingGroupNameViewHanlder;
 import com.gohn.memorize.model.WordSet;
+import com.gohn.memorize.util.Dialog;
+import com.gohn.memorize.util.Global;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,14 +34,13 @@ import java.util.Random;
 
 public class WriteActivity extends LearnActivity implements View.OnClickListener {
 
-	DBMgr dbMgr;
+//	DBMgr dbMgr;
 
 	ArrayList<ExerciseWrite> exercises;
-	ArrayList<WordSet> wordsSet;
+//	ArrayList<WordSet> wordsSet;
 
 	TextView word;
 	TextView count;
-	Button nextBtn;
 	Button checkBtn;
 	EditText editText;
 	TextView rightAnswer;
@@ -46,42 +52,39 @@ public class WriteActivity extends LearnActivity implements View.OnClickListener
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
-		dbMgr = DBMgr.getInstance();
-		Bundle b = getIntent().getExtras();
-		groupName = b.getString(DBMgr.GROUP);
-		exerciseType = b.getInt(ExerciseType.toStr());
-		wordType = b.getString(DBMgr.TYPE);
-		fileName = groupName + "|" + exerciseType + "|" + wordType;
-		wordsSet = dbMgr.getWordsSet(groupName, wordType);
+//		dbMgr = DBMgr.getInstance();
+//		Bundle b = getIntent().getExtras();
+//		groupName = b.getString(DBMgr.GROUP);
+//		exerciseType = b.getInt(ExerciseType.toStr());
+//		wordType = b.getString(DBMgr.TYPE);
+//		fileName = groupName + "|" + exerciseType + "|" + wordType;
+//		wordsSet = dbMgr.getWordsSet(groupName, wordType);
 
-//		if (isFileExist(fileName)) {
-//			DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-//				@Override
-//				public void onClick(DialogInterface dialog, int which) {
-//					switch (which) {
-//						case DialogInterface.BUTTON_POSITIVE:
-//							readCurrentState();
-//							break;
-//						case DialogInterface.BUTTON_NEGATIVE:
-//							deleteCurrentState();
-//							exerciseInit();
-//							break;
-//					}
-//					setContentView(R.layout.write_problem_activity_layout);
-//					viewInit();
-//					showPage();
-//				}
-//			};
-//
-//			AlertDialog.Builder builder = new AlertDialog.Builder(WriteProblemActivity.this);
-//			builder.setMessage(R.string.load_save).setPositiveButton(R.string.yes, dialogClickListener).setNegativeButton(R.string.no, dialogClickListener).show();
-//		} else {
-			setContentView(R.layout.content_write);
+		if (isFileExist(fileName)) {
+            Dialog.showTwoButtonAlert(this, R.string.load_save, new IAlertDialogTwoButtonHanlder() {
+                @Override
+                public void onPositive() {
+                    readCurrentState();
+                    startStudy();
+                }
+                @Override
+                public void onNegative() {
+                    deleteCurrentState();
+                    exerciseInit();
+                    startStudy();
+                }
+            });
+        } else {
 			exerciseInit();
-			viewInit();
-			showPage();
-//		}
+            startStudy();
+		}
 	}
+
+    public void startStudy() {
+        setContentView(R.layout.content_write);
+        viewInit();
+        showPage();
+    }
 
 	public void exerciseInit() {
 		exercises = new ArrayList<ExerciseWrite>();
@@ -89,12 +92,8 @@ public class WriteActivity extends LearnActivity implements View.OnClickListener
 		for ( WordSet wordSet : wordsSet )
 			exercises.add(new ExerciseWrite(wordSet));
 
-//		for (int i = 0; i < wordsSet.size(); i++) {
-//			exercises.add(new ExerciseWrite(wordsSet.get(i)));
-//		}
-
-//		if (Global.getInstance(getApplicationContext()).RandomProblem)
-//			makeExercisesRandomly();
+        if (Global.getBoolean(this, CommonData.GLOBAL_KEY_RANDOM, false))
+			makeExercisesRandomly();
 	}
 
 	public void viewInit() {
@@ -125,7 +124,6 @@ public class WriteActivity extends LearnActivity implements View.OnClickListener
 			checkBtn.setText(R.string.check);
 		}
 
-		// editText.setText(exercises.get(page).AnswerItems.Answer);
 		editText.setTextColor(exercises.get(page).getAnswerItem().getTint());
 
 		if (!exercises.get(page).isCorrect()) {
@@ -166,8 +164,8 @@ public class WriteActivity extends LearnActivity implements View.OnClickListener
 
 	public ArrayList<ExerciseWrite> assembleWrongExercises() {
 
-//		if (Global.getInstance(getApplicationContext()).RandomProblem)
-//			makeExercisesRandomly();
+        if (Global.getBoolean(this, CommonData.GLOBAL_KEY_RANDOM, false))
+			makeExercisesRandomly();
 
 		ArrayList<ExerciseWrite> ea = new ArrayList<ExerciseWrite>();
 
@@ -281,79 +279,35 @@ public class WriteActivity extends LearnActivity implements View.OnClickListener
 					public void onClick(DialogInterface dialog, int which) {
 						switch (which) {
 							case DialogInterface.BUTTON_POSITIVE:
-
-								LayoutInflater li = LayoutInflater.from(WriteActivity.this);
-								View promptsView = li.inflate(R.layout.dialog_input_group_name, null);
-								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(WriteActivity.this);
-								// set prompts.xml to alertdialog builder
-								alertDialogBuilder.setView(promptsView);
-
-								final EditText userInput = (EditText) promptsView.findViewById(R.id.et_group_name);
-
-								// set dialog message
-								alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog, int id) {
-
-										// 단어장 이름이 비어있을때
-										if (userInput.getText().toString().equals("")) {
-											AlertDialog.Builder builder = new AlertDialog.Builder(WriteActivity.this);
-											builder.setMessage(R.string.no_name).setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-												public void onClick(DialogInterface dialog, int id) {
-													// do things
-												}
-											});
-											AlertDialog alert = builder.create();
-											alert.show();
-											return;
-										}
-
-										// 동일한 단어장 이름이 있을때
-										if (dbMgr.getGroupNames().contains(userInput.getText().toString())) {
-											AlertDialog.Builder builder = new AlertDialog.Builder(WriteActivity.this);
-											builder.setMessage("Vocabulary name is duplicated").setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-												public void onClick(DialogInterface dialog, int id) {
-													// do things
-												}
-											});
-											AlertDialog alert = builder.create();
-											alert.show();
-											return;
-										}
-
-										final ArrayList<WordSet> words = new ArrayList<WordSet>();
-										for (int i = 0; i < exercises.size(); i++) {
-											words.add(exercises.get(i).getQuestion());
-										}
-										dbMgr.addWordsToDB(userInput.getText().toString(), words);
-										goHome();
-									}
-								}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog, int id) {
-										dialog.cancel();
-									}
-								});
-
-								// create alert dialog
-								AlertDialog alertDialog = alertDialogBuilder.create();
-
-								// show it
-								alertDialog.show();
+                                Dialog.showSettingGroupNameView(WriteActivity.this, new ISettingGroupNameViewHanlder() {
+                                    @Override
+                                    public void onPositive(String groupName) {
+                                        final ArrayList<WordSet> words = new ArrayList<WordSet>();
+                                        for (int i = 0; i < exercises.size(); i++) {
+                                            words.add(exercises.get(i).getQuestion());
+                                        }
+                                        dbMgr.addWordsToDB(groupName, words);
+                                        goHome();
+                                    }
+                                });
 								break;
 
 							case DialogInterface.BUTTON_NEGATIVE:
-								// No button clicked
 								Intent intent = new Intent();
 
 								dbMgr.setWrongExercisesWrite(exercises);
 								intent.setClass(getApplicationContext(), GroupActivity.class);
-								intent.putExtra("type", "write");
+								intent.putExtra(CommonData.INTENT_KEY_PROBLEM_TYPE, CommonData.INTENT_VALUE_WRITE);
 								startActivity(intent);
 								break;
 						}
 					}
 				};
 				AlertDialog.Builder builder = new AlertDialog.Builder(WriteActivity.this);
-				builder.setMessage(R.string.result_save_mention).setPositiveButton(R.string.result_save_new, dialogClickListener).setNegativeButton(R.string.result_save_old, dialogClickListener).show();
+				builder.setMessage(R.string.result_save_mention);
+                builder.setPositiveButton(R.string.result_save_new, dialogClickListener);
+                builder.setNegativeButton(R.string.result_save_old, dialogClickListener);
+                builder.show();
 		}
 	}
 
@@ -363,39 +317,39 @@ public class WriteActivity extends LearnActivity implements View.OnClickListener
 
 	private void saveCurrentState() {
 
-//		Thread t = new Thread() {
-//			public void run() {
-//				try {
-//					Gson gson = new Gson();
-//
-//					// 마지막 문제는 현재 페이지 저장. 그전 문제는 다음 페이지 저장.
-//					json.put("page", page + 1 == exercises.size() ? page : page + 1);
-//					json.put("list", gson.toJson(exercises));
-//				} catch (JSONException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				writeToFile(fileName, json.toString());
-//			}
-//		};
-//		t.start();
+		Thread t = new Thread() {
+			public void run() {
+				try {
+					Gson gson = new Gson();
+
+					// 마지막 문제는 현재 페이지 저장. 그전 문제는 다음 페이지 저장.
+					json.put("page", page + 1 == exercises.size() ? page : page + 1);
+					json.put("list", gson.toJson(exercises));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				writeToFile(fileName, json.toString());
+			}
+		};
+		t.start();
 	}
 
 	private void readCurrentState() {
-//		String jstr = readFromFile(fileName);
-//		try {
-//			JSONObject j = new JSONObject(jstr);
-//
-//			page = j.getInt("page");
-//
-//			String list = j.getString("list");
-//			Gson gson = new Gson();
-//			exercises = gson.fromJson(list, new TypeToken<ArrayList<ExerciseWrite>>() {
-//			}.getType());
-//
-//		} catch (JSONException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		String jstr = readFromFile(fileName);
+		try {
+			JSONObject j = new JSONObject(jstr);
+
+			page = j.getInt("page");
+
+			String list = j.getString("list");
+			Gson gson = new Gson();
+			exercises = gson.fromJson(list, new TypeToken<ArrayList<ExerciseWrite>>() {
+			}.getType());
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

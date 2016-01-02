@@ -13,18 +13,14 @@
     <string name="title_activity_write">Write alphabets correctly</string>
     <string name="title_activity_select_group">Select group to add</string>
 
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+
+    <string name="navi_home">Home</string>
+    <string name="navi_help">Help</string>
+    <string name="navi_info">Application Info</string>
+    <string name="navi_mail">Feedback</string>
+    <string name="navi_donate">Donate</string>
+    <string name="navi_grade">Rate</string>
+    <string name="navi_share">Share this app</string>
 
     <string name="action_example">Example action</string>
     <string name="ok">OK</string>
@@ -32,7 +28,7 @@
     <string name="main_help">Help</string>
     <string name="main_opt">More</string>
     <string name="list_parent_folder">.. Parent Folder</string>
-    <string name="enter_your_voca_name">Enter Your Vocabulary Name.</string>
+    <string name="enter_your_voca_name">Put the vocabulary group name.</string>
     <string name="create">Create</string>
     <string name="cancel">Cancel</string>
     <string name="study">Study</string>
@@ -63,7 +59,8 @@
     <string name="result_correct">Correct.</string>
     <string name="result_point">pnt</string>
     <string name="group_delete">Delete</string>
-    <string name="group_chance">Change Name</string>
+    <string name="group_change">Change Name</string>
+    <string name="group_copy">Copy</string>
     <string name="group_settings">Vocabulary Settings</string>
     <string name="find_duplicate">Vocabulary name is duplicated.</string>
     <string name="no_voca">There are not enough voca to test for this type.\nPlease use All type test or add new vocabulary.</string>

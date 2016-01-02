@@ -1,8 +1,6 @@
 package com.gohn.memorize.activity;
 
-import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,17 +11,17 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.common.CommonData;
 import com.gohn.memorize.manager.DBMgr;
+import com.gohn.memorize.model.ISettingGroupNameViewHanlder;
 import com.gohn.memorize.model.VocaGroup;
 import com.gohn.memorize.util.BackPressCloseHandler;
+import com.gohn.memorize.util.Dialog;
 import com.gohn.memorize.util.GLog;
 
 import java.util.ArrayList;
@@ -114,33 +112,16 @@ public class MainActivity extends AppCompatActivity
                             mCardArrayAdapter.remove((Card) card);
                             break;
                         case R.id.menu_group_change_name:
-                            LayoutInflater li = LayoutInflater.from(MainActivity.this);
-                            View promptsView = li.inflate(R.layout.dialog_input_group_name, null);
-
-                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-                            alertDialogBuilder.setView(promptsView);
-
-                            final EditText userInput = (EditText) promptsView.findViewById(R.id.et_group_name);
-
-                            alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
+                            Dialog.showSettingGroupNameView(MainActivity.this, new ISettingGroupNameViewHanlder() {
+                                @Override
+                                public void onPositive(String groupName) {
                                     ContentValues cv = new ContentValues();
-                                    cv.put(DBMgr.GROUP, userInput.getText().toString());
+                                    cv.put(DBMgr.GROUP, groupName);
                                     DBMgr.getInstance().update(cv, DBMgr.GROUP + "=?", new String[]{cardHeaderTitle});
-                                    ((Card) card).getCardHeader().setTitle(userInput.getText().toString());
+                                    ((Card) card).getCardHeader().setTitle(groupName);
                                     mCardArrayAdapter.notifyDataSetChanged();
                                 }
-                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
                             });
-
-                            // create alert dialog
-                            AlertDialog alertDialog = alertDialogBuilder.create();
-
-                            // show it
-                            alertDialog.show();
                             break;
                     }
                 }
@@ -204,19 +185,19 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camara) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
+//        if (id == R.id.nav_camara) {
+//            // Handle the camera action
+//        } else if (id == R.id.nav_gallery) {
+//
+//        } else if (id == R.id.nav_slideshow) {
+//
+//        } else if (id == R.id.nav_manage) {
+//
+//        } else if (id == R.id.nav_share) {
+//
+//        } else if (id == R.id.nav_send) {
+//
+//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

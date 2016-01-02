@@ -6,11 +6,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.gohn.memorize.R;
-import com.gohn.memorize.manager.DBMgr;
-import com.gohn.memorize.model.ExerciseType;
+import com.gohn.memorize.common.CommonData;
 import com.gohn.memorize.model.IAlertDialogTwoButtonHanlder;
 import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.util.Dialog;
+import com.gohn.memorize.util.Global;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -23,9 +23,9 @@ import java.util.Random;
 
 public class StudyActivity extends LearnActivity implements View.OnClickListener {
 
-    DBMgr dbMgr;
+//    DBMgr dbMgr;
 
-    ArrayList<WordSet> wordsSet;
+//    ArrayList<WordSet> wordsSet;
 
     TextView word;
     TextView meaning;
@@ -41,14 +41,14 @@ public class StudyActivity extends LearnActivity implements View.OnClickListener
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
 
-        dbMgr = DBMgr.getInstance();
-        Bundle b = getIntent().getExtras();
-        groupName = b.getString(DBMgr.GROUP);
-        exerciseType = b.getInt(ExerciseType.toStr());
-        wordType = b.getString(DBMgr.TYPE);
-        isBlind = b.getString("mode").equals("blind") ? true : false;
-
-        fileName = groupName + "|" + exerciseType + "|" + wordType + "|" + isBlind;
+//        dbMgr = DBMgr.getInstance();
+//        Bundle b = getIntent().getExtras();
+//        groupName = b.getString(DBMgr.GROUP);
+//        exerciseType = b.getInt(ExerciseType.toStr());
+//        wordType = b.getString(DBMgr.TYPE);
+//        isBlind = b.getString("mode").equals("blind") ? true : false;
+//
+//        fileName = groupName + "|" + exerciseType + "|" + wordType + "|" + isBlind;
 
         if (isFileExist(fileName)) {
             Dialog.showTwoButtonAlert(this, R.string.load_save, new IAlertDialogTwoButtonHanlder() {
@@ -81,8 +81,8 @@ public class StudyActivity extends LearnActivity implements View.OnClickListener
 
         wordsSet = dbMgr.getWordsSet(groupName, wordType);
 
-//		if (Global.getInstance(getApplicationContext()).RandomProblem)
-//			makeWordRandomly();
+        if (Global.getBoolean(this, CommonData.GLOBAL_KEY_RANDOM, false))
+			makeWordRandomly();
     }
 
     public void viewInit() {
