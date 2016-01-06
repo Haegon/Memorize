@@ -1,4 +1,4 @@
-package com.gohn.memorize.activity;
+package com.gohn.memorize.activity.base;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.gohn.memorize.R;
 
-public class BaseActivity extends AppCompatActivity {
+public class ActionBarActivity extends AppCompatActivity {
 
     protected ViewGroup contentView;
 

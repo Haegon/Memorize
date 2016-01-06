@@ -1,4 +1,4 @@
-package com.gohn.memorize.activity.Learn;
+package com.gohn.memorize.activity.learn;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.gohn.memorize.R;
-import com.gohn.memorize.activity.BaseActivity;
+import com.gohn.memorize.activity.base.ActionBarActivity;
 import com.gohn.memorize.activity.MainActivity;
 import com.gohn.memorize.manager.DBMgr;
 import com.gohn.memorize.model.ExerciseType;
@@ -28,7 +28,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
-public class LearnActivity extends BaseActivity {
+public class LearnActivity extends ActionBarActivity {
 
     protected DBMgr dbMgr;
     protected JSONObject json;

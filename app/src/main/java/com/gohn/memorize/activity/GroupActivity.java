@@ -10,6 +10,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.gohn.memorize.R;
+import com.gohn.memorize.activity.base.ActionBarActivity;
 import com.gohn.memorize.adapter.GroupAdapter;
 import com.gohn.memorize.common.CommonData;
 import com.gohn.memorize.manager.DBMgr;
@@ -17,7 +18,7 @@ import com.gohn.memorize.model.WordSet;
 
 import java.util.ArrayList;
 
-public class GroupActivity extends BaseActivity {
+public class GroupActivity extends ActionBarActivity {
 	ListView mListView = null;
 	GroupAdapter mAdapter = null;
 

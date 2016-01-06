@@ -1,4 +1,4 @@
-package com.gohn.memorize.activity.Learn;
+package com.gohn.memorize.activity.learn;
 
 import android.os.Bundle;
 import android.view.View;

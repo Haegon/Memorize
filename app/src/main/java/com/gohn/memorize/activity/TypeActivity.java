@@ -8,14 +8,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.gohn.memorize.R;
-import com.gohn.memorize.activity.Learn.MultipleActivity;
-import com.gohn.memorize.activity.Learn.StudyActivity;
-import com.gohn.memorize.activity.Learn.WriteActivity;
+import com.gohn.memorize.activity.base.ActionBarActivity;
+import com.gohn.memorize.activity.learn.MultipleActivity;
+import com.gohn.memorize.activity.learn.StudyActivity;
+import com.gohn.memorize.activity.learn.WriteActivity;
 import com.gohn.memorize.manager.DBMgr;
 import com.gohn.memorize.model.ExerciseType;
 import com.gohn.memorize.model.WordType;
 
-public class TypeActivity extends BaseActivity implements View.OnClickListener{
+public class TypeActivity extends ActionBarActivity implements View.OnClickListener{
 
     String groupName = "";
     int exerciseType;

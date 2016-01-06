@@ -12,6 +12,7 @@
     <string name="title_activity_choice_problem">Multiple Choice Question</string>
     <string name="title_activity_write">Write alphabets correctly</string>
     <string name="title_activity_select_group">Select group to add</string>
+    <string name="title_activity_help">How to use</string>
 
 
     <string name="navi_home">Home</string>

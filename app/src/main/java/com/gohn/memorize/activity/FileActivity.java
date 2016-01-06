@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gohn.memorize.R;
+import com.gohn.memorize.activity.base.ActionBarActivity;
 import com.gohn.memorize.adapter.FindFileAdapter;
 import com.gohn.memorize.common.CommonData;
 import com.gohn.memorize.manager.DBMgr;
@@ -30,7 +31,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class FileActivity extends BaseActivity {
+public class FileActivity extends ActionBarActivity {
 
     Context context = this;
 

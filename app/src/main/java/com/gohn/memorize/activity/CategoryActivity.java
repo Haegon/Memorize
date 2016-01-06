@@ -5,10 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.gohn.memorize.R;
+import com.gohn.memorize.activity.base.ActionBarActivity;
 import com.gohn.memorize.manager.DBMgr;
 import com.gohn.memorize.model.ExerciseType;
 
-public class CategoryActivity extends BaseActivity implements View.OnClickListener {
+public class CategoryActivity extends ActionBarActivity implements View.OnClickListener {
 
     String group;
 
