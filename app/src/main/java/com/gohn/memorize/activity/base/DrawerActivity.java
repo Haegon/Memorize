@@ -49,8 +49,6 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     public void setContentView(int layoutResID) {
-//        super.setContentView(layoutResID);
-
         View content = LayoutInflater.from(this).inflate(layoutResID, null);
         contentView.addView(content);
     }
