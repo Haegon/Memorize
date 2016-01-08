@@ -34,6 +34,7 @@ public class CommonData {
     public static int RESULT_REFRESH = 20001;
 
     public static String INTENT_KEY_PROBLEM_TYPE = "key_problem_type";
+    public static String INTENT_KEY_DRAWER_ITEM = "key_drawer_item";
 
     public static String INTENT_VALUE_MULTIPLE = "value_multiple";
     public static String INTENT_VALUE_WRITE = "value_write";

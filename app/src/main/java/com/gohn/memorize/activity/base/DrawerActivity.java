@@ -1,15 +1,20 @@
 package com.gohn.memorize.activity.base;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.gohn.memorize.R;
+import com.gohn.memorize.activity.HelpActivity;
+import com.gohn.memorize.activity.MainActivity;
 import com.gohn.memorize.common.CommonData;
 import com.gohn.memorize.util.GLog;
 import com.gohn.memorize.util.Global;
@@ -27,20 +32,31 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 public class DrawerActivity extends AppCompatActivity {
 
     private AccountHeader headerResult = null;
-    private Drawer result = null;
+    private Drawer drawer = null;
     private boolean opened = false;
+    protected ViewGroup contentView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        super.setContentView(R.layout.activity_main2);
 
         initView(savedInstanceState);
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+//        super.setContentView(layoutResID);
+
+        View content = LayoutInflater.from(this).inflate(layoutResID, null);
+        contentView.addView(content);
     }
 
     void initView(Bundle savedInstanceState) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        contentView = (ViewGroup) findViewById(R.id.frame_container);
 
         // Create the AccountHeader
         headerResult = new AccountHeaderBuilder()
@@ -50,7 +66,7 @@ public class DrawerActivity extends AppCompatActivity {
                 .build();
 
         //Create the drawer
-        result = new DrawerBuilder()
+        drawer = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withHasStableIds(true)
@@ -107,12 +123,19 @@ public class DrawerActivity extends AppCompatActivity {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         if (drawerItem == null) return false;
 
+                        Intent intent = new Intent();
+                        intent.putExtra(CommonData.INTENT_KEY_DRAWER_ITEM, drawerItem.getIdentifier());
+
                         switch (drawerItem.getIdentifier()) {
                             case R.string.navi_home:
                                 GLog.Debug("@@@@@ R.string.navi_home");
+                                intent.setClass(DrawerActivity.this, MainActivity.class);
+                                startActivity(intent);
                                 break;
                             case R.string.navi_help:
                                 GLog.Debug("@@@@@ R.string.navi_help");
+                                intent.setClass(DrawerActivity.this, HelpActivity.class);
+                                startActivity(intent);
                                 break;
                             case R.string.navi_info:
                                 GLog.Debug("@@@@@ R.string.navi_info");
@@ -124,10 +147,10 @@ public class DrawerActivity extends AppCompatActivity {
                                 GLog.Debug("@@@@@ R.string.navi_setting");
                                 if (opened) {
                                     //remove the items which are hidden
-                                    result.removeItems(R.string.pref_basic_random);
+                                    drawer.removeItems(R.string.pref_basic_random);
                                 } else {
-                                    int curPos = result.getPosition(drawerItem);
-                                    result.addItemsAtPosition(
+                                    int curPos = drawer.getPosition(drawerItem);
+                                    drawer.addItemsAtPosition(
                                             curPos,
                                             new SwitchDrawerItem()
                                                     .withName(R.string.pref_basic_random)
@@ -163,9 +186,9 @@ public class DrawerActivity extends AppCompatActivity {
                 .withShowDrawerOnFirstLaunch(true)
                 .build();
 
-        if (savedInstanceState == null) {
-            result.setSelection(R.string.navi_home, false);
-        }
+
+        // 앱 서랍에 현재 위치 표시
+        drawer.setSelection(getIntent().getIntExtra(CommonData.INTENT_KEY_DRAWER_ITEM, R.string.navi_home), false);
     }
 
     private OnCheckedChangeListener onCheckedChangeListener = new OnCheckedChangeListener() {
@@ -184,15 +207,15 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState = result.saveInstanceState(outState);
+        outState = drawer.saveInstanceState(outState);
         outState = headerResult.saveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onBackPressed() {
-        if (result != null && result.isDrawerOpen()) {
-            result.closeDrawer();
+        if (drawer != null && drawer.isDrawerOpen()) {
+            drawer.closeDrawer();
         } else {
             super.onBackPressed();
 //            backPressCloseHandler.onBackPressed();
@@ -206,6 +229,13 @@ public class DrawerActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getGroupId()) {
+            case 0:
+                drawer.openDrawer();
+                break;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 }

@@ -38,7 +38,7 @@ public class MainActivity extends DrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.app_bar_main2);
 
         DBMgr.init(this);
 
@@ -137,6 +137,12 @@ public class MainActivity extends DrawerActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
     }
 
     @Override
