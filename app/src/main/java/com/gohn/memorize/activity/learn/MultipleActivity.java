@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.activity.GroupActivity;
+import com.gohn.memorize.activity.base.LearnActivity;
 import com.gohn.memorize.common.CommonData;
 import com.gohn.memorize.extention.ColorEx;
 import com.gohn.memorize.model.AnswerItem;
@@ -36,10 +37,7 @@ import java.util.Random;
 
 public class MultipleActivity extends LearnActivity implements View.OnClickListener {
 
-//	DBMgr dbMgr;
-
     ArrayList<Exercise> exercises;
-//    ArrayList<WordSet> wordsSet = new ArrayList<WordSet>();
     Map<String, ArrayList<WordSet>> wordMap;
 
     TextView word;
@@ -53,18 +51,8 @@ public class MultipleActivity extends LearnActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
 
-//        Bundle b = getIntent().getExtras();
-//        groupName = b.getString(DBMgr.GROUP);
-//        exerciseType = b.getInt(ExerciseType.toStr());
-//        wordType = b.getString(DBMgr.TYPE);
-//        fileName = groupName + "|" + exerciseType + "|" + wordType;
-//        vibe = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-//        wordsSet = dbMgr.getWordsSet(groupName, wordType);
-
-        // TODO 학습 기록이 있는지 캐시에 기록하자 paper 쓰자
         if (isFileExist(fileName)) {
             Dialog.showTwoButtonAlert(this, R.string.load_save, new IAlertDialogTwoButtonHanlder() {
                 @Override
@@ -166,8 +154,6 @@ public class MultipleActivity extends LearnActivity implements View.OnClickListe
     }
 
     public void showResult() {
-
-//		AdBuddiz.showAd(learnActivity);
         deleteCurrentState();
 
         setContentView(R.layout.content_result);

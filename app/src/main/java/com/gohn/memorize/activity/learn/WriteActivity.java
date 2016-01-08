@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.activity.GroupActivity;
+import com.gohn.memorize.activity.base.LearnActivity;
 import com.gohn.memorize.common.CommonData;
 import com.gohn.memorize.extention.ColorEx;
 import com.gohn.memorize.model.ExerciseWrite;
@@ -34,10 +35,7 @@ import java.util.Random;
 
 public class WriteActivity extends LearnActivity implements View.OnClickListener {
 
-//	DBMgr dbMgr;
-
 	ArrayList<ExerciseWrite> exercises;
-//	ArrayList<WordSet> wordsSet;
 
 	TextView word;
 	TextView count;
@@ -51,14 +49,6 @@ public class WriteActivity extends LearnActivity implements View.OnClickListener
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-
-//		dbMgr = DBMgr.getInstance();
-//		Bundle b = getIntent().getExtras();
-//		groupName = b.getString(DBMgr.GROUP);
-//		exerciseType = b.getInt(ExerciseType.toStr());
-//		wordType = b.getString(DBMgr.TYPE);
-//		fileName = groupName + "|" + exerciseType + "|" + wordType;
-//		wordsSet = dbMgr.getWordsSet(groupName, wordType);
 
 		if (isFileExist(fileName)) {
             Dialog.showTwoButtonAlert(this, R.string.load_save, new IAlertDialogTwoButtonHanlder() {
@@ -109,7 +99,7 @@ public class WriteActivity extends LearnActivity implements View.OnClickListener
 		rightAnswer.setText("");
 
         checkBtn.setOnClickListener(this);
-        findViewById(R.id.btn_prev).setOnClickListener(this);
+		findViewById(R.id.btn_prev).setOnClickListener(this);
 	}
 
 	public void showPage() {
@@ -133,7 +123,6 @@ public class WriteActivity extends LearnActivity implements View.OnClickListener
 	}
 
 	public void showResult() {
-//		AdBuddiz.showAd(learnActivity);
 
         View view = this.getCurrentFocus();
         if (view != null) {
@@ -156,6 +145,11 @@ public class WriteActivity extends LearnActivity implements View.OnClickListener
 			Button saveBtn = (Button) findViewById(R.id.result_save_btn);
 			saveBtn.setVisibility(View.GONE);
 		}
+
+        findViewById(R.id.result_again_btn).setOnClickListener(this);
+        findViewById(R.id.result_restart_btn).setOnClickListener(this);
+        findViewById(R.id.result_save_btn).setOnClickListener(this);
+        findViewById(R.id.result_home_btn).setOnClickListener(this);
 	}
 
 	public ExerciseWrite makeWriteWordExercise(WordSet wordSet) {

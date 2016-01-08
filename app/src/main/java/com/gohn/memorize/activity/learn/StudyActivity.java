@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.gohn.memorize.R;
+import com.gohn.memorize.activity.base.LearnActivity;
 import com.gohn.memorize.common.CommonData;
 import com.gohn.memorize.model.IAlertDialogTwoButtonHanlder;
 import com.gohn.memorize.model.WordSet;

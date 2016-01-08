@@ -1,4 +1,4 @@
-package com.gohn.memorize.activity.learn;
+package com.gohn.memorize.activity.base;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.gohn.memorize.R;
-import com.gohn.memorize.activity.base.ActionBarActivity;
 import com.gohn.memorize.activity.MainActivity;
 import com.gohn.memorize.manager.DBMgr;
 import com.gohn.memorize.model.ExerciseType;
@@ -61,9 +60,6 @@ public class LearnActivity extends ActionBarActivity {
         json = new JSONObject();
         vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         learnActivity = this;
-
-//		AdBuddiz.cacheAds(learnActivity);
-//		AdBuddiz.setPublisherKey("2397c3d7-a8b7-4935-9869-794fc416499c");
     }
 
     protected void goHome() {
