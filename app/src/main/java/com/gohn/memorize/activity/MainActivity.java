@@ -141,8 +141,10 @@ public class MainActivity extends DrawerActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        backPressCloseHandler.onBackPressed();
+        if ( isDrawerOpen() )
+            super.onBackPressed();
+        else
+            backPressCloseHandler.onBackPressed();
     }
 
     @Override

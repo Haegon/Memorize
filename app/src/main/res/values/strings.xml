@@ -86,6 +86,8 @@
     <string name="stop_study">Are you sure you want to exit the learning?\nYou can learn content from here when you come back.</string>
     <string name="exit">Are you sure you want to quit?</string>
     <string name="click_answer">Please select the correct answer from examples.</string>
+    <string name="share">Study vocabulary and testing with this application.</string>
+    <string name="grade">Move to "Play Store" to leave rating.</string>
     <string name="help_1"> \"VOCA DIY\" app is memorizing the words you want to memorize words by uploading directly.
 \n\n You must save yourself the words you want to memorize the Excel file.
 \n\n When you save an Excel file There is a simple rule.

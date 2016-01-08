@@ -2,6 +2,7 @@ package com.gohn.memorize.activity.base;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +17,8 @@ import com.gohn.memorize.R;
 import com.gohn.memorize.activity.HelpActivity;
 import com.gohn.memorize.activity.MainActivity;
 import com.gohn.memorize.common.CommonData;
+import com.gohn.memorize.model.IAlertDialogTwoButtonHanlder;
+import com.gohn.memorize.util.Dialog;
 import com.gohn.memorize.util.GLog;
 import com.gohn.memorize.util.Global;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -127,22 +130,27 @@ public class DrawerActivity extends AppCompatActivity {
                         intent.putExtra(CommonData.INTENT_KEY_DRAWER_ITEM, drawerItem.getIdentifier());
 
                         switch (drawerItem.getIdentifier()) {
+                            // 홈액티비티 실행
                             case R.string.navi_home:
                                 GLog.Debug("@@@@@ R.string.navi_home");
                                 intent.setClass(DrawerActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 break;
+                            // 도움말 액티비티 실행
                             case R.string.navi_help:
                                 GLog.Debug("@@@@@ R.string.navi_help");
                                 intent.setClass(DrawerActivity.this, HelpActivity.class);
                                 startActivity(intent);
                                 break;
+                            // 앱정보 액티비티 실행
                             case R.string.navi_info:
                                 GLog.Debug("@@@@@ R.string.navi_info");
                                 break;
+                            // 기부하기 액티비티 실행
                             case R.string.navi_donate:
                                 GLog.Debug("@@@@@ R.string.navi_donate");
                                 break;
+                            // 셋팅 하위 메뉴 열기
                             case R.string.navi_setting:
                                 GLog.Debug("@@@@@ R.string.navi_setting");
                                 if (opened) {
@@ -167,16 +175,36 @@ public class DrawerActivity extends AppCompatActivity {
                                 opened = !opened;
                                 return true;
                             case R.string.pref_basic_random:
-                                GLog.Debug("@@@@@ R.string.pref_basic_random");
                                 break;
+                            //공유 하기
                             case R.string.navi_share:
-                                GLog.Debug("@@@@@ R.string.navi_share");
+                                Intent i = new Intent(Intent.ACTION_SEND);
+                                i.setType("text/plain");
+                                i.putExtra(Intent.EXTRA_SUBJECT, "Voca DIY");
+                                String sAux = "\n" + getResources().getString(R.string.share) + "\n\n";
+                                sAux = sAux + "https://play.google.com/store/apps/details?id=com.gohn.memorize";
+                                i.putExtra(Intent.EXTRA_TEXT, sAux);
+                                startActivity(Intent.createChooser(i, "choose one"));
                                 break;
+                            // 평점 남기기
                             case R.string.navi_grade:
-                                GLog.Debug("@@@@@ R.string.navi_grade");
+                                Dialog.showTwoButtonAlert(DrawerActivity.this, R.string.grade, new IAlertDialogTwoButtonHanlder() {
+                                    @Override
+                                    public void onPositive() {
+                                        String appPackageName = getPackageName();
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                                    }
+
+                                    @Override
+                                    public void onNegative() {}
+                                });
                                 break;
+                            // 개발자에게 이메일 쓰기
                             case R.string.navi_mail:
-                                GLog.Debug("@@@@@ R.string.navi_mail");
+                                Intent email = new Intent(Intent.ACTION_SEND);
+                                email.putExtra(Intent.EXTRA_EMAIL, new String[]{"gohn0929@gmail.com"});
+                                email.setType("message/rfc822");
+                                startActivity(Intent.createChooser(email, "Choose an Email client"));
                                 break;
                         }
                         return false;
@@ -237,5 +265,9 @@ public class DrawerActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected boolean isDrawerOpen() {
+        return drawer.isDrawerOpen();
     }
 }
