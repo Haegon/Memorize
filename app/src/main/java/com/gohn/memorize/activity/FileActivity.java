@@ -2,7 +2,6 @@ package com.gohn.memorize.activity;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,8 +19,9 @@ import com.gohn.memorize.activity.base.ActionBarActivity;
 import com.gohn.memorize.adapter.FindFileAdapter;
 import com.gohn.memorize.common.CommonData;
 import com.gohn.memorize.manager.DBMgr;
+import com.gohn.memorize.model.ISettingGroupNameViewHanlder;
 import com.gohn.memorize.model.WordSet;
-import com.gohn.memorize.util.GLog;
+import com.gohn.memorize.util.Dialog;
 import com.gohn.memorize.util.parser.ReadCSV;
 import com.gohn.memorize.util.parser.ReadXls;
 import com.gohn.memorize.util.parser.ReadXlsx;
@@ -98,74 +97,22 @@ public class FileActivity extends ActionBarActivity {
                     final String ext = file.getName().substring(file.getName().lastIndexOf("."));
                     if (ext.contains(".xls") || ext.contains(".xlsx") || ext.contains(".csv")) {
 
-                        final LayoutInflater li = LayoutInflater.from(context);
-                        final View promptsView = li.inflate(R.layout.dialog_input_group_name, null);
-
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-
-                        // set prompts.xml to alertdialog builder
-                        alertDialogBuilder.setView(promptsView);
-
-                        final EditText etGroupName = (EditText) promptsView.findViewById(R.id.et_group_name);
-
-                        // set dialog message
-                        alertDialogBuilder.setCancelable(false).setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                // 단어장 이름이 비어있을때
-                                if (etGroupName.getText().toString().equals("")) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                                    builder.setMessage(R.string.no_name).setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            // do things
-                                        }
-                                    });
-                                    AlertDialog alert = builder.create();
-                                    alert.show();
-                                    return;
-                                }
-
-                                if ( DBMgr.getInstance() == null ) {
-                                    GLog.Debug("DBMgr.getInstance() == null");
-                                }
-
-                                // 동일한 단어장 이름이 있을때
-                                if (dbMgr.getGroupNames().contains(etGroupName.getText().toString())) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                                    builder.setMessage(R.string.find_duplicate).setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            // do things
-                                        }
-                                    });
-                                    AlertDialog alert = builder.create();
-                                    alert.show();
-                                    return;
-                                }
-
+                        Dialog.showSettingGroupNameView(FileActivity.this, new ISettingGroupNameViewHanlder() {
+                            @Override
+                            public void onPositive(final String groupName) {
                                 new Thread(new Runnable() {
                                     public void run() {
 
                                         ArrayList<WordSet> words = new ArrayList<WordSet>();
 
                                         if (ext.contains(".xls") && !ext.contains(".xlsx")) {
-                                            words = ReadXls.Read(etGroupName.getText().toString(), file.getAbsolutePath());
+                                            words = ReadXls.Read(groupName, file.getAbsolutePath());
                                         } else if (ext.contains(".xlsx")) {
                                             words = ReadXlsx.Read(file.getAbsolutePath());
                                         } else if (ext.contains(".csv")) {
                                             words = ReadCSV.Read(file.getAbsolutePath());
                                         }
-//                                        // 이 스레드에서 Realm 인스턴스 얻기
-//                                        Realm realm = Realm.getInstance(context);
-//
-//                                        // 데이터를 손쉽게 영속적으로 만들기
-//                                        realm.beginTransaction();
-//                                        for ( WordSet wordSet : words) {
-//                                            realm.copyToRealm(wordSet);
-//                                        }
-//                                        realm.commitTransaction();
-
-
-                                        dbMgr.addWordsToDB(etGroupName.getText().toString(), words);
+                                        dbMgr.addWordsToDB(groupName, words);
 
                                         setResult(CommonData.RESULT_REFRESH);
                                         finish();
@@ -173,24 +120,13 @@ public class FileActivity extends ActionBarActivity {
                                 }).start();
 
                                 // 단어장을 불러오고 있다는 진행 바를 보여줌.
-                                final View popupView = li.inflate(R.layout.dialog_loading, null);
+                                final View popupView = LayoutInflater.from(context).inflate(R.layout.dialog_loading, null);
                                 AlertDialog.Builder ad = new AlertDialog.Builder(context);
                                 ad.setView(popupView);
                                 AlertDialog alertDialog = ad.create();
                                 alertDialog.show();
                             }
-                        }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
                         });
-
-                        // create alert dialog
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-
-                        // show it
-                        alertDialog.show();
-
                     }
                     return;
                 }
