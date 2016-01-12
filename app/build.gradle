@@ -30,4 +30,5 @@ dependencies {
     compile 'com.github.gabrielemariotti.cards:cardslib-core:2.1.0'
     compile 'com.github.gabrielemariotti.cards:cardslib-recyclerview:2.1.0'
     compile 'com.mikepenz:materialdrawer:4.6.3'
+    compile files('libs/opencsv-3.3.jar')
 }
