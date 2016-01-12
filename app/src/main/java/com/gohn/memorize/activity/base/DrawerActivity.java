@@ -17,6 +17,7 @@ import com.gohn.memorize.R;
 import com.gohn.memorize.activity.HelpActivity;
 import com.gohn.memorize.activity.MainActivity;
 import com.gohn.memorize.common.CommonData;
+import com.gohn.memorize.custom.PurchaseDialog;
 import com.gohn.memorize.model.IAlertDialogTwoButtonHanlder;
 import com.gohn.memorize.util.Dialog;
 import com.gohn.memorize.util.GLog;
@@ -147,6 +148,28 @@ public class DrawerActivity extends AppCompatActivity {
                             // 기부하기 액티비티 실행
                             case R.string.navi_donate:
                                 GLog.Debug("@@@@@ R.string.navi_donate");
+//                                PurchaseManager.Purchase(DrawerActivity.this,"donation_1000", "Fuck");
+                                PurchaseDialog purchaseDialog = new PurchaseDialog(DrawerActivity.this, new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        switch (v.getId()) {
+                                            case R.id.btn_purchase_1:
+                                                GLog.Debug("OnClick btn_purchase_1");
+                                                break;
+                                            case R.id.btn_purchase_3:
+                                                GLog.Debug("OnClick btn_purchase_3");
+                                                break;
+                                            case R.id.btn_purchase_5:
+                                                GLog.Debug("OnClick btn_purchase_5");
+                                                break;
+                                            case R.id.btn_purchase_10:
+                                                GLog.Debug("OnClick btn_purchase_10");
+                                                break;
+                                        }
+                                    }
+                                });
+                                purchaseDialog.show();
+
                                 break;
                             // 셋팅 하위 메뉴 열기
                             case R.string.navi_setting:

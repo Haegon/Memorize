@@ -14,7 +14,7 @@ import com.gohn.memorize.R;
 import com.gohn.memorize.activity.GroupActivity;
 import com.gohn.memorize.activity.base.LearnActivity;
 import com.gohn.memorize.common.CommonData;
-import com.gohn.memorize.extention.ColorEx;
+import com.gohn.memorize.custom.ColorEx;
 import com.gohn.memorize.model.AnswerItem;
 import com.gohn.memorize.model.Exercise;
 import com.gohn.memorize.model.IAlertDialogTwoButtonHanlder;

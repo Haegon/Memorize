@@ -14,6 +14,7 @@ import com.gohn.memorize.R;
 import com.gohn.memorize.activity.base.DrawerActivity;
 import com.gohn.memorize.common.CommonData;
 import com.gohn.memorize.manager.DBMgr;
+import com.gohn.memorize.manager.PurchaseManager;
 import com.gohn.memorize.model.ISettingGroupNameViewHanlder;
 import com.gohn.memorize.model.VocaGroup;
 import com.gohn.memorize.util.BackPressCloseHandler;
@@ -56,6 +57,13 @@ public class MainActivity extends DrawerActivity {
         }
 
         backPressCloseHandler = new BackPressCloseHandler(this);
+
+        // 인앱 결제 초기화.
+        if ( !PurchaseManager.IsConnected() )
+            PurchaseManager.Connect(
+                this,
+                "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkrMwxshv5dTSCg0zNddExEnrRUUfVcDK/V8B3gSaBXqpaVm4TSgdFR9f45S9jWJXX8fE5j3IVRZq0XCLcLls/FyDY33KxmV8WqnI0XpKsPD8uuI+26IO8Jb6XrBb31YkJg9BZjc41u5EsFMUHM0IQMZU56vs62TZt4b7qrqXfXaPHkwNKsqnpzu+0Flj4vilV30100yKp6TW9cVP29OzQLG0UhdfJXTfTI/ejChd7U6c/7v5TqYP+cFqW87VaOQOV6xZUOOHMaqh3reem34QLQTaYoO5FZ3q/DEZJ7uHae8SAPV9Ed/Qgb2CihpNeVW2M2uJVJMJAvnBoefh7+pW/wIDAQAB",
+                true);
     }
 
     void initView(Bundle savedInstanceState) {

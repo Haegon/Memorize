@@ -1,4 +1,4 @@
-package com.gohn.memorize.extention;
+package com.gohn.memorize.custom;
 
 import android.graphics.Color;
 
