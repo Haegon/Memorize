@@ -92,11 +92,13 @@ public class Dialog {
 
         alertDialogBuilder.setCancelable(false);
         alertDialogBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {}
+            public void onClick(DialogInterface dialog, int id) {
+            }
         });
 
         alertDialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {}
+            public void onClick(DialogInterface dialog, int id) {
+            }
         });
 
         final AlertDialog alertDialog = alertDialogBuilder.create();
@@ -135,6 +137,39 @@ public class Dialog {
                 alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+        alertDialog.show();
+    }
+
+    public static void showPurchaseView(final Context context, final View.OnClickListener listener) {
+        LayoutInflater li = LayoutInflater.from(context);
+        View promptsView = li.inflate(R.layout.dialog_purchase, null);
+
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setView(promptsView);
+
+        promptsView.findViewById(R.id.btn_purchase_1).setOnClickListener(listener);
+        promptsView.findViewById(R.id.btn_purchase_3).setOnClickListener(listener);
+        promptsView.findViewById(R.id.btn_purchase_5).setOnClickListener(listener);
+        promptsView.findViewById(R.id.btn_purchase_10).setOnClickListener(listener);
+
+        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialog) {
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
                         dialog.dismiss();
                     }
                 });

@@ -78,6 +78,13 @@
     <string name="click_answer">보기 중에서 정답을 선택해주세요.</string>
     <string name="share">단어 암기는 Voca DIY로 종결!!</string>
     <string name="grade">리뷰를 남기기 위해 Play Store로 연결 합니다.</string>
+    <string name="donation_snack">과자 한 봉지 ( 0.99$ )</string>
+    <string name="donation_coffee">커피 한 잔 ( 2.99$ )</string>
+    <string name="donation_hamburger">햄버거 셋트 ( 4.99$ )</string>
+    <string name="donation_pizza">피자 한 판 ( 9.99$ )</string>
+
+
+
     <string name="help_1"> \"VOCA DIY\"는 사용자가 직접 외우고 싶은 단어를 업로드 하여 단어를 외우는 앱입니다.
 \n\n 사용자는 자신이 외우고자 하는 단어들을 엑셀파일에 저장해야 합니다.
 \n\n 엑셀파일로 저장할 때는 간단한 규칙이 있습니다.

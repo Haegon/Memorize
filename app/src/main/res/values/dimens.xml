@@ -18,6 +18,10 @@
     <dimen name="type_margin_width">20dp</dimen>
     <dimen name="type_margin_button">5dp</dimen>
 
+    <dimen name="purchase_dialog_margin_side">40dp</dimen>
+    <dimen name="purchase_dialog_margin_top">10dp</dimen>
+    <dimen name="purchase_dialog_text">16dp</dimen>
+
 
     <!-- OverRide-->
 

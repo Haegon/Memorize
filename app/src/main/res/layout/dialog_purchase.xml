@@ -2,46 +2,61 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_purchase_background"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#aaaaaaaa">
+    android:layout_height="match_parent">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="300dp"
         android:layout_gravity="center"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:background="@android:color/white"
-        android:elevation="10dp"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/btn_purchase_1"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp" />
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/purchase_dialog_margin_side"
+            android:layout_marginRight="@dimen/purchase_dialog_margin_side"
+            android:layout_marginTop="@dimen/purchase_dialog_margin_top"
+            android:layout_weight="1"
+            android:text="@string/donation_snack"
+            android:textAllCaps="false"
+            android:textSize="@dimen/purchase_dialog_text"/>
 
         <Button
             android:id="@+id/btn_purchase_3"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp" />
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/purchase_dialog_margin_side"
+            android:layout_marginRight="@dimen/purchase_dialog_margin_side"
+            android:layout_marginTop="@dimen/purchase_dialog_margin_top"
+            android:layout_weight="1"
+            android:text="@string/donation_coffee"
+            android:textAllCaps="false"
+            android:textSize="@dimen/purchase_dialog_text"/>
 
         <Button
             android:id="@+id/btn_purchase_5"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp" />
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/purchase_dialog_margin_side"
+            android:layout_marginRight="@dimen/purchase_dialog_margin_side"
+            android:layout_marginTop="@dimen/purchase_dialog_margin_top"
+            android:layout_weight="1"
+            android:text="@string/donation_hamburger"
+            android:textAllCaps="false"
+            android:textSize="@dimen/purchase_dialog_text" />
 
         <Button
             android:id="@+id/btn_purchase_10"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp" />
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/purchase_dialog_margin_side"
+            android:layout_marginRight="@dimen/purchase_dialog_margin_side"
+            android:layout_marginTop="@dimen/purchase_dialog_margin_top"
+            android:layout_weight="1"
+            android:text="@string/donation_pizza"
+            android:textAllCaps="false"
+            android:textSize="@dimen/purchase_dialog_text" />
 
 
     </LinearLayout>
