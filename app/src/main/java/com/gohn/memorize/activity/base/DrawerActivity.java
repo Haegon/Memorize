@@ -89,21 +89,20 @@ public class DrawerActivity extends AppCompatActivity {
                                 .withIcon(R.drawable.ic_info)
                                 .withIdentifier(R.string.navi_info)
                                 .withSelectable(false),
+
+                        new DividerDrawerItem(),
+
                         new PrimaryDrawerItem()
                                 .withName(R.string.navi_donate)
                                 .withIcon(R.drawable.ic_money)
                                 .withIdentifier(R.string.navi_donate)
                                 .withSelectable(false),
-
-                        new DividerDrawerItem(),
-
                         new SecondaryDrawerItem()
                                 .withName(R.string.navi_setting)
                                 .withIcon(R.drawable.ic_setting)
                                 .withIdentifier(R.string.navi_setting)
                                 .withSelectable(false)
                                 .withTextColor(Color.BLACK),
-
                         new PrimaryDrawerItem()
                                 .withName(R.string.navi_share)
                                 .withIcon(R.drawable.ic_share)
@@ -171,28 +170,6 @@ public class DrawerActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
-//                                PurchaseManager.Purchase(DrawerActivity.this,"donation_1000", "Fuck");
-//                                PurchaseDialog purchaseDialog = new PurchaseDialog(DrawerActivity.this, new View.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(View v) {
-//                                        switch (v.getId()) {
-//                                            case R.id.btn_purchase_1:
-//                                                GLog.Debug("OnClick btn_purchase_1");
-//                                                break;
-//                                            case R.id.btn_purchase_3:
-//                                                GLog.Debug("OnClick btn_purchase_3");
-//                                                break;
-//                                            case R.id.btn_purchase_5:
-//                                                GLog.Debug("OnClick btn_purchase_5");
-//                                                break;
-//                                            case R.id.btn_purchase_10:
-//                                                GLog.Debug("OnClick btn_purchase_10");
-//                                                break;
-//                                        }
-//                                    }
-//                                });
-//                                purchaseDialog.show();
-
                                 break;
                             // 셋팅 하위 메뉴 열기
                             case R.string.navi_setting:
@@ -290,7 +267,6 @@ public class DrawerActivity extends AppCompatActivity {
             drawer.closeDrawer();
         } else {
             super.onBackPressed();
-//            backPressCloseHandler.onBackPressed();
         }
     }
 

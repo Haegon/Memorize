@@ -42,7 +42,7 @@ public class MainActivity extends DrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.app_bar_main2);
+        setContentView(R.layout.content_main);
 
         DBMgr.init(this);
 
