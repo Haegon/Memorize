@@ -198,7 +198,7 @@ public class PurchaseManager {
     public IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         @Override
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-            listener.onChangedStatus(PURCHASE_STATUS.FINISH_CONSUME, result, purchase);
+            listener.onChangedStatus(PURCHASE_STATUS.FINISH_PURCHASE, result, purchase);
 
             // 헬퍼 널 체크
             if (helper == null) {
@@ -215,6 +215,7 @@ public class PurchaseManager {
             listener.onChangedStatus(PURCHASE_STATUS.FINISH_PURCHASE, result, purchase);
 
             // 바로 소비 해주자.
+            listener.onChangedStatus(PURCHASE_STATUS.START_CONSUME, result, purchase);
             helper.consumeAsync(purchase, mConsumeFinishedListener);
         }
     };
@@ -254,10 +255,12 @@ public class PurchaseManager {
             // 결제 실패
             listener.onFail(response, "Purchases Error Occured");
         }
+        listener.onChangedStatus(PURCHASE_STATUS.END_PROCESS, result, null);
     }
 
     void fail(int resultCode, String msg) {
         listener.onFail(resultCode, msg);
+        listener.onChangedStatus(PURCHASE_STATUS.END_PROCESS, null, null);
     }
 
     public void dispose() {

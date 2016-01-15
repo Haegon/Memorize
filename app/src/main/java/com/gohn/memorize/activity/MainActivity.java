@@ -62,7 +62,7 @@ public class MainActivity extends DrawerActivity {
         backPressCloseHandler = new BackPressCloseHandler(this);
 
         // 인앱 결제 초기화.
-        if ( !PurchaseManager.IsConnected() )
+        if (!PurchaseManager.IsConnected())
             PurchaseManager.Connect(
                     this,
                     "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkrMwxshv5dTSCg0zNddExEnrRUUfVcDK/V8B3gSaBXqpaVm4TSgdFR9f45S9jWJXX8fE5j3IVRZq0XCLcLls/FyDY33KxmV8WqnI0XpKsPD8uuI+26IO8Jb6XrBb31YkJg9BZjc41u5EsFMUHM0IQMZU56vs62TZt4b7qrqXfXaPHkwNKsqnpzu+0Flj4vilV30100yKp6TW9cVP29OzQLG0UhdfJXTfTI/ejChd7U6c/7v5TqYP+cFqW87VaOQOV6xZUOOHMaqh3reem34QLQTaYoO5FZ3q/DEZJ7uHae8SAPV9Ed/Qgb2CihpNeVW2M2uJVJMJAvnBoefh7+pW/wIDAQAB",
@@ -70,18 +70,29 @@ public class MainActivity extends DrawerActivity {
                     new PurchaseManager.OnResultListener() {
                         @Override
                         public void onSuccess(int resultCode, String message) {
-                            Dialog.showOneButtonAlert(MainActivity.this, "감사합니다.", new IAlertDialogOneButtonHanlder() {
+                            Dialog.showOneButtonAlert(MainActivity.this, R.string.donation_success, new IAlertDialogOneButtonHanlder() {
                                 @Override
-                                public void onOk() {}
+                                public void onOk() {
+                                }
                             });
                         }
 
                         @Override
                         public void onFail(int resultCode, String message) {
-                            Dialog.showOneButtonAlert(MainActivity.this, "실패ㅠㅠ.", new IAlertDialogOneButtonHanlder() {
-                                @Override
-                                public void onOk() {}
-                            });
+
+                            if (resultCode == -1005) {
+                                Dialog.showOneButtonAlert(MainActivity.this, R.string.donation_cancel, new IAlertDialogOneButtonHanlder() {
+                                    @Override
+                                    public void onOk() {
+                                    }
+                                });
+                            } else {
+                                Dialog.showOneButtonAlert(MainActivity.this, R.string.donation_fail, new IAlertDialogOneButtonHanlder() {
+                                    @Override
+                                    public void onOk() {
+                                    }
+                                });
+                            }
                         }
 
                         @Override
@@ -174,7 +185,7 @@ public class MainActivity extends DrawerActivity {
 
     @Override
     public void onBackPressed() {
-        if ( isDrawerOpen() )
+        if (isDrawerOpen())
             super.onBackPressed();
         else
             backPressCloseHandler.onBackPressed();

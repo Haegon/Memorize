@@ -92,7 +92,9 @@
     <string name="donation_coffee">Buy me a coffee ( $2.99 )</string>
     <string name="donation_hamburger">Buy me a hamburger ( $4.99 )</string>
     <string name="donation_pizza">Buy me a pizza ( $9.99 )</string>
-
+    <string name="donation_cancel">Donation is canceled</string>
+    <string name="donation_fail">Inapp Purchase canceled</string>
+    <string name="donation_success">Thank you for your donation</string>
 
 
 
