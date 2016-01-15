@@ -15,11 +15,14 @@ import com.gohn.memorize.activity.base.DrawerActivity;
 import com.gohn.memorize.common.CommonData;
 import com.gohn.memorize.manager.DBMgr;
 import com.gohn.memorize.manager.PurchaseManager;
+import com.gohn.memorize.model.IAlertDialogOneButtonHanlder;
 import com.gohn.memorize.model.ISettingGroupNameViewHanlder;
 import com.gohn.memorize.model.VocaGroup;
 import com.gohn.memorize.util.BackPressCloseHandler;
 import com.gohn.memorize.util.Dialog;
 import com.gohn.memorize.util.GLog;
+import com.gohn.memorize.util.billing.IabResult;
+import com.gohn.memorize.util.billing.Purchase;
 
 import java.util.ArrayList;
 
@@ -61,9 +64,31 @@ public class MainActivity extends DrawerActivity {
         // 인앱 결제 초기화.
         if ( !PurchaseManager.IsConnected() )
             PurchaseManager.Connect(
-                this,
-                "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkrMwxshv5dTSCg0zNddExEnrRUUfVcDK/V8B3gSaBXqpaVm4TSgdFR9f45S9jWJXX8fE5j3IVRZq0XCLcLls/FyDY33KxmV8WqnI0XpKsPD8uuI+26IO8Jb6XrBb31YkJg9BZjc41u5EsFMUHM0IQMZU56vs62TZt4b7qrqXfXaPHkwNKsqnpzu+0Flj4vilV30100yKp6TW9cVP29OzQLG0UhdfJXTfTI/ejChd7U6c/7v5TqYP+cFqW87VaOQOV6xZUOOHMaqh3reem34QLQTaYoO5FZ3q/DEZJ7uHae8SAPV9Ed/Qgb2CihpNeVW2M2uJVJMJAvnBoefh7+pW/wIDAQAB",
-                true);
+                    this,
+                    "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkrMwxshv5dTSCg0zNddExEnrRUUfVcDK/V8B3gSaBXqpaVm4TSgdFR9f45S9jWJXX8fE5j3IVRZq0XCLcLls/FyDY33KxmV8WqnI0XpKsPD8uuI+26IO8Jb6XrBb31YkJg9BZjc41u5EsFMUHM0IQMZU56vs62TZt4b7qrqXfXaPHkwNKsqnpzu+0Flj4vilV30100yKp6TW9cVP29OzQLG0UhdfJXTfTI/ejChd7U6c/7v5TqYP+cFqW87VaOQOV6xZUOOHMaqh3reem34QLQTaYoO5FZ3q/DEZJ7uHae8SAPV9Ed/Qgb2CihpNeVW2M2uJVJMJAvnBoefh7+pW/wIDAQAB",
+                    true,
+                    new PurchaseManager.OnResultListener() {
+                        @Override
+                        public void onSuccess(int resultCode, String message) {
+                            Dialog.showOneButtonAlert(MainActivity.this, "감사합니다.", new IAlertDialogOneButtonHanlder() {
+                                @Override
+                                public void onOk() {}
+                            });
+                        }
+
+                        @Override
+                        public void onFail(int resultCode, String message) {
+                            Dialog.showOneButtonAlert(MainActivity.this, "실패ㅠㅠ.", new IAlertDialogOneButtonHanlder() {
+                                @Override
+                                public void onOk() {}
+                            });
+                        }
+
+                        @Override
+                        public void onChangedStatus(PurchaseManager.PURCHASE_STATUS status, IabResult result, Purchase purchase) {
+                            GLog.Debug("PurchaseManager.PURCHASE_STATUS : " + status);
+                        }
+                    });
     }
 
     void initView(Bundle savedInstanceState) {

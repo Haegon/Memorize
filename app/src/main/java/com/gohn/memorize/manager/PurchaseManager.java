@@ -1,12 +1,10 @@
 package com.gohn.memorize.manager;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 
 import com.gohn.memorize.activity.PurchaseActivity;
-import com.gohn.memorize.util.GLog;
 import com.gohn.memorize.util.billing.IabHelper;
 import com.gohn.memorize.util.billing.IabResult;
 import com.gohn.memorize.util.billing.Inventory;
@@ -18,13 +16,33 @@ import java.util.ArrayList;
  * Created by Gohn on 2015. 11. 21..
  */
 public class PurchaseManager {
+
+    public interface OnResultListener {
+        public void onSuccess(int resultCode, String message);
+
+        public void onFail(int resultCode, String message);
+
+        public void onChangedStatus(PURCHASE_STATUS status, IabResult result, Purchase purchase);
+    }
+
+    public enum PURCHASE_STATUS {
+        READY_TO_CONNECT,
+        CONNECTED,
+        START_PURCHASE,
+        FINISH_PURCHASE,
+        START_CONSUME,
+        FINISH_CONSUME,
+        END_PROCESS,
+    }
+
     static int RC_REQUEST = 10001;
     public static String SKU = "INAPP_PURCHASE_SKU";
     public static String PAYLOAD = "INAPP_PURCHASE_PAYLOAD";
 
     private Context context;
-    private Inventory mInventory = null;
-    private IabHelper mHelper;
+    private Inventory inventory = null;
+    private IabHelper helper;
+    private OnResultListener listener;
 
     private boolean isConnected = false;
 
@@ -39,7 +57,7 @@ public class PurchaseManager {
     }
 
     public Inventory GetInventory() {
-        return mInventory;
+        return inventory;
     }
 
     // 초기화 되어잇는지 확인
@@ -49,9 +67,10 @@ public class PurchaseManager {
 
     // 초기화 할때 부르는 함수.
     public static void Connect(Context context,
-                                   String base64EncodedPublicKey,
-                                   boolean isDebug) {
-        GetInstance().connect(context, base64EncodedPublicKey, isDebug);
+                               String base64EncodedPublicKey,
+                               boolean isDebug,
+                               OnResultListener listener) {
+        GetInstance().connect(context, base64EncodedPublicKey, isDebug, listener);
     }
 
     public static void Purchase(Context context, String item_name, String payload) {
@@ -63,46 +82,48 @@ public class PurchaseManager {
     }
 
     public static void HandleActivityResult(int requestCode, int resultCode, Intent data) {
-        GetInstance().handleActivityResult(requestCode,resultCode,data);
+        GetInstance().handleActivityResult(requestCode, resultCode, data);
     }
+
     public boolean isConnected() {
         return isConnected;
     }
 
-    public void connect(Context context, String base64EncodedPublicKey,
-                        boolean isDebug) {
+    public void connect(Context context,
+                        String base64EncodedPublicKey,
+                        boolean isDebug,
+                        OnResultListener listener) {
         this.context = context;
+        this.listener = listener;
 
         // 인앱빌링 헬퍼 초기화
-        this.mHelper = new IabHelper(context, base64EncodedPublicKey);
-        this.mHelper.enableDebugLogging(isDebug);
+        this.helper = new IabHelper(context, base64EncodedPublicKey);
+        this.helper.enableDebugLogging(isDebug);
         helperStart();
-
-
-        GLog.Debug("Finish Connect");
     }
 
     public void helperStart() {
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+        listener.onChangedStatus(PURCHASE_STATUS.READY_TO_CONNECT, null, null);
+
+        helper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
 
             @Override
             public void onIabSetupFinished(IabResult result) {
                 if (!result.isSuccess()) {
                     // 헬퍼스타트를 실패 했을때 처
-                    fail("Problem setting up in-app billing: " + result);
+                    fail(result.getResponse(), "Problem setting up in-app billing: " + result);
                     return;
                 }
 
                 // 헬퍼스타트 후 헬퍼가 널이 아닌지 확인.
-                if (mHelper == null) {
-                    fail("mHelper is Null");
+                if (helper == null) {
+                    fail(result.getResponse(), "helper is Null");
                     return;
                 }
 
                 // 인앱 빌링 준비 끝.
                 // 유저의 인벤토리 요청을한다.
-                GLog.Debug("Setup successful. Querying inventory.");
-                mHelper.queryInventoryAsync(mGotInventoryListener);
+                helper.queryInventoryAsync(mGotInventoryListener);
 
                 isConnected = true;
             }
@@ -114,19 +135,17 @@ public class PurchaseManager {
         @Override
         public void onQueryInventoryFinished(IabResult result,
                                              Inventory inventory) {
-            GLog.Debug("Query inventory finished.");
-
-            mInventory = inventory;
+            PurchaseManager.this.inventory = inventory;
 
             // 헬퍼 널체크.
-            if (mHelper == null) {
-                fail("mHelper is Null");
+            if (helper == null) {
+                fail(result.getResponse(), "helper is Null");
                 return;
             }
 
             // 실패했으면 ㅂㅂ
             if (result.isFailure()) {
-                fail("Failed to query inventory: " + result);
+                fail(result.getResponse(), "Failed to query inventory: " + result);
                 return;
             }
 
@@ -136,12 +155,11 @@ public class PurchaseManager {
             ArrayList<Purchase> mPurchaseList = inventory.getPurchases();
 
             for (Purchase purchase : mPurchaseList) {
-                GLog.Debug("reconsume : " + purchase.getSku());
                 // 결제 완료되자마자 앱 강종하면 소비가 안되서 재구매가 불가능하다.
                 // 헬퍼를 통해서 소비한다.
-                mHelper.consumeAsync(purchase, mConsumeFinishedListener);
+                helper.consumeAsync(purchase, mConsumeFinishedListener);
             }
-            GLog.Debug("Finish Helper Start");
+            listener.onChangedStatus(PURCHASE_STATUS.CONNECTED, result, null);
         }
     };
 
@@ -154,23 +172,25 @@ public class PurchaseManager {
         i.putExtra(SKU, item_name);
         i.putExtra(PAYLOAD, payload);
 
+        listener.onChangedStatus(PURCHASE_STATUS.START_PURCHASE, null, null);
+
         context.startActivity(i);
     }
 
     // 더미 액티비티에서 호출하는 결제 함수.
     public void launchPurchaseFlow(Activity act, String sku, String developerPayload) {
         try {
-            mHelper.launchPurchaseFlow(act, sku, RC_REQUEST, mPurchaseFinishedListener, developerPayload);
+            helper.launchPurchaseFlow(act, sku, RC_REQUEST, mPurchaseFinishedListener, developerPayload);
         } catch (Exception ex) {
-            fail("launchPurchaseFlow Exception");
+            fail(-999, "launchPurchaseFlow Exception");
             context.sendBroadcast(new Intent(PurchaseActivity.ACTION_FINISH));
         }
     }
 
     // 처리 결과를 넘긴다.
     public void handleActivityResult(int requestCode, int resultCode, Intent data) {
-        if (mHelper != null) {
-            mHelper.handleActivityResult(requestCode, resultCode, data);
+        if (helper != null) {
+            helper.handleActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -178,28 +198,24 @@ public class PurchaseManager {
     public IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         @Override
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-            GLog.Debug("Purchase finished: " + result + ", purchase: "
-                    + purchase);
+            listener.onChangedStatus(PURCHASE_STATUS.FINISH_CONSUME, result, purchase);
 
             // 헬퍼 널 체크
-            if (mHelper == null) {
-                fail("mHelper is Null");
-                sendResult(result);
+            if (helper == null) {
+                fail(result.getResponse(), "helper is Null");
                 return;
             }
 
             // 구매 실패..
             if (result.isFailure()) {
-                fail("Error purchasing: " + result);
-                sendResult(result);
+                fail(result.getResponse(), "Error purchasing: " + result);
                 return;
             }
 
-            GLog.Debug("Purchase successful.");
-            GLog.Debug("item consumption ready.");
+            listener.onChangedStatus(PURCHASE_STATUS.FINISH_PURCHASE, result, purchase);
 
             // 바로 소비 해주자.
-            mHelper.consumeAsync(purchase, mConsumeFinishedListener);
+            helper.consumeAsync(purchase, mConsumeFinishedListener);
         }
     };
 
@@ -207,13 +223,11 @@ public class PurchaseManager {
     IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
         @Override
         public void onConsumeFinished(Purchase purchase, IabResult result) {
-            GLog.Debug("Consumption finished. Purchase: " + purchase
-                    + ", result: " + result);
+            listener.onChangedStatus(PURCHASE_STATUS.FINISH_CONSUME, result, purchase);
 
             // 헬퍼 널 체크
-            if (mHelper == null) {
-                fail("mHelper is Null");
-                sendResult(result);
+            if (helper == null) {
+                fail(result.getResponse(), "helper is Null");
                 return;
             }
 
@@ -221,7 +235,7 @@ public class PurchaseManager {
             if (result.isSuccess()) {
                 sendResult(result);
             } else {
-                fail("Error while consuming: " + result);
+                fail(result.getResponse(), "Error while consuming: " + result);
             }
         }
     };
@@ -231,33 +245,26 @@ public class PurchaseManager {
         int response = result.getResponse();
 
         if (response == 0) {
-            GLog.Debug("Purchase Success!!!");
+            // 결제 성공
+            listener.onSuccess(response,"Purchases Successfully Finished");
         } else if (response == -1005) {
-            GLog.Debug("Purchase Cancelled!!!");
-            new AlertDialog.Builder(context)
-                    .setTitle("안내")
-                    .setMessage("결제를 취소하셨습니다.")
-                    .setPositiveButton("확인", null)
-                    .show();
+            // 유저 결제 취소
+            listener.onFail(response, "User Canceled");
         } else {
-            GLog.Debug("Error!!! Purchase Response : " + response);
-            new AlertDialog.Builder(context)
-                    .setTitle("오류")
-                    .setMessage("결제 도중 오류가 발생했습니다. 다시 시도해주세.")
-                    .setPositiveButton("확인", null)
-                    .show();
+            // 결제 실패
+            listener.onFail(response, "Purchases Error Occured");
         }
     }
 
-    void fail(String msg) {
-        GLog.Debug("fail " + msg);
+    void fail(int resultCode, String msg) {
+        listener.onFail(resultCode, msg);
     }
 
     public void dispose() {
-        if (this.mHelper != null) {
-            this.mHelper.dispose();
+        if (this.helper != null) {
+            this.helper.dispose();
         }
         _instance = null;
-        this.mHelper = null;
+        this.helper = null;
     }
 }

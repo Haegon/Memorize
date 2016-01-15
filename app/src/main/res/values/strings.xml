@@ -88,10 +88,10 @@
     <string name="click_answer">Please select the correct answer from examples.</string>
     <string name="share">Study vocabulary and testing with this application.</string>
     <string name="grade">Move to "Play Store" to leave rating.</string>
-    <string name="donation_snack">Buy me a snack ( 0.99$ )</string>
-    <string name="donation_coffee">Buy me a coffee ( 2.99$ )</string>
-    <string name="donation_hamburger">Buy me a hamburger ( 4.99$ )</string>
-    <string name="donation_pizza">Buy me a pizza ( 9.99$ )</string>
+    <string name="donation_snack">Buy me a snack ( $0.99 )</string>
+    <string name="donation_coffee">Buy me a coffee ( $2.99 )</string>
+    <string name="donation_hamburger">Buy me a hamburger ( $4.99 )</string>
+    <string name="donation_pizza">Buy me a pizza ( $9.99 )</string>
 
 
 

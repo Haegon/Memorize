@@ -78,10 +78,10 @@
     <string name="click_answer">보기 중에서 정답을 선택해주세요.</string>
     <string name="share">단어 암기는 Voca DIY로 종결!!</string>
     <string name="grade">리뷰를 남기기 위해 Play Store로 연결 합니다.</string>
-    <string name="donation_snack">과자 한 봉지 ( 0.99$ )</string>
-    <string name="donation_coffee">커피 한 잔 ( 2.99$ )</string>
-    <string name="donation_hamburger">햄버거 셋트 ( 4.99$ )</string>
-    <string name="donation_pizza">피자 한 판 ( 9.99$ )</string>
+    <string name="donation_snack">과자 한 봉지 ( $0.99 )</string>
+    <string name="donation_coffee">커피 한 잔 ( $2.99 )</string>
+    <string name="donation_hamburger">햄버거 셋트 ( $4.99 )</string>
+    <string name="donation_pizza">피자 한 판 ( $9.99 )</string>
 
 
 
