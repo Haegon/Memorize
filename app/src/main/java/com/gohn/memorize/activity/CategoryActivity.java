@@ -17,8 +17,6 @@ public class CategoryActivity extends ActionBarActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_category);
-//        View newView = LayoutInflater.from(this).inflate(R.layout.content_category, null);
-//        contentView.addView(newView);
 
         findViewById(R.id.btn_category_study).setOnClickListener(this);
         findViewById(R.id.btn_category_find_meaning).setOnClickListener(this);

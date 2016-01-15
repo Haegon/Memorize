@@ -23,10 +23,6 @@ public class PurchaseActivity extends Activity {
         // Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        // Remove notification bar
-//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         this.broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

@@ -43,7 +43,7 @@ public class DrawerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_main2);
+        super.setContentView(R.layout.activity_drawer);
 
         initView(savedInstanceState);
     }
