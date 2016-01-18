@@ -10,12 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.gohn.memorize.R;
-import com.gohn.memorize.activity.base.ActionBarActivity;
+import com.gohn.memorize.activity.base.observable.ObservableListActivity;
 import com.gohn.memorize.adapter.FindFileAdapter;
 import com.gohn.memorize.common.CommonData;
 import com.gohn.memorize.manager.DBMgr;
@@ -30,27 +29,22 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class FileActivity extends ActionBarActivity {
+public class FileActivityObservable extends ObservableListActivity {
 
     Context context = this;
-
-    ListView listView = null;
     FindFileAdapter adapter = null;
-
     String baseDir = "/mnt/sdcard";
-
     DBMgr dbMgr;
-
     File file;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.content_file);
 
         dbMgr = DBMgr.getInstance();
         initView();
-
     }
 
     @Override
@@ -83,21 +77,18 @@ public class FileActivity extends ActionBarActivity {
 
         adapter = new FindFileAdapter(this, GetFiles(baseDir));
 
-        listView = (ListView) findViewById(R.id.list_file);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        setListView((ObservableListView) findViewById(R.id.list_file));
+        getListView().setAdapter(adapter);
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 file = adapter.items.get(position);
-
                 if (!file.isDirectory()) {
-
                     final String ext = file.getName().substring(file.getName().lastIndexOf("."));
                     if (ext.contains(".xls") || ext.contains(".xlsx") || ext.contains(".csv")) {
 
-                        Dialog.showSettingGroupNameView(FileActivity.this, new ISettingGroupNameViewHanlder() {
+                        Dialog.showSettingGroupNameView(FileActivityObservable.this, new ISettingGroupNameViewHanlder() {
                             @Override
                             public void onPositive(final String groupName) {
                                 new Thread(new Runnable() {
@@ -138,31 +129,7 @@ public class FileActivity extends ActionBarActivity {
                 showNext(file.getName());
             }
         });
-
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                // adapter.delete((int) id);
-                return true;
-            }
-
-        });
-
-        listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(FileActivity.this, "onItemSelected Item : " + position + ", " + id, Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(FileActivity.this, "OnNothing Selected", Toast.LENGTH_LONG).show();
-            }
-        });
     }
-
 
     public ArrayList<File> GetFiles(String path) {
         ArrayList<File> MyFiles = new ArrayList<File>();
@@ -216,17 +183,4 @@ public class FileActivity extends ActionBarActivity {
         adapter.items = GetFiles(baseDir);
         adapter.notifyDataSetChanged();
     }
-
-//    private void addWordsToDB(String group, ArrayList<WordSet> set) {
-//
-//        for (int i = 0; i < set.size(); i++) {
-//            ContentValues cv = new ContentValues();
-//            cv.put(WordsDBMgr.GROUP, group);
-//            cv.put(WordsDBMgr.TYPE, set.get(i).Type);
-//            cv.put(WordsDBMgr.WORD, set.get(i).Word);
-//            cv.put(WordsDBMgr.MEANING, set.get(i).Meaning);
-//            dbMgr.insert(cv);
-//        }
-//    }
-
 }

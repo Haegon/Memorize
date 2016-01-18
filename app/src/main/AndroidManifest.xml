@@ -25,10 +25,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.FileActivity"
+            android:name=".activity.FileActivityObservable"
             android:label="@string/title_activity_file"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.MainActivity" />
@@ -36,8 +35,7 @@
         <activity
             android:name=".activity.CategoryActivity"
             android:label="@string/title_activity_category"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.MainActivity" />
@@ -45,8 +43,7 @@
         <activity
             android:name=".activity.TypeActivity"
             android:label="@string/title_activity_type"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.CategoryActivity" />
@@ -54,8 +51,7 @@
         <activity
             android:name=".activity.learn.MultipleActivity"
             android:label="@string/title_activity_choice_problem"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.TypeActivity" />
@@ -63,8 +59,7 @@
         <activity
             android:name=".activity.learn.StudyActivity"
             android:label="@string/title_activity_study"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.TypeActivity" />
@@ -72,8 +67,7 @@
         <activity
             android:name=".activity.learn.WriteActivity"
             android:label="@string/title_activity_write"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.TypeActivity" />
@@ -81,8 +75,7 @@
         <activity
             android:name=".activity.GroupActivity"
             android:label="@string/title_activity_select_group"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.HelpActivity"
             android:label="@string/title_activity_help"

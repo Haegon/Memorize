@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -27,7 +28,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
-public class LearnActivity extends ActionBarActivity {
+public class LearnActivity extends AppCompatActivity {
 
     protected DBMgr dbMgr;
     protected JSONObject json;
