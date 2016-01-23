@@ -64,7 +64,7 @@ public class DBMgr {
 
     public static DBMgr getInstance() {
 
-        if ( !instance.isInit ) {
+        if (!instance.isInit) {
             GLog.Error("DBMgr didn't `init` yet !!");
             return null;
         }
@@ -123,10 +123,10 @@ public class DBMgr {
 
             if (type.equals(WordType.NONE)) {
                 query = String.format("select groupName, type, word, meaning from Words where groupName=? limit %d offset %d", limit, i * 100);
-                c = rawQuery(query, new String[] { group });
+                c = rawQuery(query, new String[]{group});
             } else {
                 query = String.format("select groupName, type, word, meaning from Words where groupName=? and type=? limit %d offset %d", limit, i * 100);
-                c = rawQuery(query, new String[] { group, type });
+                c = rawQuery(query, new String[]{group, type});
             }
 
             if (c != null) {
@@ -148,9 +148,9 @@ public class DBMgr {
         Cursor c;
 
         if (type.equals(WordType.NONE)) {
-            c = query(new String[] { "count(*)" }, DBMgr.GROUP + "=? ", new String[] { group }, null, null, null);
+            c = query(new String[]{"count(*)"}, DBMgr.GROUP + "=? ", new String[]{group}, null, null, null);
         } else
-            c = query(new String[] { "count(*)" }, DBMgr.GROUP + "=? and " + DBMgr.TYPE + "=? ", new String[] { group, type }, null, null, null);
+            c = query(new String[]{"count(*)"}, DBMgr.GROUP + "=? and " + DBMgr.TYPE + "=? ", new String[]{group, type}, null, null, null);
 
         int number = 0;
 
@@ -163,7 +163,7 @@ public class DBMgr {
     }
 
     public String[] getColumns() {
-        return new String[] { DBMgr.GROUP, DBMgr.TYPE, DBMgr.WORD, DBMgr.MEANING };
+        return new String[]{DBMgr.GROUP, DBMgr.TYPE, DBMgr.WORD, DBMgr.MEANING};
     }
 
     public void addWordsToDB(String group, ArrayList<WordSet> set) {
@@ -185,14 +185,17 @@ public class DBMgr {
 
     public ArrayList<VocaGroup> getVocaGroups() {
 
-        String[] columns = new String[] { DBMgr.GROUP, "count(" + DBMgr.GROUP + ")" };
+        String[] columns = new String[]{DBMgr.GROUP, "count(" + DBMgr.GROUP + ")"};
         Cursor c = query(columns, null, null, DBMgr.GROUP, null, null);
 
         if (c != null) {
             ArrayList<VocaGroup> groups = new ArrayList<VocaGroup>();
 
             while (c.moveToNext()) {
-                VocaGroup vg = new VocaGroup(c.getString(0),c.getInt(1));
+
+                GLog.Debug(c.getString(0));
+
+                VocaGroup vg = new VocaGroup(c.getString(0), c.getInt(1));
                 groups.add(vg);
             }
             Collections.reverse(groups);
@@ -203,12 +206,15 @@ public class DBMgr {
 
     public ArrayList<String> getGroupNames() {
         String query = "select groupName from Words group by groupName";
-        Cursor c = rawQuery(query, new String[] {});
+        Cursor c = rawQuery(query, new String[]{});
 
         if (c != null) {
             ArrayList<String> groups = new ArrayList<String>();
 
             while (c.moveToNext()) {
+
+                GLog.Debug(c.getString(0));
+
                 groups.add(c.getString(0));
             }
             return groups;

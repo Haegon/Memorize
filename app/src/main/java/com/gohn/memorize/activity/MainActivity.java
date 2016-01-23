@@ -3,7 +3,6 @@ package com.gohn.memorize.activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -23,6 +22,7 @@ import com.gohn.memorize.util.Dialog;
 import com.gohn.memorize.util.GLog;
 import com.gohn.memorize.util.billing.IabResult;
 import com.gohn.memorize.util.billing.Purchase;
+import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -47,17 +47,6 @@ public class MainActivity extends DrawerActivity {
         DBMgr.init(this);
 
         initView(savedInstanceState);
-
-        mCardArrayAdapter = new CardArrayRecyclerViewAdapter(this, getCards());
-
-        mRecyclerView = (CardRecyclerView) findViewById(R.id.carddemo_recyclerview);
-        mRecyclerView.setHasFixedSize(false);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        //Set the empty view
-        if (mRecyclerView != null) {
-            mRecyclerView.setAdapter(mCardArrayAdapter);
-        }
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 
@@ -106,7 +95,19 @@ public class MainActivity extends DrawerActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mCardArrayAdapter = new CardArrayRecyclerViewAdapter(this, getCards());
+
+        mRecyclerView = (CardRecyclerView) findViewById(R.id.carddemo_recyclerview);
+        mRecyclerView.setHasFixedSize(false);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //Set the empty view
+        if (mRecyclerView != null) {
+            mRecyclerView.setAdapter(mCardArrayAdapter);
+        }
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.attachToRecyclerView(mRecyclerView);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
