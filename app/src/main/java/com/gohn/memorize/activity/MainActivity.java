@@ -1,6 +1,8 @@
 package com.gohn.memorize.activity;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +27,7 @@ import com.gohn.memorize.util.billing.Purchase;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
@@ -34,8 +37,8 @@ import it.gmariotti.cardslib.library.recyclerview.view.CardRecyclerView;
 
 public class MainActivity extends DrawerActivity {
 
-    CardArrayRecyclerViewAdapter mCardArrayAdapter;
-    CardRecyclerView mRecyclerView;
+    CardArrayRecyclerViewAdapter cardArrayAdapter;
+    CardRecyclerView recyclerView;
 
     BackPressCloseHandler backPressCloseHandler;
 
@@ -44,9 +47,8 @@ public class MainActivity extends DrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
 
-        DBMgr.init(this);
-
-        initView(savedInstanceState);
+        super.setContext(this);
+        initView();
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 
@@ -91,29 +93,41 @@ public class MainActivity extends DrawerActivity {
                     });
     }
 
-    void initView(Bundle savedInstanceState) {
+    void initView() {
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mCardArrayAdapter = new CardArrayRecyclerViewAdapter(this, getCards());
+        cardArrayAdapter = new CardArrayRecyclerViewAdapter(this, getCards());
 
-        mRecyclerView = (CardRecyclerView) findViewById(R.id.carddemo_recyclerview);
-        mRecyclerView.setHasFixedSize(false);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView = (CardRecyclerView) findViewById(R.id.carddemo_recyclerview);
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //Set the empty view
-        if (mRecyclerView != null) {
-            mRecyclerView.setAdapter(mCardArrayAdapter);
+        if (recyclerView != null) {
+            recyclerView.setAdapter(cardArrayAdapter);
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.attachToRecyclerView(mRecyclerView);
+        fab.attachToRecyclerView(recyclerView);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(MainActivity.this, FileActivity.class), CommonData.REQUEST_CODE_FILE_ACTIVITY);
             }
         });
+
+        if (cardArrayAdapter.getItemCount() == 0 &&
+                Locale.KOREA.getCountry().equals(getResources().getConfiguration().locale.getCountry())) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setMessage("단어장에 등록된 단어가 없습니다. \n설정 화면에서 기본 단어를 추가해 주세요.").setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 
     ArrayList<Card> getCards() {
@@ -137,7 +151,7 @@ public class MainActivity extends DrawerActivity {
                     switch (item.getItemId()) {
                         case R.id.menu_group_delete:
                             DBMgr.getInstance().delete(DBMgr.GROUP + "=?", new String[]{cardHeaderTitle});
-                            mCardArrayAdapter.remove((Card) card);
+                            cardArrayAdapter.remove((Card) card);
                             break;
                         case R.id.menu_group_copy:
                             // TODO : 복사기능 넣자
@@ -151,7 +165,7 @@ public class MainActivity extends DrawerActivity {
                                     cv.put(DBMgr.GROUP, groupName);
                                     DBMgr.getInstance().update(cv, DBMgr.GROUP + "=?", new String[]{cardHeaderTitle});
                                     ((Card) card).getCardHeader().setTitle(groupName);
-                                    mCardArrayAdapter.notifyDataSetChanged();
+                                    cardArrayAdapter.notifyDataSetChanged();
                                 }
                             });
                             break;
@@ -172,6 +186,18 @@ public class MainActivity extends DrawerActivity {
         }
 
         return cards;
+    }
+
+    @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+        reloadView();
+    }
+
+    public void reloadView() {
+        cardArrayAdapter.setCards(getCards());
+        cardArrayAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -205,8 +231,8 @@ public class MainActivity extends DrawerActivity {
             if (resultCode == CommonData.RESULT_REFRESH) {
                 GLog.Debug("requestCode : " + requestCode + " , resultCode : " + resultCode);
 
-                mCardArrayAdapter.setCards(getCards());
-                mCardArrayAdapter.notifyDataSetChanged();
+                cardArrayAdapter.setCards(getCards());
+                cardArrayAdapter.notifyDataSetChanged();
             }
         }
     }

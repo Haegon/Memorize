@@ -87,7 +87,6 @@ public class DBMgr {
     }
 
     public long insert(ContentValues addRowValue) {
-
         return database.insert(TABLE_NAME, null, addRowValue);
     }
 

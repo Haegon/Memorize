@@ -15,6 +15,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/selector_btn_ractangle_normal"
         android:text="@string/study"
+        android:textAllCaps="false"
         android:textSize="@dimen/category_font_size" />
 
     <Button
@@ -27,6 +28,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/selector_btn_ractangle_normal"
         android:text="@string/find_meaning"
+        android:textAllCaps="false"
         android:textSize="@dimen/category_font_size" />
 
     <Button
@@ -35,10 +37,10 @@
         android:layout_height="60dp"
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/selector_btn_ractangle_normal"
         android:text="@string/find_word"
+        android:textAllCaps="false"
         android:textSize="@dimen/category_font_size" />
 
     <Button
@@ -51,6 +53,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/selector_btn_ractangle_normal"
         android:text="@string/write_word"
+        android:textAllCaps="false"
         android:textSize="@dimen/category_font_size" />
 
 </LinearLayout>

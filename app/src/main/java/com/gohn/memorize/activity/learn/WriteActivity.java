@@ -217,7 +217,7 @@ public class WriteActivity extends LearnActivity implements View.OnClickListener
 				break;
 			case R.id.btn_next:
 				if (editText.getText().toString().isEmpty()) {
-					Toast.makeText(this, R.string.click_answer, Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, R.string.write_answer, Toast.LENGTH_SHORT).show();
 					return;
 				}
 

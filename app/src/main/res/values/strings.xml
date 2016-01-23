@@ -13,12 +13,14 @@
     <string name="title_activity_write">Write alphabets correctly</string>
     <string name="title_activity_select_group">Select group to add</string>
     <string name="title_activity_help">How to use</string>
+    <string name="title_activity_info">Application info</string>
 
 
     <string name="navi_home">Home</string>
     <string name="navi_help">Help</string>
     <string name="navi_info">Application Info</string>
     <string name="navi_mail">Feedback</string>
+    <string name="navi_basic">Add Basic Vocaburaries</string>
     <string name="navi_donate">Buying food for Developer</string>
     <string name="navi_grade">Rate</string>
     <string name="navi_share">Share this app</string>
@@ -68,7 +70,7 @@
     <string name="no_voca">There are not enough voca to test for this type.\nPlease use All type test or add new vocabulary.</string>
     <string name="no_name">Please enter valid vocabulary name.</string>
     <string name="find_add_msg">Vocabulary is being loaded.\nPlease Wait</string>
-    <string name="main_word">Words</string>
+    <string name="main_word"> Words</string>
     <string name="pref_basic">Basic Settings</string>
     <string name="pref_basic_random">Test Order Randomly</string>
     <string name="pref_basic_random_des_on">Based on Excel file order.</string>
@@ -86,6 +88,7 @@
     <string name="stop_study">Are you sure you want to exit the learning?\nYou can learn content from here when you come back.</string>
     <string name="exit">Are you sure you want to quit?</string>
     <string name="click_answer">Please select the correct answer from examples.</string>
+    <string name="write_answer">Please write the correct answer from examples.</string>
     <string name="share">Study vocabulary and testing with this application.</string>
     <string name="grade">Move to "Play Store" to leave rating.\n5 stars are very helpful to developer.</string>
     <string name="donation_snack">Buy me a snack ( $0.99 )</string>
@@ -99,30 +102,26 @@
     <string name="broadcast_share_title">Choose an Application to share</string>
     <string name="broadcast_email_title">Choose an Email Application</string>
 
-    <string name="help_1"> \"VOCA DIY\" app is memorizing the words you want to memorize words by uploading directly.
-\n\n You must save yourself the words you want to memorize the Excel file.
-\n\n When you save an Excel file There is a simple rule.
-\n\n The user must enter a value in a total of three columns.
-\n\n The first column is the part of speech of the word,
-the second column is the word,
-and the third column is the meaning of the word.
-\n\n You entered parts of speech helps to provide a great view from the multiple-choice questions.</string>
-    <string name="help_2">Alphabet to write the part of speech is defined by part of speech.
-             \n  [ n ]: Noun
-             \n  [ v ]: Verb
-             \n  [ a ]: Adjective
-             \n  [ ad ]: Adverb
-             \n  [ e ]: Other Parts of Speech
-             \n\n If a word has two meaning that if you type:</string>
-    <string name="help_3">Word learning can be a total of four types.
-             \n\n First, just learn the words.
-             \n Second, looking at the problem of finding meaning in the word-choice questions.
-             \n Third, looking at the problem of finding word in the meaning-choice questions.
-             \n Fourth, the problem will write the words to see yourself.
-             \n\n Wrong answers can be seen right back test,
-add a new vocabulary or
-you can also add to the existing vocabulary.
-             \n\n You can change the order option of questions in the \"Settings\" view.</string>
+    <string name="help_01">\"VOCA DIY\" app is memorizing the words you want to memorize words by uploading directly.</string>
+    <string name="help_02">You must save yourself the words you want to memorize the Excel file.</string>
+    <string name="help_03">When you save an Excel file There is a simple rule.</string>
+    <string name="help_04">The user must enter a value in a total of three columns.</string>
+    <string name="help_05">The first column is the part of speech of the word, the second column is the word,and the third column is the meaning of the word.</string>
+    <string name="help_06">You entered parts of speech helps to provide a great view from the multiple-choice questions.</string>
+    <string name="help_07">Alphabet to write the part of speech is defined by part of speech.</string>
+    <string name="help_08">\n[ n ]: Noun
+             \n[ v ]: Verb
+             \n[ a ]: Adjective
+             \n[ ad ]: Adverb
+             \n[ e ]: Other Parts of Speech</string>
+    <string name="help_09">If a word has two meaning, please put a meaning like this :</string>
+    <string name="help_10">Word learning can be a total of four types.</string>
+    <string name="help_11">First, just learn the words.</string>
+    <string name="help_12">Second, looking at the problem of finding meaning in the word-choice questions.</string>
+    <string name="help_13">Third, looking at the problem of finding word in the meaning-choice questions</string>.
+    <string name="help_14">Fourth, the problem will write the words to see yourself.</string>
+    <string name="help_15">Wrong answers can be seen right back test, add a new vocabulary or you can also add to the existing vocabulary.</string>
+    <string name="help_16">You can change the order option of questions in the \"Settings\" view on App Drawer.</string>
 
 
 </resources>

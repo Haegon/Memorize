@@ -124,6 +124,7 @@
                 android:gravity="center"
                 android:text="@string/prev"
                 android:textAlignment="center"
+                android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="20dp" />
         </FrameLayout>
@@ -142,6 +143,7 @@
                 android:gravity="center"
                 android:text="@string/check"
                 android:textAlignment="center"
+                android:textAllCaps="false"
                 android:textColor="#FFF"
                 android:textSize="20dp" />
         </FrameLayout>

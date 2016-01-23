@@ -19,9 +19,6 @@ public class PurchaseDialog extends Dialog implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        WindowManager.LayoutParams lpWindow = new WindowManager.LayoutParams();
-//        lpWindow.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-//        getWindow().setAttributes(lpWindow);
         WindowManager.LayoutParams params = getWindow().getAttributes();
         params.width = WindowManager.LayoutParams.MATCH_PARENT;
         params.height = WindowManager.LayoutParams.MATCH_PARENT;

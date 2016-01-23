@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_purchase_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/middle_1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/purchase_dialog_margin_side"
+            android:layout_marginRight="@dimen/purchase_dialog_margin_side"
+            android:layout_marginTop="@dimen/purchase_dialog_margin_top"
+            android:layout_weight="1"
+            android:text="중학교 기본 단어 1"
+            android:textAllCaps="false"
+            android:textSize="@dimen/purchase_dialog_text" />
+
+        <Button
+            android:id="@+id/middle_2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/purchase_dialog_margin_side"
+            android:layout_marginRight="@dimen/purchase_dialog_margin_side"
+            android:layout_marginTop="@dimen/purchase_dialog_margin_top"
+            android:layout_weight="1"
+            android:text="중학교 기본 단어 2"
+            android:textAllCaps="false"
+            android:textSize="@dimen/purchase_dialog_text" />
+
+        <Button
+            android:id="@+id/middle_3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/purchase_dialog_margin_side"
+            android:layout_marginRight="@dimen/purchase_dialog_margin_side"
+            android:layout_marginTop="@dimen/purchase_dialog_margin_top"
+            android:layout_weight="1"
+            android:text="중학교 기본 단어 3"
+            android:textAllCaps="false"
+            android:textSize="@dimen/purchase_dialog_text" />
+
+        <Button
+            android:id="@+id/high_1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/purchase_dialog_margin_side"
+            android:layout_marginRight="@dimen/purchase_dialog_margin_side"
+            android:layout_marginTop="@dimen/purchase_dialog_margin_top"
+            android:layout_weight="1"
+            android:text="고등학교 기본 단어 1"
+            android:textAllCaps="false"
+            android:textSize="@dimen/purchase_dialog_text" />
+
+        <Button
+            android:id="@+id/high_2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/purchase_dialog_margin_side"
+            android:layout_marginRight="@dimen/purchase_dialog_margin_side"
+            android:layout_marginTop="@dimen/purchase_dialog_margin_top"
+            android:layout_weight="1"
+            android:text="고등학교 기본 단어 2"
+            android:textAllCaps="false"
+            android:textSize="@dimen/purchase_dialog_text" />
+
+        <Button
+            android:id="@+id/high_3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/purchase_dialog_margin_side"
+            android:layout_marginRight="@dimen/purchase_dialog_margin_side"
+            android:layout_marginTop="@dimen/purchase_dialog_margin_top"
+            android:layout_weight="1"
+            android:text="고등학교 기본 단어 3"
+            android:textAllCaps="false"
+            android:textSize="@dimen/purchase_dialog_text" />
+
+        <Button
+            android:id="@+id/toeic_1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/purchase_dialog_margin_side"
+            android:layout_marginRight="@dimen/purchase_dialog_margin_side"
+            android:layout_marginTop="@dimen/purchase_dialog_margin_top"
+            android:layout_weight="1"
+            android:text="토익 기본 단어 1"
+            android:textAllCaps="false"
+            android:textSize="@dimen/purchase_dialog_text" />
+
+        <Button
+            android:id="@+id/toeic_2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/purchase_dialog_margin_side"
+            android:layout_marginRight="@dimen/purchase_dialog_margin_side"
+            android:layout_marginTop="@dimen/purchase_dialog_margin_top"
+            android:layout_weight="1"
+            android:text="토익 기본 단어 2"
+            android:textAllCaps="false"
+            android:textSize="@dimen/purchase_dialog_text" />
+
+
+    </LinearLayout>
+</FrameLayout>
