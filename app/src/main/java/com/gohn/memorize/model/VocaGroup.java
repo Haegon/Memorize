@@ -20,10 +20,20 @@ public class VocaGroup {
         this.numbers = numbers;
     }
 
-    String name = "";
-    int numbers = 0;
+    public long getCreateTime() {
+        return createTime;
+    }
 
-    public VocaGroup(String name, int numbers) {
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    long createTime ;
+    String name;
+    int numbers;
+
+    public VocaGroup(long createTime, String name, int numbers) {
+        this.createTime = createTime;
         this.name = name;
         this.numbers = numbers;
     }

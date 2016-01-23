@@ -25,6 +25,7 @@ public class DBMgr {
     public static final String DB_NAME = "Words.db";
     public static final String TABLE_NAME = "Words";
 
+    public static final String TIME = "createTime";
     public static final String GROUP = "groupName";
     public static final String TYPE = "type";
     public static final String WORD = "word";
@@ -75,7 +76,7 @@ public class DBMgr {
         this.context = context;
         database = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
 
-        database.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(" + "_id INTEGER PRIMARY KEY AUTOINCREMENT," + GROUP + " TEXT," + TYPE + " type TEXT," + WORD + " word TEXT," + MEANING
+        database.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(" + "_id INTEGER PRIMARY KEY AUTOINCREMENT," + TIME + " INTEGER,"  + GROUP + " TEXT," + TYPE + " type TEXT," + WORD + " word TEXT," + MEANING
                 + " meaning TEXT, unique(" + GROUP + "," + WORD + ")" + ");");
         database.execSQL("CREATE INDEX IF NOT EXISTS group_idx ON " + TABLE_NAME + " (" + GROUP + ");");
         database.execSQL("CREATE INDEX IF NOT EXISTS type_idx ON " + TABLE_NAME + " (" + TYPE + ");");
@@ -168,6 +169,8 @@ public class DBMgr {
 
     public void addWordsToDB(String group, ArrayList<WordSet> set) {
 
+        long unixTime = System.currentTimeMillis() / 1000L;
+
         for (WordSet word : set) {
             if (word.getType().trim().equals("") ||
                     word.getWord().trim().equals("") ||
@@ -175,6 +178,7 @@ public class DBMgr {
                 continue;
 
             ContentValues cv = new ContentValues();
+            cv.put(DBMgr.TIME, unixTime);
             cv.put(DBMgr.GROUP, group);
             cv.put(DBMgr.TYPE, word.getType());
             cv.put(DBMgr.WORD, word.getWord());
@@ -185,17 +189,14 @@ public class DBMgr {
 
     public ArrayList<VocaGroup> getVocaGroups() {
 
-        String[] columns = new String[]{DBMgr.GROUP, "count(" + DBMgr.GROUP + ")"};
-        Cursor c = query(columns, null, null, DBMgr.GROUP, null, null);
+        String[] columns = new String[]{DBMgr.TIME, DBMgr.GROUP, "count(" + DBMgr.GROUP + ")"};
+        Cursor c = query(columns, null, null, DBMgr.GROUP, null, DBMgr.TIME);
 
         if (c != null) {
             ArrayList<VocaGroup> groups = new ArrayList<VocaGroup>();
 
             while (c.moveToNext()) {
-
-                GLog.Debug(c.getString(0));
-
-                VocaGroup vg = new VocaGroup(c.getString(0), c.getInt(1));
+                VocaGroup vg = new VocaGroup(c.getLong(0), c.getString(1), c.getInt(2));
                 groups.add(vg);
             }
             Collections.reverse(groups);
@@ -205,16 +206,13 @@ public class DBMgr {
     }
 
     public ArrayList<String> getGroupNames() {
-        String query = "select groupName from Words group by groupName";
+        String query = "select groupName from Words group by groupName order by createTime";
         Cursor c = rawQuery(query, new String[]{});
 
         if (c != null) {
             ArrayList<String> groups = new ArrayList<String>();
 
             while (c.moveToNext()) {
-
-                GLog.Debug(c.getString(0));
-
                 groups.add(c.getString(0));
             }
             return groups;
