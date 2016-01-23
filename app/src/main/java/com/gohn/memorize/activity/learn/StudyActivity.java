@@ -42,15 +42,6 @@ public class StudyActivity extends LearnActivity implements View.OnClickListener
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
 
-//        dbMgr = DBMgr.getInstance();
-//        Bundle b = getIntent().getExtras();
-//        groupName = b.getString(DBMgr.GROUP);
-//        exerciseType = b.getInt(ExerciseType.toStr());
-//        wordType = b.getString(DBMgr.TYPE);
-//        isBlind = b.getString("mode").equals("blind") ? true : false;
-//
-//        fileName = groupName + "|" + exerciseType + "|" + wordType + "|" + isBlind;
-
         if (isFileExist(fileName)) {
             Dialog.showTwoButtonAlert(this, R.string.load_save, new IAlertDialogTwoButtonHanlder() {
                 @Override

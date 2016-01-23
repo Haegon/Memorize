@@ -68,173 +68,176 @@ public class DrawerActivity extends AppCompatActivity {
                 .build();
 
         //Create the drawer
-        drawer = new DrawerBuilder()
+        DrawerBuilder builder = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withHasStableIds(true)
-                .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
-                .addDrawerItems(
-                        new PrimaryDrawerItem()
-                                .withName(R.string.navi_home)
-                                .withIcon(R.drawable.ic_home)
-                                .withIdentifier(R.string.navi_home)
-                                .withSelectable(false),
-                        new PrimaryDrawerItem()
-                                .withName(R.string.navi_help)
-                                .withIcon(R.drawable.ic_help)
-                                .withIdentifier(R.string.navi_help)
-                                .withSelectable(false),
-                        new PrimaryDrawerItem()
-                                .withName(R.string.navi_info)
-                                .withIcon(R.drawable.ic_info)
-                                .withIdentifier(R.string.navi_info)
-                                .withSelectable(false),
+                .withAccountHeader(headerResult);
 
-                        new DividerDrawerItem(),
+        builder.addDrawerItems(
+                new PrimaryDrawerItem()
+                        .withName(R.string.navi_home)
+                        .withIcon(R.drawable.ic_home)
+                        .withIdentifier(R.string.navi_home)
+                        .withSelectable(false),
+                new PrimaryDrawerItem()
+                        .withName(R.string.navi_help)
+                        .withIcon(R.drawable.ic_help)
+                        .withIdentifier(R.string.navi_help)
+                        .withSelectable(false),
+                new PrimaryDrawerItem()
+                        .withName(R.string.navi_info)
+                        .withIcon(R.drawable.ic_info)
+                        .withIdentifier(R.string.navi_info)
+                        .withSelectable(false));
 
-                        new PrimaryDrawerItem()
-                                .withName(R.string.navi_donate)
-                                .withIcon(R.drawable.ic_money)
-                                .withIdentifier(R.string.navi_donate)
-                                .withSelectable(false),
-                        new SecondaryDrawerItem()
-                                .withName(R.string.navi_setting)
-                                .withIcon(R.drawable.ic_setting)
-                                .withIdentifier(R.string.navi_setting)
-                                .withSelectable(false)
-                                .withTextColor(Color.BLACK),
-                        new PrimaryDrawerItem()
-                                .withName(R.string.navi_share)
-                                .withIcon(R.drawable.ic_share)
-                                .withIdentifier(R.string.navi_share)
-                                .withSelectable(false),
-                        new PrimaryDrawerItem()
-                                .withName(R.string.navi_grade)
-                                .withIcon(R.drawable.ic_grade)
-                                .withIdentifier(R.string.navi_grade)
-                                .withSelectable(false),
-                        new PrimaryDrawerItem()
-                                .withName(R.string.navi_mail)
-                                .withIcon(R.drawable.ic_mail)
-                                .withIdentifier(R.string.navi_mail)
-                                .withSelectable(false)
-                )
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        if (drawerItem == null) return false;
+        builder.addDrawerItems(
+                new DividerDrawerItem(),
 
-                        Intent intent = new Intent();
-                        intent.putExtra(CommonData.INTENT_KEY_DRAWER_ITEM, drawerItem.getIdentifier());
+                new PrimaryDrawerItem()
+                        .withName(R.string.navi_donate)
+                        .withIcon(R.drawable.ic_money)
+                        .withIdentifier(R.string.navi_donate)
+                        .withSelectable(false),
+                new SecondaryDrawerItem()
+                        .withName(R.string.navi_setting)
+                        .withIcon(R.drawable.ic_setting)
+                        .withIdentifier(R.string.navi_setting)
+                        .withSelectable(false)
+                        .withTextColor(Color.BLACK),
+                new PrimaryDrawerItem()
+                        .withName(R.string.navi_share)
+                        .withIcon(R.drawable.ic_share)
+                        .withIdentifier(R.string.navi_share)
+                        .withSelectable(false),
+                new PrimaryDrawerItem()
+                        .withName(R.string.navi_grade)
+                        .withIcon(R.drawable.ic_grade)
+                        .withIdentifier(R.string.navi_grade)
+                        .withSelectable(false),
+                new PrimaryDrawerItem()
+                        .withName(R.string.navi_mail)
+                        .withIcon(R.drawable.ic_mail)
+                        .withIdentifier(R.string.navi_mail)
+                        .withSelectable(false)
+        );
+        builder.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                if (drawerItem == null) return false;
 
-                        switch (drawerItem.getIdentifier()) {
-                            // 홈액티비티 실행
-                            case R.string.navi_home:
-                                GLog.Debug("@@@@@ R.string.navi_home");
-                                intent.setClass(DrawerActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                break;
-                            // 도움말 액티비티 실행
-                            case R.string.navi_help:
-                                GLog.Debug("@@@@@ R.string.navi_help");
-                                intent.setClass(DrawerActivity.this, HelpActivity.class);
-                                startActivity(intent);
-                                break;
-                            // 앱정보 액티비티 실행
-                            case R.string.navi_info:
-                                GLog.Debug("@@@@@ R.string.navi_info");
-                                break;
-                            // 기부하기 액티비티 실행
-                            case R.string.navi_donate:
-                                GLog.Debug("@@@@@ R.string.navi_donate");
-                                Dialog.showPurchaseView(DrawerActivity.this, new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        switch (v.getId()) {
-                                            case R.id.btn_purchase_1:
-                                                PurchaseManager.Purchase(DrawerActivity.this, "donation_1000", "Fuck");
-                                                GLog.Debug("OnClick btn_purchase_1");
-                                                break;
-                                            case R.id.btn_purchase_3:
-                                                PurchaseManager.Purchase(DrawerActivity.this,"donation_3000", "Fuck");
-                                                GLog.Debug("OnClick btn_purchase_3");
-                                                break;
-                                            case R.id.btn_purchase_5:
-                                                PurchaseManager.Purchase(DrawerActivity.this,"donation_5000", "Fuck");
-                                                GLog.Debug("OnClick btn_purchase_5");
-                                                break;
-                                            case R.id.btn_purchase_10:
-                                                PurchaseManager.Purchase(DrawerActivity.this,"donation_10000", "Fuck");
-                                                GLog.Debug("OnClick btn_purchase_10");
-                                                break;
-                                        }
-                                    }
-                                });
-                                break;
-                            // 셋팅 하위 메뉴 열기
-                            case R.string.navi_setting:
-                                GLog.Debug("@@@@@ R.string.navi_setting");
-                                if (opened) {
-                                    //remove the items which are hidden
-                                    drawer.removeItems(R.string.pref_basic_random);
-                                } else {
-                                    int curPos = drawer.getPosition(drawerItem);
-                                    drawer.addItemsAtPosition(
-                                            curPos,
-                                            new SwitchDrawerItem()
-                                                    .withName(R.string.pref_basic_random)
-                                                    .withDescription(R.string.pref_basic_random_des_on)
-                                                    .withDescriptionTextColor(Color.GRAY)
-                                                    .withLevel(2)
-                                                    .withIcon(R.drawable.ic_clip)
-                                                    .withChecked(Global.getBoolean(DrawerActivity.this, CommonData.GLOBAL_KEY_RANDOM, false))
-                                                    .withIdentifier(R.string.pref_basic_random)
-                                                    .withOnCheckedChangeListener(onCheckedChangeListener)
-                                                    .withSelectable(false)
-                                    );
+                Intent intent = new Intent();
+                intent.putExtra(CommonData.INTENT_KEY_DRAWER_ITEM, drawerItem.getIdentifier());
+
+                switch (drawerItem.getIdentifier()) {
+                    // 홈액티비티 실행
+                    case R.string.navi_home:
+                        GLog.Debug("@@@@@ R.string.navi_home");
+                        intent.setClass(DrawerActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        break;
+                    // 도움말 액티비티 실행
+                    case R.string.navi_help:
+                        GLog.Debug("@@@@@ R.string.navi_help");
+                        intent.setClass(DrawerActivity.this, HelpActivity.class);
+                        startActivity(intent);
+                        break;
+                    // 앱정보 액티비티 실행
+                    case R.string.navi_info:
+                        GLog.Debug("@@@@@ R.string.navi_info");
+                        break;
+                    // 기부하기 액티비티 실행
+                    case R.string.navi_donate:
+                        GLog.Debug("@@@@@ R.string.navi_donate");
+                        Dialog.showPurchaseView(DrawerActivity.this, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()) {
+                                    case R.id.btn_purchase_1:
+                                        PurchaseManager.Purchase(DrawerActivity.this, "donation_1000", "Fuck");
+                                        GLog.Debug("OnClick btn_purchase_1");
+                                        break;
+                                    case R.id.btn_purchase_3:
+                                        PurchaseManager.Purchase(DrawerActivity.this, "donation_3000", "Fuck");
+                                        GLog.Debug("OnClick btn_purchase_3");
+                                        break;
+                                    case R.id.btn_purchase_5:
+                                        PurchaseManager.Purchase(DrawerActivity.this, "donation_5000", "Fuck");
+                                        GLog.Debug("OnClick btn_purchase_5");
+                                        break;
+                                    case R.id.btn_purchase_10:
+                                        PurchaseManager.Purchase(DrawerActivity.this, "donation_10000", "Fuck");
+                                        GLog.Debug("OnClick btn_purchase_10");
+                                        break;
                                 }
-                                opened = !opened;
-                                return true;
-                            case R.string.pref_basic_random:
-                                break;
-                            //공유 하기
-                            case R.string.navi_share:
-                                Intent i = new Intent(Intent.ACTION_SEND);
-                                i.setType("text/plain");
-                                i.putExtra(Intent.EXTRA_SUBJECT, "Voca DIY");
-                                String sAux = "\n" + getResources().getString(R.string.share) + "\n\n";
-                                sAux = sAux + "https://play.google.com/store/apps/details?id=com.gohn.memorize";
-                                i.putExtra(Intent.EXTRA_TEXT, sAux);
-                                startActivity(Intent.createChooser(i, "choose one"));
-                                break;
-                            // 평점 남기기
-                            case R.string.navi_grade:
-                                Dialog.showTwoButtonAlert(DrawerActivity.this, R.string.grade, new IAlertDialogTwoButtonHanlder() {
-                                    @Override
-                                    public void onPositive() {
-                                        String appPackageName = getPackageName();
-                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-                                    }
-
-                                    @Override
-                                    public void onNegative() {}
-                                });
-                                break;
-                            // 개발자에게 이메일 쓰기
-                            case R.string.navi_mail:
-                                Intent email = new Intent(Intent.ACTION_SEND);
-                                email.putExtra(Intent.EXTRA_EMAIL, new String[]{"gohn0929@gmail.com"});
-                                email.setType("message/rfc822");
-                                startActivity(Intent.createChooser(email, "Choose an Email client"));
-                                break;
+                            }
+                        });
+                        break;
+                    // 셋팅 하위 메뉴 열기
+                    case R.string.navi_setting:
+                        GLog.Debug("@@@@@ R.string.navi_setting");
+                        if (opened) {
+                            //remove the items which are hidden
+                            drawer.removeItems(R.string.pref_basic_random);
+                        } else {
+                            int curPos = drawer.getPosition(drawerItem);
+                            drawer.addItemsAtPosition(
+                                    curPos,
+                                    new SwitchDrawerItem()
+                                            .withName(R.string.pref_basic_random)
+                                            .withDescription(R.string.pref_basic_random_des_on)
+                                            .withDescriptionTextColor(Color.GRAY)
+                                            .withLevel(2)
+                                            .withIcon(R.drawable.ic_clip)
+                                            .withChecked(Global.getBoolean(DrawerActivity.this, CommonData.GLOBAL_KEY_RANDOM, false))
+                                            .withIdentifier(R.string.pref_basic_random)
+                                            .withOnCheckedChangeListener(onCheckedChangeListener)
+                                            .withSelectable(false)
+                            );
                         }
-                        return false;
-                    }
-                })
-                .withSavedInstance(savedInstanceState)
-                .withShowDrawerOnFirstLaunch(true)
-                .build();
+                        opened = !opened;
+                        return true;
+                    case R.string.pref_basic_random:
+                        break;
+                    //공유 하기
+                    case R.string.navi_share:
+                        Intent i = new Intent(Intent.ACTION_SEND);
+                        i.setType("text/plain");
+                        i.putExtra(Intent.EXTRA_SUBJECT, "Voca DIY");
+                        String sAux = "\n" + getResources().getString(R.string.share) + "\n\n";
+                        sAux = sAux + "https://play.google.com/store/apps/details?id=com.gohn.memorize";
+                        i.putExtra(Intent.EXTRA_TEXT, sAux);
+                        startActivity(Intent.createChooser(i, getResources().getString(R.string.broadcast_share_title)));
+                        break;
+                    // 평점 남기기
+                    case R.string.navi_grade:
+                        Dialog.showTwoButtonAlert(DrawerActivity.this, R.string.grade, new IAlertDialogTwoButtonHanlder() {
+                            @Override
+                            public void onPositive() {
+                                String appPackageName = getPackageName();
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                            }
 
+                            @Override
+                            public void onNegative() {
+                            }
+                        });
+                        break;
+                    // 개발자에게 이메일 쓰기
+                    case R.string.navi_mail:
+                        Intent email = new Intent(Intent.ACTION_SEND);
+                        email.putExtra(Intent.EXTRA_EMAIL, new String[]{"gohn0929@gmail.com"});
+                        email.setType("message/rfc822");
+                        startActivity(Intent.createChooser(email, getResources().getString(R.string.broadcast_email_title)));
+                        break;
+                }
+                return false;
+            }
+        });
+        builder.withSavedInstance(savedInstanceState);
+        builder.withShowDrawerOnFirstLaunch(true);
+
+        drawer = builder.build();
 
         // 앱 서랍에 현재 위치 표시
         drawer.setSelection(getIntent().getIntExtra(CommonData.INTENT_KEY_DRAWER_ITEM, R.string.navi_home), false);

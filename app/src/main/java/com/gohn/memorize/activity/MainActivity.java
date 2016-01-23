@@ -111,7 +111,7 @@ public class MainActivity extends DrawerActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(MainActivity.this, FileActivityObservable.class), CommonData.REQUEST_CODE_FILE_ACTIVITY);
+                startActivityForResult(new Intent(MainActivity.this, FileActivity.class), CommonData.REQUEST_CODE_FILE_ACTIVITY);
             }
         });
     }

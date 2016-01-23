@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.activity.GroupActivity;
@@ -215,8 +216,10 @@ public class WriteActivity extends LearnActivity implements View.OnClickListener
 				showPage();
 				break;
 			case R.id.btn_next:
-				if (editText.getText().toString().isEmpty())
+				if (editText.getText().toString().isEmpty()) {
+					Toast.makeText(this, R.string.click_answer, Toast.LENGTH_SHORT).show();
 					return;
+				}
 
 				if (checkBtn.getText().equals(getResources().getString(R.string.check))) {
 					exercises.get(page).setSolve(true);
