@@ -216,58 +216,44 @@ public class Dialog {
                 // 단어장을 불러오고 있다는 진행 바를 보여줌.
                 final LayoutInflater li = LayoutInflater.from(context);
                 final View popupView = li.inflate(R.layout.dialog_loading, null);
-                AlertDialog.Builder ad = new AlertDialog.Builder(context);
+                final AlertDialog.Builder ad = new AlertDialog.Builder(context);
                 ad.setView(popupView);
                 final AlertDialog alertDialog = ad.create();
                 alertDialog.show();
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("[ " + btn.getText().toString() + " ] " + "은 메인 화면에서 확인해주세요. ").setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        new Thread(new Runnable() {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+                        activity.runOnUiThread(new Runnable(){
                             @Override
                             public void run() {
-                                activity.runOnUiThread(new Runnable(){
-                                    @Override
-                                    public void run() {
-                                        String name = activity.getResources().getResourceEntryName(v.getId());
-                                        ArrayList<WordSet> words = new ArrayList<WordSet>();
+                                String name = activity.getResources().getResourceEntryName(v.getId());
+                                ArrayList<WordSet> words = new ArrayList<WordSet>();
 
-                                        try {
-                                            words = ReadXlsx.readExcel(activity.getAssets().open(name + ".xlsx"));
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-                                        DBMgr.getInstance().addWordsToDB(btn.getText().toString(), words);
-                                        listener.onClick(v);
+                                try {
+                                    words = ReadXlsx.readExcel(activity.getAssets().open(name + ".xlsx"));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                DBMgr.getInstance().addWordsToDB(btn.getText().toString(), words);
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                builder.setMessage("[ " + btn.getText().toString() + " ] " + "은 메인 화면에서 확인해주세요. ").setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
                                         alertDialog.dismiss();
+                                        listener.onClick(v);
                                     }
                                 });
+                                AlertDialog alert = builder.create();
+                                alert.show();
+
+
                             }
-                        }).start();
+                        });
                     }
-                });
-                AlertDialog alert = builder.create();
-                alert.show();
-
-
-
-
-//                new Thread(new Runnable() {
-//                    public void run() {
-//                        String name = activity.getResources().getResourceEntryName(v.getId());
-//                        ArrayList<WordSet> words = new ArrayList<WordSet>();
-//
-//                        try {
-//                            words = ReadXlsx.readExcel(activity.getAssets().open(name + ".xlsx"));
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        DBMgr.getInstance().addWordsToDB(btn.getText().toString(), words);
-//                        listener.onClick(v);
-//                        alertDialog.dismiss();
-//                    }
-//                }).start();
+                }).start();
             }
         };
 

@@ -3,14 +3,12 @@ package com.gohn.memorize.activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.TextView;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.gohn.memorize.R;
@@ -69,11 +67,6 @@ public class FileActivity extends ObservableListActivity {
     void initView() {
 
         int actionBarTitle = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
-        TextView tv = (TextView) getWindow().findViewById(actionBarTitle);
-        Typeface tf = CommonData.getTypefaceRegular(this);
-        if (tv != null) {
-            tv.setTypeface(tf);
-        }
 
         adapter = new FindFileAdapter(this, GetFiles(baseDir));
 
