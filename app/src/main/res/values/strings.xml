@@ -102,6 +102,9 @@
     <string name="broadcast_share_title">Choose an Application to share</string>
     <string name="broadcast_email_title">Choose an Email Application</string>
 
+    <string name="permission">To add excel file, "File Read Permission" is necessary.</string>
+    <string name="permission_deny">If you reject permission, you can not add excel files\nPlease turn on permissions at [Setting] > [Application-VocaDiy] > [Permission]</string>
+
     <string name="help_01">\"VOCA DIY\" app is memorizing the words you want to memorize words by uploading directly.</string>
     <string name="help_02">You must save yourself the words you want to memorize the Excel file.</string>
     <string name="help_03">When you save an Excel file There is a simple rule.</string>

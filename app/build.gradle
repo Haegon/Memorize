@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.gohn.memorize"
@@ -10,7 +10,6 @@ android {
         targetSdkVersion 23
         versionCode 6
         versionName "2.0"
-
         multiDexEnabled true
     }
     buildTypes {
@@ -41,16 +40,17 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    compile "com.android.support:multidex:1.0.1"
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.google.code.gson:gson:2.5'
-    compile 'net.sourceforge.jexcelapi:jxl:2.6.12'
     compile 'com.github.gabrielemariotti.cards:cardslib-core:2.1.0'
     compile 'com.github.gabrielemariotti.cards:cardslib-recyclerview:2.1.0'
-    compile 'com.github.ksoichiro:android-observablescrollview:1.6.0'
     compile 'com.mikepenz:materialdrawer:4.6.3'
     compile 'com.melnykov:floatingactionbutton:1.3.0'
     compile 'com.lsjwzh:recyclerviewpager:1.0.11-SNAPSHOT'
+    compile 'gun0912.ted:tedpermission:2.1.0'
+    compile 'net.sourceforge.jexcelapi:jxl:2.6.12'
     compile files('libs/opencsv-3.3.jar')
     compile files('libs/aspose-cells-8.4.0.jar')
 }

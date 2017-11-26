@@ -2,17 +2,14 @@ package com.gohn.memorize.activity;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
-import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.gohn.memorize.R;
-import com.gohn.memorize.activity.base.observable.ObservableListActivity;
 import com.gohn.memorize.adapter.FindFileAdapter;
 import com.gohn.memorize.common.CommonData;
 import com.gohn.memorize.manager.DBMgr;
@@ -27,7 +24,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class FileActivity extends ObservableListActivity {
+public class FileActivity extends AppCompatActivity {
 
     Context context = this;
     FindFileAdapter adapter = null;
@@ -45,34 +42,12 @@ public class FileActivity extends ObservableListActivity {
         initView();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.file, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     void initView() {
-
-        int actionBarTitle = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
-
         adapter = new FindFileAdapter(this, GetFiles(baseDir));
 
-        setListView((ObservableListView) findViewById(R.id.list_file));
-        getListView().setAdapter(adapter);
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ListView listView = (ListView)findViewById(R.id.list_file);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

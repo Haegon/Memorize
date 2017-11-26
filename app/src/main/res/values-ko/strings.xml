@@ -99,6 +99,8 @@
     <string name="broadcast_share_title">공유 할 앱을 선택해 주세요</string>
     <string name="broadcast_email_title">메일 앱을 선택해 주세요</string>
 
+    <string name="permission">엑셀 파일을 추가하려면 파일 읽기 권한이 필요합니다.</string>
+    <string name="permission_deny">파일 읽기 권한을 거부하시면 엑셀을 추가 할 수 없습니다\n[휴대폰 설정] > [앱-VocaDIY] > [권한]에서 파일 읽기 권한을 추가해주세요.</string>
 
     <string name="help_01">\"VOCA DIY\"는 사용자가 직접 외우고 싶은 단어를 업로드 하여 단어를 외우는 앱입니다.</string>
     <string name="help_02">사용자는 자신이 외우고자 하는 단어들을 엑셀파일에 저장해야 합니다.</string>

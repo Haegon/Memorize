@@ -1,5 +1,6 @@
 package com.gohn.memorize.activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.activity.base.DrawerActivity;
@@ -24,6 +26,8 @@ import com.gohn.memorize.util.Dialog;
 import com.gohn.memorize.util.GLog;
 import com.gohn.memorize.util.billing.IabResult;
 import com.gohn.memorize.util.billing.Purchase;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -114,7 +118,21 @@ public class MainActivity extends DrawerActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(MainActivity.this, FileActivity.class), CommonData.REQUEST_CODE_FILE_ACTIVITY);
+                TedPermission.with(MainActivity.this)
+                        .setPermissionListener(new PermissionListener() {
+                            @Override
+                            public void onPermissionGranted() {
+                                startActivityForResult(new Intent(MainActivity.this, FileActivity.class), CommonData.REQUEST_CODE_FILE_ACTIVITY);
+                            }
+
+                            @Override
+                            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                                Toast.makeText(MainActivity.this, R.string.permission_deny, Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setDeniedMessage("")
+                        .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .check();
             }
         });
 
