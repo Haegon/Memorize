@@ -238,9 +238,7 @@ public class MainActivity extends DrawerActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, intent);
-
 
         GLog.Debug("requestCode : " + requestCode + " , resultCode : " + resultCode);
 

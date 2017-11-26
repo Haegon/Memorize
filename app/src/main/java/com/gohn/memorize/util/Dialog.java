@@ -14,11 +14,6 @@ import com.gohn.memorize.manager.DBMgr;
 import com.gohn.memorize.model.IAlertDialogOneButtonHanlder;
 import com.gohn.memorize.model.IAlertDialogTwoButtonHanlder;
 import com.gohn.memorize.model.ISettingGroupNameViewHanlder;
-import com.gohn.memorize.model.WordSet;
-import com.gohn.memorize.util.parser.ReadXlsx;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Created by Gohn on 15. 12. 10..
@@ -112,6 +107,7 @@ public class Dialog {
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(final DialogInterface dialog) {
+//                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.textAccent));
                 alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -185,7 +181,11 @@ public class Dialog {
         alertDialog.show();
     }
 
-    public static void showAddBasicView(final Context context, final View.OnClickListener listener) {
+    public interface AddBasicItemListener {
+        void onClickItem(String groupName,String fileName);
+    }
+
+    public static void showAddBasicView(final Context context, final AddBasicItemListener listener) {
         final Activity activity = ((Activity) context);
 
         LayoutInflater li = LayoutInflater.from(context);
@@ -193,79 +193,6 @@ public class Dialog {
 
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setView(promptsView);
-
-
-        View.OnClickListener onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                final Button btn = (Button) promptsView.findViewById(v.getId());
-
-                // 동일한 단어장 이름이 있을때
-                if (DBMgr.getInstance().getGroupNames().contains(btn.getText().toString())) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setMessage(R.string.find_duplicate).setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // do things
-                        }
-                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    return;
-                }
-
-                // 단어장을 불러오고 있다는 진행 바를 보여줌.
-                final LayoutInflater li = LayoutInflater.from(context);
-                final View popupView = li.inflate(R.layout.dialog_loading, null);
-                final AlertDialog.Builder ad = new AlertDialog.Builder(context);
-                ad.setView(popupView);
-                final AlertDialog alertDialog = ad.create();
-                alertDialog.show();
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-
-
-                        activity.runOnUiThread(new Runnable(){
-                            @Override
-                            public void run() {
-                                String name = activity.getResources().getResourceEntryName(v.getId());
-                                ArrayList<WordSet> words = new ArrayList<WordSet>();
-
-                                try {
-                                    words = ReadXlsx.readExcel(activity.getAssets().open(name + ".xlsx"));
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                DBMgr.getInstance().addWordsToDB(btn.getText().toString(), words);
-
-                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                                builder.setMessage("[ " + btn.getText().toString() + " ] " + "은 메인 화면에서 확인해주세요. ").setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        alertDialog.dismiss();
-                                        listener.onClick(v);
-                                    }
-                                });
-                                AlertDialog alert = builder.create();
-                                alert.show();
-
-
-                            }
-                        });
-                    }
-                }).start();
-            }
-        };
-
-        promptsView.findViewById(R.id.middle_1).setOnClickListener(onClickListener);
-        promptsView.findViewById(R.id.middle_2).setOnClickListener(onClickListener);
-        promptsView.findViewById(R.id.middle_3).setOnClickListener(onClickListener);
-        promptsView.findViewById(R.id.high_1).setOnClickListener(onClickListener);
-        promptsView.findViewById(R.id.high_2).setOnClickListener(onClickListener);
-        promptsView.findViewById(R.id.high_3).setOnClickListener(onClickListener);
-        promptsView.findViewById(R.id.toeic_1).setOnClickListener(onClickListener);
-        promptsView.findViewById(R.id.toeic_2).setOnClickListener(onClickListener);
-
         alertDialogBuilder.setCancelable(false);
         alertDialogBuilder.setPositiveButton("닫기", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -284,6 +211,39 @@ public class Dialog {
                 });
             }
         });
+
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                final Button btn = (Button) promptsView.findViewById(v.getId());
+
+                // 동일한 단어장 이름이 있을때
+                if (DBMgr.getInstance().getGroupNames().contains(btn.getText().toString())) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage(R.string.find_duplicate).setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // do things
+                        }
+                    });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                    return;
+                }
+                alertDialog.dismiss();
+                listener.onClickItem(btn.getText().toString(), activity.getResources().getResourceEntryName(v.getId()));
+            }
+        };
+
+        promptsView.findViewById(R.id.middle_1).setOnClickListener(onClickListener);
+        promptsView.findViewById(R.id.middle_2).setOnClickListener(onClickListener);
+        promptsView.findViewById(R.id.middle_3).setOnClickListener(onClickListener);
+        promptsView.findViewById(R.id.high_1).setOnClickListener(onClickListener);
+        promptsView.findViewById(R.id.high_2).setOnClickListener(onClickListener);
+        promptsView.findViewById(R.id.high_3).setOnClickListener(onClickListener);
+        promptsView.findViewById(R.id.toeic_1).setOnClickListener(onClickListener);
+        promptsView.findViewById(R.id.toeic_2).setOnClickListener(onClickListener);
+
+
         alertDialog.show();
     }
 
