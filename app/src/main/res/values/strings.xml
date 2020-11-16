@@ -21,12 +21,10 @@
     <string name="navi_info">Application Info</string>
     <string name="navi_mail">Feedback</string>
     <string name="navi_basic">Add Basic Vocaburaries</string>
-    <string name="navi_donate">Buying food for Developer</string>
     <string name="navi_grade">Rate</string>
     <string name="navi_share">Share this app</string>
     <string name="navi_setting">Settings</string>
 
-    <string name="action_example">Example action</string>
     <string name="ok">OK</string>
     <string name="main_add">Voca Add</string>
     <string name="main_help">Help</string>

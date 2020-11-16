@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,11 +21,9 @@ import com.gohn.memorize.activity.InfoActivity;
 import com.gohn.memorize.activity.MainActivity;
 import com.gohn.memorize.common.CommonData;
 import com.gohn.memorize.manager.DBMgr;
-import com.gohn.memorize.manager.PurchaseManager;
 import com.gohn.memorize.model.IAlertDialogTwoButtonHanlder;
 import com.gohn.memorize.model.WordSet;
 import com.gohn.memorize.util.Dialog;
-import com.gohn.memorize.util.GLog;
 import com.gohn.memorize.util.Global;
 import com.gohn.memorize.util.parser.ReadXlsx;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -118,12 +116,6 @@ public class DrawerActivity extends AppCompatActivity {
         }
 
         builder.addDrawerItems(
-
-                new PrimaryDrawerItem()
-                        .withName(R.string.navi_donate)
-                        .withIcon(R.drawable.ic_money)
-                        .withIdentifier(R.string.navi_donate)
-                        .withSelectable(false),
                 new SecondaryDrawerItem()
                         .withName(R.string.navi_setting)
                         .withIcon(R.drawable.ic_setting)
@@ -211,36 +203,8 @@ public class DrawerActivity extends AppCompatActivity {
                                     }
                                 });
                                 break;
-                            // 기부하기 액티비티 실행
-                            case R.string.navi_donate:
-                                GLog.Debug("@@@@@ R.string.navi_donate");
-                                Dialog.showPurchaseView(DrawerActivity.this, new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        switch (v.getId()) {
-                                            case R.id.btn_purchase_1:
-                                                PurchaseManager.Purchase(DrawerActivity.this, "donation_1000", "Fuck");
-                                                GLog.Debug("OnClick btn_purchase_1");
-                                                break;
-                                            case R.id.btn_purchase_3:
-                                                PurchaseManager.Purchase(DrawerActivity.this, "donation_3000", "Fuck");
-                                                GLog.Debug("OnClick btn_purchase_3");
-                                                break;
-                                            case R.id.btn_purchase_5:
-                                                PurchaseManager.Purchase(DrawerActivity.this, "donation_5000", "Fuck");
-                                                GLog.Debug("OnClick btn_purchase_5");
-                                                break;
-                                            case R.id.btn_purchase_10:
-                                                PurchaseManager.Purchase(DrawerActivity.this, "donation_10000", "Fuck");
-                                                GLog.Debug("OnClick btn_purchase_10");
-                                                break;
-                                        }
-                                    }
-                                });
-                                break;
                             // 셋팅 하위 메뉴 열기
                             case R.string.navi_setting:
-                                GLog.Debug("@@@@@ R.string.navi_setting");
                                 if (opened) {
                                     //remove the items which are hidden
                                     drawer.removeItems(R.string.pref_basic_random);

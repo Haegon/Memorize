@@ -1,7 +1,7 @@
 package com.gohn.memorize.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 
 import com.gohn.memorize.R;
 import com.gohn.memorize.activity.base.RecyclerPagerActivity;
